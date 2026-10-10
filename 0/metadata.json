@@ -1,0 +1,55 @@
+{
+  "cli_version": "0.11.4",
+  "checkpoint_id": "01M4KSRK6ZZMFWAPB0V7HVPVVX",
+  "session_id": "ses_ed8a786f7ffeUozR3mhAyaYoTD",
+  "strategy": "manual-commit",
+  "created_at": "2026-10-10T20:59:26.199702Z",
+  "branch": "main",
+  "checkpoints_count": 2,
+  "files_touched": [
+    "frontend/app/inventory/layout.tsx",
+    "frontend/app/inventory/page.tsx",
+    "frontend/app/layout.tsx",
+    "frontend/app/page.tsx",
+    "frontend/app/ticket/[id]/page.tsx",
+    "frontend/src/components/AppShell.tsx",
+    "frontend/src/store/swapdesk.tsx"
+  ],
+  "agent": "OpenCode",
+  "model": "big-pickle",
+  "turn_id": "954b6652ee75",
+  "checkpoint_transcript_start": 57,
+  "transcript_lines_at_start": 57,
+  "compact_transcript_start": 57,
+  "token_usage": {
+    "input_tokens": 35222,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 3309568,
+    "output_tokens": 22441,
+    "api_call_count": 31
+  },
+  "session_metrics": {
+    "turn_count": 4
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-10-10T20:59:25.9745664Z",
+    "agent_lines": 307,
+    "agent_removed": 67,
+    "human_added": 0,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 307,
+    "total_lines_changed": 374,
+    "agent_percentage": 100,
+    "metric_version": 2
+  },
+  "prompt_attributions": [
+    {
+      "checkpoint_number": 1,
+      "user_lines_added": 0,
+      "user_lines_removed": 0,
+      "agent_lines_added": 0,
+      "agent_lines_removed": 0
+    }
+  ]
+}
