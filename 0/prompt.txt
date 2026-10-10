@@ -1,0 +1,72 @@
+i have this error
+
+---
+
+## Error Type
+Console Error
+
+## Error Message
+A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <RenderFromTemplateContext>
+      <ScrollHandler renderTree={{...}}>
+        <InnerScrollHandler scrollRef={{scrollRef:null, ...}} renderTree={{...}}>
+          <ErrorBoundary errorComponent={undefined} errorStyles={undefined} errorScripts={undefined}>
+            <LoadingBoundary name="traces/" loading={null}>
+              <HTTPAccessFallbackBoundary notFound={undefined} forbidden={undefined} unauthorized={undefined}>
+                <RedirectBoundary>
+                  <RedirectErrorBoundary router={{...}}>
+                    <InnerLayoutRouter url="/traces" tree={[...]} params={{}} renderTree={{...}} segmentPath={[...]} ...>
+                      <SegmentViewNode type="page" pagePath="traces/pag...">
+                        <SegmentTrieNode>
+                        <TracePage>
+                          <AppShell crumbs={[...]}>
+                            <div className="flex min-h...">
+                              <aside
++                               className="glass fixed inset-y-0 left-0 z-40 hidden h-screen w-20 shrink-0 flex-col it..."
+-                               className="glass sticky top-0 hidden h-screen w-20 shrink-0 flex-col items-center gap-..."
+                              >
+                              <div
++                               className="flex min-w-0 flex-1 flex-col pb-[calc(5rem+env(safe-area-inset-bottom))] md..."
+-                               className="flex min-w-0 flex-1 flex-col pb-[calc(5rem+env(safe-area-inset-bottom))] md..."
+                              >
+                              ...
+                      ...
+                    ...
+          ...
+
+
+
+    at aside (<anonymous>:null:null)
+    at AppShell (src/components/AppShell.tsx:24:7)
+    at TracePage (app\traces\page.tsx:29:5)
+
+## Code Frame
+  22 |     <div className="flex min-h-screen w-full">
+  23 |       {/* Desktop sidebar */}
+> 24 |       <aside className="glass fixed inset-y-0 left-0 z-40 hidden h-screen w-20 shrink-0 flex-col items-center gap-2 border-y-0 border-l-0 py-6 md:flex">
+     |       ^
+  25 |         <Link href="/" aria-label="SwapDesk Mission Control" className="mb-6 flex items-center justify-center">
+  26 |           <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-primary/10 text-primary glow-success">
+  27 |             <Ticket className="h-5 w-5" />
+
+Next.js version: 16.4.0 (Turbopack)
+
+---
+
+fix it and commit
+
+---
+
+when you are done fixing the error commit the code in the frontend folder
