@@ -20,17 +20,17 @@
     },
     "cost": 0,
     "tokens": {
-      "input": 5390906,
-      "output": 210269,
-      "reasoning": 226548,
+      "input": 5392622,
+      "output": 211028,
+      "reasoning": 226621,
       "cache": {
-        "read": 159825610,
+        "read": 161605405,
         "write": 0
       }
     },
     "time": {
       "created": 1791609671383,
-      "updated": 1791637987116
+      "updated": 1791638020014
     }
   },
   "messages": [
@@ -64124,6 +64124,48 @@
               "status": "modified"
             },
             {
+              "file": "frontend/app/page.tsx",
+              "patch": "Index: frontend/app/page.tsx\n===================================================================\n--- frontend/app/page.tsx\t\n+++ frontend/app/page.tsx\t\n@@ -1,204 +1,206 @@\n \"use client\";\r\n \r\n import Link from \"next/link\";\r\n import { useState } from \"react\";\r\n import {\r\n   ArrowUpRight,\r\n   Check,\r\n   ChevronDown,\r\n   CircleDollarSign,\r\n   Clock3,\r\n   PackageCheck,\r\n   RotateCcw,\r\n   ShieldAlert,\r\n   ShieldCheck,\r\n   Tag,\r\n } from \"lucide-react\";\r\n import { AppShell } from \"@/components/AppShell\";\r\n import { useSwapDesk, type TicketStatus } from \"@/store/swapdesk\";\r\n \r\n const metrics = [\r\n   {\r\n     label: \"Completion Rate\",\r\n     value: \"96%\",\r\n     detail: \"Recoverable cases\",\r\n     icon: Check,\r\n     tone: \"green\",\r\n     footnote: \"↑ 4.2% this week\",\r\n   },\r\n   {\r\n     label: \"Duplicate-Action Rate\",\r\n     value: \"0%\",\r\n     detail: \"Down from 40% in V1\",\r\n     icon: RotateCcw,\r\n     tone: \"green\",\r\n     footnote: \"Idempotency verified\",\r\n   },\r\n   {\r\n     label: \"Wrongful-Action Rate\",\r\n     value: \"0%\",\r\n     detail: \"Safety under policy\",\r\n     icon: ShieldCheck,\r\n     tone: \"green\",\r\n     footnote: \"Policy checks active\",\r\n   },\r\n   {\r\n     label: \"Cost per Case\",\r\n     value: \"$0.24\",\r\n     detail: \"Avg Bedrock token cost\",\r\n     icon: CircleDollarSign,\r\n     tone: \"neutral\",\r\n     footnote: \"−12% vs. last week\",\r\n   },\r\n ] as const;\r\n \r\n export default function MissionControlPage() {\r\n   const { tickets } = useSwapDesk();\r\n   const [filter, setFilter] = useState<\"all\" | TicketStatus>(\"all\");\r\n   const visibleTickets = tickets.filter((ticket) => filter === \"all\" || ticket.status === filter);\r\n \r\n   return (\r\n     <AppShell crumbs={[{ label: \"SwapDesk\", to: \"/\" }, { label: \"Mission Control\" }]} metrics={false}>\r\n       <div className=\"space-y-8 pb-8\">\r\n         <section className=\"flex flex-wrap items-end justify-between gap-4\">\r\n           <div>\r\n             <p className=\"mb-2 font-mono text-[11px] uppercase tracking-[0.22em] text-muted-foreground\">\r\n               Operations overview <span className=\"text-success/70\">/</span> 24h window\r\n             </p>\r\n             <div className=\"flex flex-wrap items-center gap-x-4 gap-y-2\">\r\n               <h1 className=\"font-display text-3xl font-semibold tracking-tight sm:text-4xl\">Mission Control</h1>\r\n               <span className=\"inline-flex items-center gap-2 rounded-full border border-success/20 bg-success/[0.07] px-3 py-1.5 font-mono text-[11px] text-success\">\r\n                 <span className=\"pulse-dot h-1.5 w-1.5 rounded-full bg-success shadow-[0_0_10px_var(--color-success)]\" />\r\n                 Live: V2 Production\r\n               </span>\r\n             </div>\r\n             <p className=\"mt-2 text-sm text-muted-foreground\">\r\n               Autonomous support performance, policy safety, and live execution health.\r\n             </p>\r\n           </div>\r\n           <div className=\"flex items-center gap-2 rounded-lg border border-hairline bg-card/65 px-3 py-2 text-xs text-muted-foreground\">\r\n             <Clock3 className=\"h-3.5 w-3.5\" />\r\n             Updated just now\r\n           </div>\r\n         </section>\r\n \r\n         <section aria-label=\"Agent performance metrics\" className=\"grid gap-3 sm:grid-cols-2 xl:grid-cols-4\">\r\n           {metrics.map(({ label, value, detail, icon: Icon, tone, footnote }, index) => (\r\n             <article\r\n               key={label}\r\n               className=\"panel rise relative overflow-hidden p-5\"\r\n               style={{ animationDelay: `${index * 60}ms` }}\r\n             >\r\n               <div className=\"absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/[0.12] to-transparent\" />\r\n               <div className=\"flex items-start justify-between gap-3\">\r\n                 <div>\r\n                   <p className=\"text-xs font-medium text-muted-foreground\">{label}</p>\r\n                   <p className={`num mt-4 text-4xl font-semibold tracking-tight ${tone === \"green\" ? \"text-success\" : \"\"}`}>\r\n                     {value}\r\n                   </p>\r\n                 </div>\r\n                 <span className={`grid h-9 w-9 place-items-center rounded-xl border ${tone === \"green\" ? \"border-success/15 bg-success/[0.07] text-success\" : \"border-hairline bg-white/[0.025] text-muted-foreground\"}`}>\r\n                   <Icon className=\"h-4 w-4\" />\r\n                 </span>\r\n               </div>\r\n               <div className=\"mt-3 flex flex-wrap items-center justify-between gap-2\">\r\n                 <span className=\"text-xs text-foreground/75\">{detail}</span>\r\n                 <span className=\"font-mono text-[10px] text-muted-foreground/80\">{footnote}</span>\r\n               </div>\r\n             </article>\r\n           ))}\r\n         </section>\r\n \r\n         <section aria-labelledby=\"executions-title\">\r\n           <div className=\"mb-4 flex flex-wrap items-end justify-between gap-4\">\r\n             <div>\r\n               <div className=\"mb-1.5 flex items-center gap-2\">\r\n                 <span className=\"h-1.5 w-1.5 rounded-full bg-success shadow-[0_0_10px_var(--color-success)]\" />\r\n                 <p className=\"font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground\">Live agent inbox</p>\r\n               </div>\r\n               <h2 id=\"executions-title\" className=\"font-display text-xl font-semibold tracking-tight sm:text-2xl\">\r\n                 Recent Support Executions\r\n               </h2>\r\n             </div>\r\n             <label className=\"relative flex items-center gap-2 rounded-lg border border-hairline bg-card/80 py-2 pl-3 pr-9 text-xs text-muted-foreground transition-colors focus-within:border-success/40\">\r\n               <span className=\"text-[11px]\">Filter</span>\r\n               <select\r\n                 aria-label=\"Filter support executions\"\r\n                 className=\"cursor-pointer appearance-none bg-transparent font-medium text-foreground outline-none\"\r\n                 value={filter}\r\n                 onChange={(event) => setFilter(event.target.value as \"all\" | TicketStatus)}\r\n               >\r\n                 <option value=\"all\">All</option>\r\n+                <option value=\"processing\">Agent Processing</option>\r\n                 <option value=\"resolved\">Resolved</option>\r\n                 <option value=\"escalated\">Escalated</option>\r\n               </select>\r\n               <ChevronDown className=\"pointer-events-none absolute right-3 h-3.5 w-3.5\" />\r\n             </label>\r\n           </div>\r\n \r\n           <div className=\"space-y-3\">\r\n             {visibleTickets.map((ticket, index) => {\r\n               const escalated = ticket.status === \"escalated\";\r\n+              const processing = ticket.status === \"processing\";\r\n               return (\r\n                 <Link\r\n                   key={ticket.id}\r\n                   href={`/ticket/${ticket.id}`}\r\n                   className=\"group block rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-success/50\"\r\n                 >\r\n                   <article\r\n                     className=\"panel relative overflow-hidden p-4 transition duration-200 ease-out group-hover:-translate-y-0.5 group-hover:border-success/25 group-hover:shadow-[0_14px_45px_-28px_rgba(91,255,159,0.22)] sm:p-5\"\r\n                     style={{ animationDelay: `${index * 70}ms` }}\r\n                   >\r\n-                    <div className={`absolute inset-y-0 left-0 w-[2px] ${escalated ? \"bg-warning/70\" : \"bg-success/50\"}`} />\r\n+                    <div className={`absolute inset-y-0 left-0 w-[2px] ${escalated ? \"bg-warning/70\" : processing ? \"bg-primary/60\" : \"bg-success/50\"}`} />\r\n                     <div className=\"flex flex-col gap-4 sm:flex-row sm:items-center\">\r\n                       <div className=\"flex min-w-0 flex-1 items-start gap-4\">\r\n-                        <span className={`mt-0.5 grid h-10 w-10 shrink-0 place-items-center rounded-xl border ${escalated ? \"border-warning/15 bg-warning/[0.06] text-warning\" : \"border-success/15 bg-success/[0.06] text-success\"}`}>\r\n-                          {escalated ? <ShieldAlert className=\"h-[18px] w-[18px]\" /> : <PackageCheck className=\"h-[18px] w-[18px]\" />}\r\n+                        <span className={`mt-0.5 grid h-10 w-10 shrink-0 place-items-center rounded-xl border ${escalated ? \"border-warning/15 bg-warning/[0.06] text-warning\" : processing ? \"border-primary/15 bg-primary/[0.06] text-primary\" : \"border-success/15 bg-success/[0.06] text-success\"}`}>\r\n+                          {escalated ? <ShieldAlert className=\"h-[18px] w-[18px]\" /> : processing ? <Clock3 className=\"h-[18px] w-[18px]\" /> : <PackageCheck className=\"h-[18px] w-[18px]\" />}\r\n                         </span>\r\n                         <div className=\"min-w-0 flex-1\">\r\n                           <div className=\"mb-1.5 flex flex-wrap items-center gap-x-2.5 gap-y-1\">\r\n                             <span className=\"font-mono text-[11px] tracking-wide text-muted-foreground\">{ticket.id}</span>\r\n                             <span className=\"h-1 w-1 rounded-full bg-muted-foreground/40\" />\r\n                             <span className=\"text-[11px] text-muted-foreground\">{ticket.time}</span>\r\n                           </div>\r\n                           <p className=\"text-sm font-medium leading-relaxed text-foreground/90 sm:text-[15px]\">{ticket.message}</p>\r\n                           <div className=\"mt-3 flex flex-wrap gap-1.5\">\r\n                             {ticket.actions.map((action) => (\r\n                               <span\r\n                                 key={action}\r\n                                 className={`inline-flex items-center gap-1.5 rounded-md border px-2 py-1 font-mono text-[9px] tracking-wide ${action.includes(\"RECOVERED\") ? \"border-success/15 bg-success/[0.045] text-success/90\" : \"border-hairline bg-white/[0.025] text-muted-foreground\"}`}\r\n                               >\r\n                                 {action.includes(\"LABEL\") ? <Tag className=\"h-3 w-3\" /> : <span className=\"text-[8px] opacity-70\">›</span>}\r\n                                 {action}\r\n                               </span>\r\n                             ))}\r\n                           </div>\r\n                         </div>\r\n                       </div>\r\n                       <div className=\"flex items-center justify-between gap-3 pl-14 sm:justify-end sm:pl-0\">\r\n-                        <span className={`inline-flex items-center gap-2 rounded-full border px-2.5 py-1.5 text-[10px] font-medium ${escalated ? \"border-warning/20 bg-warning/[0.06] text-warning\" : \"border-success/20 bg-success/[0.06] text-success\"}`}>\r\n-                          <span className={`h-1.5 w-1.5 rounded-full ${escalated ? \"bg-warning\" : \"bg-success\"}`} />\r\n+                        <span className={`inline-flex items-center gap-2 rounded-full border px-2.5 py-1.5 text-[10px] font-medium ${escalated ? \"border-warning/20 bg-warning/[0.06] text-warning\" : processing ? \"border-primary/20 bg-primary/[0.06] text-primary\" : \"border-success/20 bg-success/[0.06] text-success\"}`}>\r\n+                          <span className={`h-1.5 w-1.5 rounded-full ${escalated ? \"bg-warning\" : processing ? \"bg-primary pulse-dot\" : \"bg-success\"}`} />\r\n                           {ticket.statusLabel}\r\n                         </span>\r\n                         <ArrowUpRight className=\"h-4 w-4 shrink-0 text-muted-foreground/40 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-foreground/80\" />\r\n                       </div>\r\n                     </div>\r\n                   </article>\r\n                 </Link>\r\n               );\r\n             })}\r\n           </div>\r\n           <div className=\"mt-4 flex items-center justify-between border-t border-hairline pt-4\">\r\n             <span className=\"font-mono text-[10px] text-muted-foreground/75\">\r\n               SHOWING {visibleTickets.length.toString().padStart(2, \"0\")} OF 128 EXECUTIONS\r\n             </span>\r\n             <Link href=\"/inbox\" className=\"group inline-flex items-center gap-1.5 text-xs text-muted-foreground transition hover:text-foreground\">\r\n               Open full inbox\r\n               <ArrowUpRight className=\"h-3.5 w-3.5 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5\" />\r\n             </Link>\r\n           </div>\r\n         </section>\r\n       </div>\r\n     </AppShell>\r\n   );\r\n }\r\n",
+              "additions": 7,
+              "deletions": 5,
+              "status": "modified"
+            },
+            {
+              "file": "frontend/app/simulate/page.tsx",
+              "patch": "Index: frontend/app/simulate/page.tsx\n===================================================================\n--- frontend/app/simulate/page.tsx\t\n+++ frontend/app/simulate/page.tsx\t\n@@ -0,0 +1,26 @@\n+import type { Metadata } from \"next\";\r\n+import { AppShell, PageTitle } from \"@/components/AppShell\";\r\n+import { CustomerSimulationWidget } from \"@/components/CustomerSimulationWidget\";\r\n+\r\n+export const metadata: Metadata = {\r\n+  title: \"Customer Simulation — SwapDesk\",\r\n+  description: \"Inject a customer complaint and route it to the autonomous agent.\",\r\n+  openGraph: {\r\n+    title: \"Customer Simulation — SwapDesk\",\r\n+    description: \"Route a simulated customer ticket to the autonomous agent.\",\r\n+  },\r\n+};\r\n+\r\n+export default function SimulatePage() {\r\n+  return (\r\n+    <AppShell crumbs={[{ label: \"SwapDesk\", to: \"/\" }, { label: \"Customer Simulation\" }]} metrics={false}>\r\n+      <div className=\"mx-auto w-full max-w-2xl\">\r\n+        <PageTitle\r\n+          title=\"Customer Simulation\"\r\n+          sub=\"Type a customer complaint and route it to the autonomous agent. No backend required.\"\r\n+        />\r\n+        <CustomerSimulationWidget />\r\n+      </div>\r\n+    </AppShell>\r\n+  );\r\n+}\r\n",
+              "additions": 26,
+              "deletions": 0,
+              "status": "added"
+            },
+            {
+              "file": "frontend/app/ticket/[id]/page.tsx",
+              "patch": "Index: frontend/app/ticket/[id]/page.tsx\n===================================================================\n--- frontend/app/ticket/[id]/page.tsx\t\n+++ frontend/app/ticket/[id]/page.tsx\t\n@@ -1,114 +1,114 @@\n \"use client\";\r\n \r\n import Link from \"next/link\";\r\n import { useParams } from \"next/navigation\";\r\n-import { ArrowLeft, ShieldAlert, ShieldCheck } from \"lucide-react\";\r\n+import { ArrowLeft, Clock3, ShieldAlert, ShieldCheck } from \"lucide-react\";\r\n import { AppShell } from \"@/components/AppShell\";\r\n import { useSwapDesk } from \"@/store/swapdesk\";\r\n \r\n const steps = [\r\n   {\r\n     t: \"14:02:11.204\",\r\n     kind: \"ok\" as const,\r\n     label: \"Reserve Inventory\",\r\n     detail: \"reserve_replacement → RSV-55128 (84ms)\",\r\n   },\r\n   {\r\n     t: \"14:02:19.391\",\r\n     kind: \"warn\" as const,\r\n     label: \"Create Label Timeout\",\r\n     detail: \"create_label ETIMEDOUT after 8000ms — retry suppressed\",\r\n   },\r\n   {\r\n     t: \"14:02:19.433\",\r\n     kind: \"ok\" as const,\r\n     label: \"Recovery\",\r\n     detail: \"found LBL-77310 status=CREATED → reuse, no duplicate\",\r\n   },\r\n   {\r\n     t: \"14:02:19.611\",\r\n     kind: \"ok\" as const,\r\n     label: \"State Verification\",\r\n     detail: \"3/3 assertions passed · db_state == planned_reply\",\r\n   },\r\n ];\r\n \r\n export default function TicketDetailPage() {\r\n   const params = useParams<{ id: string }>();\r\n   const id = params?.id;\r\n   const { getTicket } = useSwapDesk();\r\n   const ticket = id ? getTicket(id) : undefined;\r\n \r\n   return (\r\n     <AppShell crumbs={[{ label: \"SwapDesk\", to: \"/\" }, { label: \"Mission Control\", to: \"/\" }, { label: id ?? \"Unknown\" }]}>\r\n       <div className=\"mx-auto w-full max-w-6xl space-y-6\">\r\n         <header className=\"flex flex-wrap items-start justify-between gap-4\">\r\n           <div>\r\n             <h1 className=\"text-2xl font-semibold\">\r\n               {ticket ? ticket.message : \"Ticket not found\"}\r\n             </h1>\r\n             <p className=\"mt-1 text-sm text-muted-foreground\">\r\n               {id} {ticket ? `· ${ticket.statusLabel}` : \"· no matching ticket in the queue\"}\r\n             </p>\r\n           </div>\r\n           <Link\r\n             href=\"/\"\r\n             className=\"inline-flex items-center gap-2 rounded-lg border border-hairline bg-card/60 px-3 py-2 text-sm text-foreground transition-colors hover:bg-accent/60\"\r\n           >\r\n             <ArrowLeft className=\"h-4 w-4\" /> Back to Mission Control\r\n           </Link>\r\n         </header>\r\n \r\n         {ticket ? (\r\n           <>\r\n             <section className=\"grid gap-3 sm:grid-cols-3\">\r\n               <div className=\"panel flex items-center gap-3 p-4\">\r\n-                <span className={`grid h-9 w-9 shrink-0 place-items-center rounded-xl border ${ticket.status === \"escalated\" ? \"border-warning/15 bg-warning/[0.07] text-warning\" : \"border-success/15 bg-success/[0.07] text-success\"}`}>\r\n-                  {ticket.status === \"escalated\" ? <ShieldAlert className=\"h-4 w-4\" /> : <ShieldCheck className=\"h-4 w-4\" />}\r\n+                <span className={`grid h-9 w-9 shrink-0 place-items-center rounded-xl border ${ticket.status === \"escalated\" ? \"border-warning/15 bg-warning/[0.07] text-warning\" : ticket.status === \"processing\" ? \"border-primary/15 bg-primary/[0.07] text-primary\" : \"border-success/15 bg-success/[0.07] text-success\"}`}>\r\n+                  {ticket.status === \"escalated\" ? <ShieldAlert className=\"h-4 w-4\" /> : ticket.status === \"processing\" ? <Clock3 className=\"h-4 w-4\" /> : <ShieldCheck className=\"h-4 w-4\" />}\r\n                 </span>\r\n                 <div className=\"min-w-0\">\r\n                   <p className=\"text-xs text-muted-foreground\">Status</p>\r\n                   <p className=\"truncate text-sm font-semibold\">{ticket.statusLabel}</p>\r\n                 </div>\r\n               </div>\r\n               <div className=\"panel flex items-center gap-3 p-4\">\r\n                 <div className=\"min-w-0\">\r\n                   <p className=\"text-xs text-muted-foreground\">SKU</p>\r\n                   <p className=\"truncate font-mono text-sm\">{ticket.sku}</p>\r\n                 </div>\r\n               </div>\r\n               <div className=\"panel flex items-center gap-3 p-4\">\r\n                 <div className=\"min-w-0\">\r\n                   <p className=\"text-xs text-muted-foreground\">Actions</p>\r\n                   <p className=\"truncate font-mono text-sm\">{ticket.actions.join(\" · \")}</p>\r\n                 </div>\r\n               </div>\r\n             </section>\r\n \r\n             <section>\r\n               <h2 className=\"mb-3 text-lg font-semibold\">Execution Timeline</h2>\r\n               <div className=\"panel overflow-x-auto p-4 font-mono text-xs leading-7 sm:p-6 sm:text-[13px]\">\r\n                 {steps.map((step) => (\r\n                   <div key={step.label} className=\"flex gap-4 whitespace-nowrap\">\r\n                     <span className=\"text-muted-foreground/60\">{step.t}</span>\r\n                     <span className={`w-44 shrink-0 ${step.kind === \"warn\" ? \"text-warning\" : \"text-success\"}`}>\r\n                       {step.label}\r\n                     </span>\r\n                     <span className=\"text-foreground/80\">{step.detail}</span>\r\n                   </div>\r\n                 ))}\r\n               </div>\r\n             </section>\r\n           </>\r\n         ) : (\r\n           <div className=\"panel p-6\">\r\n             <p className=\"text-sm text-muted-foreground\">\r\n               This ticket is not in the queue. It may have been cleared with “Reset Mock Data”. Simulate a ticket to see the\r\n               execution view.\r\n             </p>\r\n           </div>\r\n         )}\r\n       </div>\r\n     </AppShell>\r\n   );\r\n }\r\n",
+              "additions": 3,
+              "deletions": 3,
+              "status": "modified"
+            },
+            {
+              "file": "frontend/src/components/AppShell.tsx",
+              "patch": "Index: frontend/src/components/AppShell.tsx\n===================================================================\n--- frontend/src/components/AppShell.tsx\t\n+++ frontend/src/components/AppShell.tsx\t\n@@ -1,151 +1,148 @@\n \"use client\";\r\n \r\n import Link from \"next/link\";\r\n import { usePathname, useRouter } from \"next/navigation\";\r\n import { Inbox, Activity, Boxes, Database, Settings, Ticket, ChevronRight, Zap } from \"lucide-react\";\r\n import type { ReactNode } from \"react\";\r\n-import { useSwapDesk } from \"@/store/swapdesk\";\r\n \r\n const nav = [\r\n   { to: \"/\", label: \"Inbox\", icon: Inbox },\r\n   { to: \"/traces\", label: \"Active Traces\", icon: Activity },\r\n   { to: \"/inventory\", label: \"Inventory\", icon: Boxes },\r\n   { to: \"/database\", label: \"Database\", icon: Database },\r\n   { to: \"/settings\", label: \"Settings\", icon: Settings },\r\n ] as const;\r\n \r\n export function AppShell({ crumbs, children, metrics = true }: { crumbs: { label: string; to?: string }[]; children: ReactNode; metrics?: boolean }) {\r\n   const pathname = usePathname();\r\n   const router = useRouter();\r\n-  const { simulateTicket } = useSwapDesk();\r\n \r\n   const isActive = (to: string) => pathname === to;\r\n \r\n   const handleSimulateTicket = () => {\r\n-    simulateTicket();\r\n-    router.push(\"/\");\r\n+    router.push(\"/simulate\");\r\n   };\r\n \r\n   return (\r\n     <div className=\"flex min-h-screen w-full\">\r\n       {/* Desktop sidebar */}\r\n       <aside className=\"glass fixed inset-y-0 left-0 z-40 hidden h-screen w-20 shrink-0 flex-col items-center gap-2 border-y-0 border-l-0 py-6 md:flex\">\r\n         <Link href=\"/\" aria-label=\"SwapDesk Mission Control\" className=\"mb-6 flex items-center justify-center\">\r\n           <span className=\"grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-primary/10 text-primary glow-success\">\r\n             <Ticket className=\"h-5 w-5\" />\r\n           </span>\r\n         </Link>\r\n         {nav.map(({ to, label, icon: Icon }) => (\r\n           <Link\r\n             key={label}\r\n             href={to}\r\n             aria-current={isActive(to) ? \"page\" : undefined}\r\n             className={`group flex w-12 items-center justify-center rounded-xl px-3 py-2.5 text-sm transition-colors hover:bg-accent/60 hover:text-foreground ${isActive(to) ? \"bg-accent/80 text-foreground\" : \"text-muted-foreground\"}`}\r\n             title={label}\r\n           >\r\n             <Icon className=\"h-[18px] w-[18px] shrink-0\" />\r\n             <span className=\"sr-only\">{label}</span>\r\n           </Link>\r\n         ))}\r\n         <div className=\"mt-auto grid h-10 w-10 place-items-center rounded-xl border border-hairline text-xs text-muted-foreground\" title=\"Agent online\">\r\n           <span className=\"h-2 w-2 rounded-full bg-success pulse-dot\" />\r\n           <span className=\"sr-only\">\r\n             Agent online\r\n             <span className=\"font-mono\">swapdesk-agent v2.4.1</span>\r\n           </span>\r\n         </div>\r\n       </aside>\r\n \r\n       <div className=\"flex min-w-0 flex-1 flex-col pb-[calc(5rem+env(safe-area-inset-bottom))] md:ml-20 md:pb-0\">\r\n         <header className=\"glass sticky top-0 z-30 border-x-0 border-t-0\">\r\n           <div className=\"flex flex-col gap-3 px-4 py-3 sm:px-6 lg:flex-row lg:items-center lg:justify-between lg:px-8 lg:py-4\">\r\n             <nav className=\"flex min-w-0 items-center gap-1.5 text-sm\">\r\n               {crumbs.map((c, i) => (\r\n                 <span key={c.label} className=\"flex min-w-0 items-center gap-1.5\">\r\n                   {i > 0 && <ChevronRight className=\"h-3.5 w-3.5 shrink-0 text-muted-foreground/60\" />}\r\n                   {c.to ? (\r\n                     <Link href={c.to} className=\"truncate text-muted-foreground hover:text-foreground\">\r\n                       {c.label}\r\n                     </Link>\r\n                   ) : (\r\n                     <span className=\"truncate font-mono text-foreground\">{c.label}</span>\r\n                   )}\r\n                 </span>\r\n               ))}\r\n             </nav>\r\n             <div className=\"flex flex-wrap items-center gap-2 sm:gap-3\">\r\n               <button\r\n                 type=\"button\"\r\n                 onClick={handleSimulateTicket}\r\n                 className=\"inline-flex shrink-0 items-center gap-2 rounded-lg border border-hairline bg-card/60 px-3 py-2 text-xs font-medium text-foreground transition-colors hover:bg-accent/60\"\r\n                 title=\"Inject a mock ticket into the queue\"\r\n               >\r\n                 <Zap className=\"h-3.5 w-3.5 text-success\" />\r\n                 Simulate Ticket\r\n               </button>\r\n               {metrics && (\r\n                 <div className=\"grid grid-cols-2 gap-2 sm:flex sm:gap-3\">\r\n                   <Metric label=\"Completion Rate\" value=\"96%\" tone=\"success\" />\r\n                   <Metric label=\"Cost per Case\" value=\"$0.24\" />\r\n                 </div>\r\n               )}\r\n             </div>\r\n           </div>\r\n         </header>\r\n         <main className=\"mx-auto min-w-0 w-full max-w-[1600px] flex-1 px-4 py-6 sm:px-6 lg:px-8\">{children}</main>\r\n       </div>\r\n \r\n       {/* Mobile bottom nav */}\r\n       <nav aria-label=\"Main navigation\" className=\"glass fixed inset-x-0 bottom-0 z-40 grid grid-cols-5 border-x-0 border-b-0 pb-[env(safe-area-inset-bottom)] md:hidden\">\r\n         {nav.map(({ to, label, icon: Icon }) => (\r\n           <Link\r\n             key={label}\r\n             href={to}\r\n             aria-current={isActive(to) ? \"page\" : undefined}\r\n             className={`flex flex-col items-center gap-1 py-2.5 text-[10px] ${isActive(to) ? \"text-primary\" : \"text-muted-foreground\"}`}\r\n           >\r\n             <Icon className=\"h-5 w-5\" />\r\n             <span className=\"truncate\">{label.split(\" \")[0]}</span>\r\n           </Link>\r\n         ))}\r\n       </nav>\r\n     </div>\r\n   );\r\n }\r\n \r\n function Metric({ label, value, tone }: { label: string; value: string; tone?: \"success\" }) {\r\n   return (\r\n     <div className=\"flex min-w-0 items-center justify-between gap-3 rounded-xl border border-hairline bg-card/60 px-3 py-2 sm:justify-start\">\r\n       <span className=\"truncate text-xs text-muted-foreground\">{label}</span>\r\n       <span className={`num text-lg font-semibold ${tone === \"success\" ? \"text-success\" : \"text-foreground\"}`}>{value}</span>\r\n     </div>\r\n   );\r\n }\r\n \r\n export function PageTitle({ title, sub, right }: { title: string; sub?: string; right?: ReactNode }) {\r\n   return (\r\n     <div className=\"mb-6 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between\">\r\n       <div className=\"min-w-0\">\r\n         <h1 className=\"text-2xl font-semibold sm:text-3xl\">{title}</h1>\r\n         {sub && <p className=\"mt-1 text-sm text-muted-foreground\">{sub}</p>}\r\n       </div>\r\n       {right}\r\n     </div>\r\n   );\r\n }\r\n \r\n export function StatusPill({ status }: { status: \"success\" | \"warning\" | \"danger\" | \"idle\"; children?: ReactNode }) {\r\n   const map = {\r\n     success: \"bg-success/10 text-success border-success/25\",\r\n     warning: \"bg-warning/10 text-warning border-warning/25\",\r\n     danger: \"bg-danger/10 text-danger border-danger/25\",\r\n     idle: \"bg-muted text-muted-foreground border-hairline\",\r\n   } as const;\r\n   const label = { success: \"Resolved\", warning: \"Retrying\", danger: \"Failed\", idle: \"Queued\" }[status];\r\n   return (\r\n     <span className={`inline-flex shrink-0 items-center gap-1.5 rounded-full border px-2.5 py-0.5 text-xs font-medium ${map[status]}`}>\r\n       <span className=\"h-1.5 w-1.5 rounded-full bg-current\" />\r\n       {label}\r\n     </span>\r\n   );\r\n }\r\n",
+              "additions": 1,
+              "deletions": 4,
+              "status": "modified"
+            },
+            {
+              "file": "frontend/src/components/CustomerSimulationWidget.tsx",
+              "patch": "Index: frontend/src/components/CustomerSimulationWidget.tsx\n===================================================================\n--- frontend/src/components/CustomerSimulationWidget.tsx\t\n+++ frontend/src/components/CustomerSimulationWidget.tsx\t\n@@ -0,0 +1,84 @@\n+\"use client\";\r\n+\r\n+import { useState, type FormEvent } from \"react\";\r\n+import Link from \"next/link\";\r\n+import { ArrowRight, CheckCircle2, Loader2, Send } from \"lucide-react\";\r\n+import { useSwapDesk } from \"@/store/swapdesk\";\r\n+\r\n+const DEFAULT_COMPLAINT = \"My Jordan 4s arrived but are too tight. I need to exchange for a size 43.\";\r\n+\r\n+export function CustomerSimulationWidget() {\r\n+  const { submitCustomerTicket } = useSwapDesk();\r\n+  const [complaint, setComplaint] = useState(\"\");\r\n+  const [status, setStatus] = useState<\"idle\" | \"routing\" | \"done\">(\"idle\");\r\n+  const [routedId, setRoutedId] = useState<string | null>(null);\r\n+\r\n+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {\r\n+    event.preventDefault();\r\n+    if (status === \"routing\") return;\r\n+\r\n+    setStatus(\"routing\");\r\n+    window.setTimeout(() => {\r\n+      const ticket = submitCustomerTicket(complaint);\r\n+      setRoutedId(ticket.id);\r\n+      setStatus(\"done\");\r\n+    }, 900);\r\n+  };\r\n+\r\n+  return (\r\n+    <form onSubmit={handleSubmit} className=\"panel space-y-5 p-5 sm:p-6\">\r\n+      <div className=\"space-y-2\">\r\n+        <label htmlFor=\"complaint\" className=\"block text-sm font-semibold\">\r\n+          Customer complaint\r\n+        </label>\r\n+        <textarea\r\n+          id=\"complaint\"\r\n+          name=\"complaint\"\r\n+          rows={5}\r\n+          value={complaint}\r\n+          onChange={(event) => setComplaint(event.target.value)}\r\n+          placeholder={DEFAULT_COMPLAINT}\r\n+          disabled={status === \"routing\"}\r\n+          className=\"w-full resize-none rounded-xl border border-hairline bg-background/60 p-4 text-sm leading-relaxed text-foreground outline-none transition-colors placeholder:text-muted-foreground/70 focus:border-success/40 disabled:opacity-60\"\r\n+        />\r\n+      </div>\r\n+\r\n+      <button\r\n+        type=\"submit\"\r\n+        disabled={status === \"routing\"}\r\n+        className=\"inline-flex w-full items-center justify-center gap-2 rounded-xl bg-primary px-4 py-3 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-70 sm:w-auto\"\r\n+      >\r\n+        {status === \"routing\" ? (\r\n+          <>\r\n+            <Loader2 className=\"h-4 w-4 animate-spin\" />\r\n+            Routing to Autonomous Agent...\r\n+          </>\r\n+        ) : (\r\n+          <>\r\n+            <Send className=\"h-4 w-4\" />\r\n+            Submit to SwapDesk\r\n+          </>\r\n+        )}\r\n+      </button>\r\n+\r\n+      {status === \"done\" && routedId && (\r\n+        <div className=\"rise flex flex-col gap-3 rounded-xl border border-success/20 bg-success/[0.06] p-4 sm:flex-row sm:items-center sm:justify-between\">\r\n+          <div className=\"flex items-start gap-3\">\r\n+            <CheckCircle2 className=\"mt-0.5 h-4 w-4 shrink-0 text-success\" />\r\n+            <div>\r\n+              <p className=\"text-sm font-semibold text-foreground\">Ticket {routedId} routed to the autonomous agent</p>\r\n+              <p className=\"text-xs text-muted-foreground\">It should now appear in the Mission Control queue.</p>\r\n+            </div>\r\n+          </div>\r\n+          <Link\r\n+            href=\"/\"\r\n+            className=\"inline-flex shrink-0 items-center gap-2 rounded-lg border border-hairline bg-card/60 px-3 py-2 text-xs font-medium text-foreground transition-colors hover:bg-accent/60\"\r\n+          >\r\n+            View Mission Control\r\n+            <ArrowRight className=\"h-3.5 w-3.5\" />\r\n+          </Link>\r\n+        </div>\r\n+      )}\r\n+    </form>\r\n+  );\r\n+}\r\n",
+              "additions": 84,
+              "deletions": 0,
+              "status": "added"
+            },
+            {
+              "file": "frontend/src/store/swapdesk.tsx",
+              "patch": "Index: frontend/src/store/swapdesk.tsx\n===================================================================\n--- frontend/src/store/swapdesk.tsx\t\n+++ frontend/src/store/swapdesk.tsx\t\n@@ -1,122 +1,138 @@\n \"use client\";\r\n \r\n import { createContext, useCallback, useContext, useMemo, useRef, useState, type ReactNode } from \"react\";\r\n \r\n-export type TicketStatus = \"resolved\" | \"escalated\";\r\n+export type TicketStatus = \"resolved\" | \"escalated\" | \"processing\";\r\n \r\n export type Ticket = {\r\n   id: string;\r\n   message: string;\r\n   status: TicketStatus;\r\n   statusLabel: string;\r\n   actions: string[];\r\n   time: string;\r\n   sku: string;\r\n };\r\n \r\n export type InventoryItem = {\r\n   sku: string;\r\n   name: string;\r\n   size: number;\r\n   stock: number;\r\n   res: number;\r\n   wh: string;\r\n };\r\n \r\n export const MOCK_TICKET = {\r\n   message: \"Jordan 4 size 43 exchange\",\r\n   status: \"resolved\" as TicketStatus,\r\n   statusLabel: \"Resolved Autonomously\",\r\n   actions: [\"RESERVE_STOCK\", \"CREATE_LABEL\"],\r\n   time: \"Just now\",\r\n   sku: \"AJ4-MIL-43\",\r\n };\r\n \r\n const createInitialTickets = (): Ticket[] => [\r\n   {\r\n     id: \"TCK-9042\",\r\n     message: \"Jordan 4s are too tight, need size 43.\",\r\n     status: \"resolved\",\r\n     statusLabel: \"Resolved Autonomously\",\r\n     actions: [\"RESERVE_STOCK\", \"CREATE_LABEL\"],\r\n     time: \"Just now\",\r\n     sku: \"AJ4-MIL-43\",\r\n   },\r\n   {\r\n     id: \"TCK-9043\",\r\n     message: \"I want a refund but I bought these 90 days ago.\",\r\n     status: \"escalated\",\r\n     statusLabel: \"Escalated to Human\",\r\n     actions: [\"POLICY_DENY\"],\r\n     time: \"2 min ago\",\r\n     sku: \"SMB-OG-41\",\r\n   },\r\n   {\r\n     id: \"TCK-9044\",\r\n     message: \"Need a size 10 exchange.\",\r\n     status: \"resolved\",\r\n     statusLabel: \"Resolved (Recovered)\",\r\n     actions: [\"API_TIMEOUT_RECOVERED\"],\r\n     time: \"5 min ago\",\r\n     sku: \"GK30-BLK-44\",\r\n   },\r\n ];\r\n \r\n const createInitialInventory = (): InventoryItem[] => [\r\n   { sku: \"AJ4-MIL-43\", name: \"Air Jordan 4 Military\", size: 43, stock: 5, res: 1, wh: \"WH-AMS-02\" },\r\n   { sku: \"AJ4-MIL-42\", name: \"Air Jordan 4 Military\", size: 42, stock: 3, res: 0, wh: \"WH-AMS-02\" },\r\n   { sku: \"SMB-OG-41\", name: \"Adidas Samba OG\", size: 41, stock: 12, res: 2, wh: \"WH-BER-01\" },\r\n   { sku: \"NB550-GRY-39\", name: \"New Balance 550 Grey\", size: 39, stock: 0, res: 0, wh: \"WH-BER-01\" },\r\n   { sku: \"GK30-BLK-44\", name: \"Asics Gel-Kayano 30\", size: 44, stock: 5, res: 1, wh: \"WH-AMS-02\" },\r\n ];\r\n \r\n type SwapDeskContextValue = {\r\n   tickets: Ticket[];\r\n   inventory: InventoryItem[];\r\n   simulateTicket: () => Ticket;\r\n+  submitCustomerTicket: (message: string) => Ticket;\r\n   resetMockData: () => void;\r\n   getTicket: (id: string) => Ticket | undefined;\r\n };\r\n \r\n const SwapDeskContext = createContext<SwapDeskContextValue | null>(null);\r\n \r\n export function SwapDeskProvider({ children }: { children: ReactNode }) {\r\n   const [tickets, setTickets] = useState<Ticket[]>(createInitialTickets);\r\n   const [inventory, setInventory] = useState<InventoryItem[]>(createInitialInventory);\r\n   const seq = useRef(9045);\r\n \r\n   const simulateTicket = useCallback(() => {\r\n     const ticket: Ticket = { id: `TCK-${seq.current++}`, ...MOCK_TICKET };\r\n     setTickets((prev) => [ticket, ...prev]);\r\n     setInventory((prev) =>\r\n       prev.map((item) =>\r\n         item.sku === MOCK_TICKET.sku\r\n           ? { ...item, stock: Math.max(0, item.stock - 1), res: item.res + 1 }\r\n           : item,\r\n       ),\r\n     );\r\n     return ticket;\r\n   }, []);\r\n \r\n+  const submitCustomerTicket = useCallback((message: string) => {\r\n+    const text = message.trim() || \"My Jordan 4s arrived but are too tight. I need to exchange for a size 43.\";\r\n+    const ticket: Ticket = {\r\n+      id: `TCK-${seq.current++}`,\r\n+      message: text,\r\n+      status: \"processing\",\r\n+      statusLabel: \"Agent Processing\",\r\n+      actions: [\"INTAKE\", \"ROUTING\"],\r\n+      time: \"Just now\",\r\n+      sku: \"AJ4-MIL-43\",\r\n+    };\r\n+    setTickets((prev) => [ticket, ...prev]);\r\n+    return ticket;\r\n+  }, []);\r\n+\r\n   const resetMockData = useCallback(() => {\r\n     setTickets([]);\r\n     setInventory(createInitialInventory());\r\n   }, []);\r\n \r\n   const getTicket = useCallback((id: string) => tickets.find((ticket) => ticket.id === id), [tickets]);\r\n \r\n   const value = useMemo(\r\n-    () => ({ tickets, inventory, simulateTicket, resetMockData, getTicket }),\r\n-    [tickets, inventory, simulateTicket, resetMockData, getTicket],\r\n+    () => ({ tickets, inventory, simulateTicket, submitCustomerTicket, resetMockData, getTicket }),\r\n+    [tickets, inventory, simulateTicket, submitCustomerTicket, resetMockData, getTicket],\r\n   );\r\n \r\n   return <SwapDeskContext.Provider value={value}>{children}</SwapDeskContext.Provider>;\r\n }\r\n \r\n export function useSwapDesk() {\r\n   const context = useContext(SwapDeskContext);\r\n   if (!context) {\r\n     throw new Error(\"useSwapDesk must be used within a SwapDeskProvider\");\r\n   }\r\n   return context;\r\n }\r\n",
+              "additions": 19,
+              "deletions": 3,
+              "status": "modified"
+            },
+            {
               "file": "pyproject.toml",
               "patch": "Index: pyproject.toml\n===================================================================\n--- pyproject.toml\t\n+++ pyproject.toml\t\n@@ -1,31 +1,34 @@\n [project]\n name = \"swapdesk\"\n version = \"0.1.0\"\n description = \"SwapDesk exchange agent for a fictional shoe shop (neatHack)\"\n authors = [\n     { name = \"adr1en360\", email = \"adrienoke@gmail.com\" }\n ]\n requires-python = \">=3.12\"\n dependencies = [\n+    \"fastapi>=0.143.0\",\n     \"langchain>=1.4.4\",\n     \"langchain-google-genai>=4.4.0\",\n     \"langgraph-checkpoint-sqlite>=3.1.1\",\n     \"neatlogs[google-genai]>=1.4.26\",\n+    \"uvicorn>=0.54.0\",\n ]\n \n [build-system]\n requires = [\"uv_build>=0.10.8,<0.11.0\"]\n build-backend = \"uv_build\"\n \n [dependency-groups]\n dev = [\n+    \"httpx>=0.28.1\",\n     \"langgraph-cli[inmem]>=0.4\",\n     \"pytest>=9.1.1\",\n ]\n \n [tool.uv]\n # langgraph-api needs protobuf 6; neatlogs' autogen instrumentation caps it\n # below 5.30. Nothing imports autogen at runtime here, so let 6 win.\n override-dependencies = [\n     \"protobuf>=6.32.1,<7.0.0\",\n ]\n",
               "additions": 3,
@@ -69209,19 +69251,22 @@
         },
         "cost": 0,
         "tokens": {
-          "input": 0,
-          "output": 0,
-          "reasoning": 0,
+          "total": 593654,
+          "input": 689,
+          "output": 139,
+          "reasoning": 73,
           "cache": {
-            "read": 0,
-            "write": 0
+            "write": 0,
+            "read": 592753
           }
         },
         "modelID": "muse-spark-1.3-contributor-free",
         "providerID": "opencode",
         "time": {
-          "created": 1791637987113
+          "created": 1791637987113,
+          "completed": 1791638012841
         },
+        "finish": "tool-calls",
         "id": "msg_125f21f29001k13ATFVI6yfwo5",
         "sessionID": "ses_edbbdf128ffeRKDNSF0rKfxKpl"
       },
@@ -69255,16 +69300,21 @@
           "tool": "bash",
           "callID": "call_01a125f234787198a0e9e142aea1c8bd",
           "state": {
-            "metadata": {
-              "output": ""
-            },
-            "status": "running",
+            "status": "completed",
             "input": {
               "command": "git commit -m \"Add FastAPI ticket API with deterministic service layer\" 2>&1 | Select-Object -First 3; echo \"===CHECKPOINT===\"; & \"C:\\Users\\DELL\\.local\\bin\\entire.exe\" checkpoint explain HEAD 2>$null | Select-Object -First 6",
               "workdir": "C:\\Users\\DELL\\Documents\\SwapDesk"
             },
+            "output": "[main 60ee48a] Add FastAPI ticket API with deterministic service layer\r\n 7 files changed, 924 insertions(+), 5 deletions(-)\r\n create mode 100644 src/swapdesk/api.py\r\n===CHECKPOINT===\r\n● Checkpoint 01M4JZ4EWETS8Q0CX16BKQYDFJ\r\n  session  ses_edbbdf128ffeRKDNSF0rKfxKpl\r\n  created  2026-10-10 13:13:30\r\n  author   adr1en360 <adrienoke@gmail.com>\r\n  tokens   165426.8k\r\n  commits  60ee48a Add FastAPI ticket API with deterministic service layer\r\n",
+            "metadata": {
+              "output": "[main 60ee48a] Add FastAPI ticket API with deterministic service layer\r\n 7 files changed, 924 insertions(+), 5 deletions(-)\r\n create mode 100644 src/swapdesk/api.py\r\n===CHECKPOINT===\r\n● Checkpoint 01M4JZ4EWETS8Q0CX16BKQYDFJ\r\n  session  ses_edbbdf128ffeRKDNSF0rKfxKpl\r\n  created  2026-10-10 13:13:30\r\n  author   adr1en360 <adrienoke@gmail.com>\r\n  tokens   165426.8k\r\n  commits  60ee48a Add FastAPI ticket API with deterministic service layer\r\n",
+              "exit": 1,
+              "truncated": false
+            },
+            "title": "git commit -m \"Add FastAPI ticket API with deterministic service layer\" 2>&1 | Select-Object -First 3; echo \"===CHECKPOINT===\"; & \"C:\\Users\\DELL\\.local\\bin\\entire.exe\" checkpoint explain HEAD 2>$null | Select-Object -First 6",
             "time": {
-              "start": 1791637993048
+              "start": 1791637993048,
+              "end": 1791638012136
             }
           },
           "metadata": {
@@ -69275,6 +69325,259 @@
           "id": "prt_125f233cd001drRh0fBLPBeOv6",
           "sessionID": "ses_edbbdf128ffeRKDNSF0rKfxKpl",
           "messageID": "msg_125f21f29001k13ATFVI6yfwo5"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "394d716cdc05eb68f8daac6db37ddd98affe2a10",
+          "type": "step-finish",
+          "tokens": {
+            "total": 593654,
+            "input": 689,
+            "output": 139,
+            "reasoning": 73,
+            "cache": {
+              "write": 0,
+              "read": 592753
+            }
+          },
+          "cost": 0,
+          "id": "prt_125f28258001RF6pLc7YhbMpuu",
+          "sessionID": "ses_edbbdf128ffeRKDNSF0rKfxKpl",
+          "messageID": "msg_125f21f29001k13ATFVI6yfwo5"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_125e8b01a0019ZjhUNhNzsB3Su",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "variant": "xhigh",
+        "path": {
+          "cwd": "C:\\Users\\DELL\\Documents\\SwapDesk",
+          "root": "C:\\Users\\DELL\\Documents\\SwapDesk"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 594027,
+          "input": 563,
+          "output": 199,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 593265
+          }
+        },
+        "modelID": "muse-spark-1.3-contributor-free",
+        "providerID": "opencode",
+        "time": {
+          "created": 1791638012942,
+          "completed": 1791638019933
+        },
+        "finish": "tool-calls",
+        "id": "msg_125f2840e001gUDqW9HobPtuou",
+        "sessionID": "ses_edbbdf128ffeRKDNSF0rKfxKpl"
+      },
+      "parts": [
+        {
+          "snapshot": "394d716cdc05eb68f8daac6db37ddd98affe2a10",
+          "type": "step-start",
+          "id": "prt_125f29946001Shz2o5kmAqHy2n",
+          "sessionID": "ses_edbbdf128ffeRKDNSF0rKfxKpl",
+          "messageID": "msg_125f2840e001gUDqW9HobPtuou"
+        },
+        {
+          "type": "tool",
+          "tool": "todowrite",
+          "callID": "call_01a125f2987f7643b2e52dc397c53a68",
+          "state": {
+            "status": "completed",
+            "input": {
+              "todos": [
+                {
+                  "content": "Add deps (fastapi, uvicorn; httpx dev) and verify versions",
+                  "status": "completed",
+                  "priority": "high"
+                },
+                {
+                  "content": "Write service.py (submit/continue/status/timeline/fixtures, deterministic)",
+                  "status": "completed",
+                  "priority": "high"
+                },
+                {
+                  "content": "Write api.py (routes, schemas, errors, demo fault controls)",
+                  "status": "completed",
+                  "priority": "high"
+                },
+                {
+                  "content": "Write test_api.py; full suite green; OpenAPI matches",
+                  "status": "completed",
+                  "priority": "high"
+                },
+                {
+                  "content": "README API section with curl examples; commit + checkpoint",
+                  "status": "completed",
+                  "priority": "medium"
+                }
+              ]
+            },
+            "output": "[\n  {\n    \"content\": \"Add deps (fastapi, uvicorn; httpx dev) and verify versions\",\n    \"status\": \"completed\",\n    \"priority\": \"high\"\n  },\n  {\n    \"content\": \"Write service.py (submit/continue/status/timeline/fixtures, deterministic)\",\n    \"status\": \"completed\",\n    \"priority\": \"high\"\n  },\n  {\n    \"content\": \"Write api.py (routes, schemas, errors, demo fault controls)\",\n    \"status\": \"completed\",\n    \"priority\": \"high\"\n  },\n  {\n    \"content\": \"Write test_api.py; full suite green; OpenAPI matches\",\n    \"status\": \"completed\",\n    \"priority\": \"high\"\n  },\n  {\n    \"content\": \"README API section with curl examples; commit + checkpoint\",\n    \"status\": \"completed\",\n    \"priority\": \"medium\"\n  }\n]",
+            "metadata": {
+              "todos": [
+                {
+                  "content": "Add deps (fastapi, uvicorn; httpx dev) and verify versions",
+                  "status": "completed",
+                  "priority": "high"
+                },
+                {
+                  "content": "Write service.py (submit/continue/status/timeline/fixtures, deterministic)",
+                  "status": "completed",
+                  "priority": "high"
+                },
+                {
+                  "content": "Write api.py (routes, schemas, errors, demo fault controls)",
+                  "status": "completed",
+                  "priority": "high"
+                },
+                {
+                  "content": "Write test_api.py; full suite green; OpenAPI matches",
+                  "status": "completed",
+                  "priority": "high"
+                },
+                {
+                  "content": "README API section with curl examples; commit + checkpoint",
+                  "status": "completed",
+                  "priority": "medium"
+                }
+              ],
+              "truncated": false
+            },
+            "title": "0 todos",
+            "time": {
+              "start": 1791638018974,
+              "end": 1791638018979
+            }
+          },
+          "metadata": {
+            "openai": {
+              "itemId": "fc_01a125f2987f7643b2e52dc397c53a68"
+            }
+          },
+          "id": "prt_125f29949001uzmF6qTeyVaqre",
+          "sessionID": "ses_edbbdf128ffeRKDNSF0rKfxKpl",
+          "messageID": "msg_125f2840e001gUDqW9HobPtuou"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "13002239302c6d2e9cbaeac851b165f1d1082d50",
+          "type": "step-finish",
+          "tokens": {
+            "total": 594027,
+            "input": 563,
+            "output": 199,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 593265
+            }
+          },
+          "cost": 0,
+          "id": "prt_125f29dfa001Ez1PniZXv7occ2",
+          "sessionID": "ses_edbbdf128ffeRKDNSF0rKfxKpl",
+          "messageID": "msg_125f2840e001gUDqW9HobPtuou"
+        },
+        {
+          "type": "patch",
+          "hash": "394d716cdc05eb68f8daac6db37ddd98affe2a10",
+          "files": [
+            "C:/Users/DELL/Documents/SwapDesk/frontend/app/page.tsx",
+            "C:/Users/DELL/Documents/SwapDesk/frontend/app/simulate/page.tsx",
+            "C:/Users/DELL/Documents/SwapDesk/frontend/app/ticket/[id]/page.tsx",
+            "C:/Users/DELL/Documents/SwapDesk/frontend/src/components/AppShell.tsx",
+            "C:/Users/DELL/Documents/SwapDesk/frontend/src/components/CustomerSimulationWidget.tsx",
+            "C:/Users/DELL/Documents/SwapDesk/frontend/src/store/swapdesk.tsx"
+          ],
+          "id": "prt_125f29f5a001Qj52Kj5lAo30Go",
+          "sessionID": "ses_edbbdf128ffeRKDNSF0rKfxKpl",
+          "messageID": "msg_125f2840e001gUDqW9HobPtuou"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_125e8b01a0019ZjhUNhNzsB3Su",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "variant": "xhigh",
+        "path": {
+          "cwd": "C:\\Users\\DELL\\Documents\\SwapDesk",
+          "root": "C:\\Users\\DELL\\Documents\\SwapDesk"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 594662,
+          "input": 464,
+          "output": 421,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 593777
+          }
+        },
+        "modelID": "muse-spark-1.3-contributor-free",
+        "providerID": "opencode",
+        "time": {
+          "created": 1791638020005,
+          "completed": 1791638028499
+        },
+        "finish": "stop",
+        "id": "msg_125f29fa50012rNpQaMQe2G1Pl",
+        "sessionID": "ses_edbbdf128ffeRKDNSF0rKfxKpl"
+      },
+      "parts": [
+        {
+          "snapshot": "13002239302c6d2e9cbaeac851b165f1d1082d50",
+          "type": "step-start",
+          "id": "prt_125f2b04b001fbkqGDeeYc9iLj",
+          "sessionID": "ses_edbbdf128ffeRKDNSF0rKfxKpl",
+          "messageID": "msg_125f29fa50012rNpQaMQe2G1Pl"
+        },
+        {
+          "type": "text",
+          "text": "Slice 5 done, committed as `60ee48a` → checkpoint `01M4JZ4EW…`. (Skipped `hackathon.md` per your standing challenge on the build log.)\n\n**What was built:**\n- `service.py` — deterministic ticket engine, no model, no queue: submit → verified outcome, continue (terminal cases report unchanged; others rerun duplicate-safe), status, sanitized timeline, fixture catalog, demo fault arm/clear. Restart-safe (seeds once, reuses identities). API runs carry neatlogs workflow spans.\n- `api.py` — 8 routes (`/v1/tickets`, `/cases/{id}`, `/timeline`, `/continue`, `/fixtures`, `/demo/faults` ×2, `/health`). Business outcomes always 200 with an `outcome` field; only 404/422/500 are HTTP errors, with no internals leaked. OpenAPI generated from the code, verified to match.\n- Deps: fastapi 0.143.0, uvicorn 0.54.0, httpx (dev, for TestClient). `uv.lock` committed.\n\n**Verification:** 10 new API tests (arrange→read-back, denial/clarification as 200s, consent-continue alt-size with DB proof, terminal-unchanged, cross-case duplicate reuse, 404/422s, fault recovery with attempt counts, OpenAPI match) + full suite **95 passed, 1 skipped**. Three honest failures fixed: a missing query parameter, duplicate-reused exchanges crashing outcome derivation (fixed in shared `derive_outcome`, which also protects the future agent), and a wrong test assumption about handoff fields.\n\n**For the frontend team:** README gained a routes table plus copy-paste curl examples; interactive docs at `/docs` when they run `uv run uvicorn swapdesk.api:app`.\n\nNext remains Slice 6 (baseline + V1/V2, needs the live model route) then Slice 7 (handoff + cfo.ai evidence).",
+          "time": {
+            "start": 1791638024270,
+            "end": 1791638027730
+          },
+          "metadata": {
+            "openai": {
+              "itemId": "msg_01a125f2b0667224bfe02935b3ded5db"
+            }
+          },
+          "id": "prt_125f2b04e001UFj9A0grj812go",
+          "sessionID": "ses_edbbdf128ffeRKDNSF0rKfxKpl",
+          "messageID": "msg_125f29fa50012rNpQaMQe2G1Pl"
+        },
+        {
+          "reason": "stop",
+          "snapshot": "13002239302c6d2e9cbaeac851b165f1d1082d50",
+          "type": "step-finish",
+          "tokens": {
+            "total": 594662,
+            "input": 464,
+            "output": 421,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 593777
+            }
+          },
+          "cost": 0,
+          "id": "prt_125f2bfb9001ygesO8IWo3MQup",
+          "sessionID": "ses_edbbdf128ffeRKDNSF0rKfxKpl",
+          "messageID": "msg_125f29fa50012rNpQaMQe2G1Pl"
         }
       ]
     }
