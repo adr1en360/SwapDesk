@@ -20,17 +20,17 @@
     },
     "cost": 0,
     "tokens": {
-      "input": 2561155,
-      "output": 120939,
-      "reasoning": 124621,
+      "input": 2562584,
+      "output": 121895,
+      "reasoning": 124643,
       "cache": {
-        "read": 48766645,
+        "read": 49790216,
         "write": 0
       }
     },
     "time": {
       "created": 1791609671383,
-      "updated": 1791629344248
+      "updated": 1791629376351
     }
   },
   "messages": [
@@ -35913,19 +35913,22 @@
         },
         "cost": 0,
         "tokens": {
-          "input": 0,
-          "output": 0,
-          "reasoning": 0,
+          "total": 341467,
+          "input": 456,
+          "output": 140,
+          "reasoning": 22,
           "cache": {
-            "read": 0,
-            "write": 0
+            "write": 0,
+            "read": 340849
           }
         },
         "modelID": "muse-spark-1.3-contributor-free",
         "providerID": "opencode",
         "time": {
-          "created": 1791629344224
+          "created": 1791629344224,
+          "completed": 1791629370524
         },
+        "finish": "tool-calls",
         "id": "msg_1256e3de000178eMkkmmjv4Rlq",
         "sessionID": "ses_edbbdf128ffeRKDNSF0rKfxKpl"
       },
@@ -35959,16 +35962,21 @@
           "tool": "bash",
           "callID": "call_01a1256e518677f2951dddc89c6fc13d",
           "state": {
-            "metadata": {
-              "output": ""
-            },
-            "status": "running",
+            "status": "completed",
             "input": {
               "command": "git commit -m \"Add isolated Studio verification with offline and live modes\" 2>&1 | Select-Object -First 3; echo \"===CHECKPOINTS===\"; & \"C:\\Users\\DELL\\.local\\bin\\entire.exe\" checkpoint explain HEAD 2>$null | Select-Object -First 6",
               "workdir": "C:\\Users\\DELL\\Documents\\SwapDesk"
             },
+            "output": "[main a9abafc] Add isolated Studio verification with offline and live modes\r\n 9 files changed, 716 insertions(+), 69 deletions(-)\r\n create mode 100644 src/swapdesk/agent/capped.py\r\n===CHECKPOINTS===\r\n● Checkpoint 01M4JPWP7HZDDNFT7P6HQBZKF8\r\n  session  ses_edbbdf128ffeRKDNSF0rKfxKpl\r\n  created  2026-10-10 10:49:28\r\n  author   adr1en360 <adrienoke@gmail.com>\r\n  tokens   51448.7k\r\n  commits  a9abafc Add isolated Studio verification with offline and live modes\r\n",
+            "metadata": {
+              "output": "[main a9abafc] Add isolated Studio verification with offline and live modes\r\n 9 files changed, 716 insertions(+), 69 deletions(-)\r\n create mode 100644 src/swapdesk/agent/capped.py\r\n===CHECKPOINTS===\r\n● Checkpoint 01M4JPWP7HZDDNFT7P6HQBZKF8\r\n  session  ses_edbbdf128ffeRKDNSF0rKfxKpl\r\n  created  2026-10-10 10:49:28\r\n  author   adr1en360 <adrienoke@gmail.com>\r\n  tokens   51448.7k\r\n  commits  a9abafc Add isolated Studio verification with offline and live modes\r\n",
+              "exit": 1,
+              "truncated": false
+            },
+            "title": "git commit -m \"Add isolated Studio verification with offline and live modes\" 2>&1 | Select-Object -First 3; echo \"===CHECKPOINTS===\"; & \"C:\\Users\\DELL\\.local\\bin\\entire.exe\" checkpoint explain HEAD 2>$null | Select-Object -First 6",
             "time": {
-              "start": 1791629349740
+              "start": 1791629349740,
+              "end": 1791629369444
             }
           },
           "metadata": {
@@ -35979,6 +35987,244 @@
           "id": "prt_1256e516b0011ue0NXDtpAAv1k",
           "sessionID": "ses_edbbdf128ffeRKDNSF0rKfxKpl",
           "messageID": "msg_1256e3de000178eMkkmmjv4Rlq"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "b1e3d0c6ef203af5da6af8a824ce853fd3390dc1",
+          "type": "step-finish",
+          "tokens": {
+            "total": 341467,
+            "input": 456,
+            "output": 140,
+            "reasoning": 22,
+            "cache": {
+              "write": 0,
+              "read": 340849
+            }
+          },
+          "cost": 0,
+          "id": "prt_1256ea24b0010yRwG7fL1B8Vaa",
+          "sessionID": "ses_edbbdf128ffeRKDNSF0rKfxKpl",
+          "messageID": "msg_1256e3de000178eMkkmmjv4Rlq"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_12507ed33001NnXTfP9QTZMf10",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "variant": "xhigh",
+        "path": {
+          "cwd": "C:\\Users\\DELL\\Documents\\SwapDesk",
+          "root": "C:\\Users\\DELL\\Documents\\SwapDesk"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 341840,
+          "input": 282,
+          "output": 197,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 341361
+          }
+        },
+        "modelID": "muse-spark-1.3-contributor-free",
+        "providerID": "opencode",
+        "time": {
+          "created": 1791629370647,
+          "completed": 1791629376290
+        },
+        "finish": "tool-calls",
+        "id": "msg_1256ea5170010pgzFmN7ABVXzd",
+        "sessionID": "ses_edbbdf128ffeRKDNSF0rKfxKpl"
+      },
+      "parts": [
+        {
+          "snapshot": "b1e3d0c6ef203af5da6af8a824ce853fd3390dc1",
+          "type": "step-start",
+          "id": "prt_1256eb51800107WLwGgo1Pejq3",
+          "sessionID": "ses_edbbdf128ffeRKDNSF0rKfxKpl",
+          "messageID": "msg_1256ea5170010pgzFmN7ABVXzd"
+        },
+        {
+          "type": "tool",
+          "tool": "todowrite",
+          "callID": "call_01a1256eb50d72d199e0f276cd6259f0",
+          "state": {
+            "status": "completed",
+            "input": {
+              "todos": [
+                {
+                  "content": "Write scripted.py (moved double + scenario scripts) and capped.py (budget)",
+                  "status": "completed",
+                  "priority": "high"
+                },
+                {
+                  "content": "Write studio_flow.py (prepare/agent/verify, offline+live graphs)",
+                  "status": "completed",
+                  "priority": "high"
+                },
+                {
+                  "content": "Rewire studio.py + langgraph.json; refactor test_agent imports",
+                  "status": "completed",
+                  "priority": "high"
+                },
+                {
+                  "content": "Write test_studio.py; run full suite green",
+                  "status": "completed",
+                  "priority": "high"
+                },
+                {
+                  "content": "README Studio section; commit (no slice) + checkpoint",
+                  "status": "completed",
+                  "priority": "medium"
+                }
+              ]
+            },
+            "output": "[\n  {\n    \"content\": \"Write scripted.py (moved double + scenario scripts) and capped.py (budget)\",\n    \"status\": \"completed\",\n    \"priority\": \"high\"\n  },\n  {\n    \"content\": \"Write studio_flow.py (prepare/agent/verify, offline+live graphs)\",\n    \"status\": \"completed\",\n    \"priority\": \"high\"\n  },\n  {\n    \"content\": \"Rewire studio.py + langgraph.json; refactor test_agent imports\",\n    \"status\": \"completed\",\n    \"priority\": \"high\"\n  },\n  {\n    \"content\": \"Write test_studio.py; run full suite green\",\n    \"status\": \"completed\",\n    \"priority\": \"high\"\n  },\n  {\n    \"content\": \"README Studio section; commit (no slice) + checkpoint\",\n    \"status\": \"completed\",\n    \"priority\": \"medium\"\n  }\n]",
+            "metadata": {
+              "todos": [
+                {
+                  "content": "Write scripted.py (moved double + scenario scripts) and capped.py (budget)",
+                  "status": "completed",
+                  "priority": "high"
+                },
+                {
+                  "content": "Write studio_flow.py (prepare/agent/verify, offline+live graphs)",
+                  "status": "completed",
+                  "priority": "high"
+                },
+                {
+                  "content": "Rewire studio.py + langgraph.json; refactor test_agent imports",
+                  "status": "completed",
+                  "priority": "high"
+                },
+                {
+                  "content": "Write test_studio.py; run full suite green",
+                  "status": "completed",
+                  "priority": "high"
+                },
+                {
+                  "content": "README Studio section; commit (no slice) + checkpoint",
+                  "status": "completed",
+                  "priority": "medium"
+                }
+              ],
+              "truncated": false
+            },
+            "title": "0 todos",
+            "time": {
+              "start": 1791629375602,
+              "end": 1791629375608
+            }
+          },
+          "metadata": {
+            "openai": {
+              "itemId": "fc_01a1256eb50d72d199e0f276cd6259f0"
+            }
+          },
+          "id": "prt_1256eb51b001UAUNt24aerp66X",
+          "sessionID": "ses_edbbdf128ffeRKDNSF0rKfxKpl",
+          "messageID": "msg_1256ea5170010pgzFmN7ABVXzd"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "b1e3d0c6ef203af5da6af8a824ce853fd3390dc1",
+          "type": "step-finish",
+          "tokens": {
+            "total": 341840,
+            "input": 282,
+            "output": 197,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 341361
+            }
+          },
+          "cost": 0,
+          "id": "prt_1256eb9dd001bpJQ367Ze2W5Ta",
+          "sessionID": "ses_edbbdf128ffeRKDNSF0rKfxKpl",
+          "messageID": "msg_1256ea5170010pgzFmN7ABVXzd"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_12507ed33001NnXTfP9QTZMf10",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "variant": "xhigh",
+        "path": {
+          "cwd": "C:\\Users\\DELL\\Documents\\SwapDesk",
+          "root": "C:\\Users\\DELL\\Documents\\SwapDesk"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 342671,
+          "input": 691,
+          "output": 619,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 341361
+          }
+        },
+        "modelID": "muse-spark-1.3-contributor-free",
+        "providerID": "opencode",
+        "time": {
+          "created": 1791629376347,
+          "completed": 1791629384906
+        },
+        "finish": "stop",
+        "id": "msg_1256ebb5b001s2ANWcibL7KCES",
+        "sessionID": "ses_edbbdf128ffeRKDNSF0rKfxKpl"
+      },
+      "parts": [
+        {
+          "snapshot": "b1e3d0c6ef203af5da6af8a824ce853fd3390dc1",
+          "type": "step-start",
+          "id": "prt_1256eca2f001E0lrZYE8EIsn60",
+          "sessionID": "ses_edbbdf128ffeRKDNSF0rKfxKpl",
+          "messageID": "msg_1256ebb5b001s2ANWcibL7KCES"
+        },
+        {
+          "type": "text",
+          "text": "Studio verification finished, committed as `a9abafc` → checkpoint `01M4JPWP7H…`. Slice 5 not started.\n\n**What was built (existing architecture kept):**\n- `agent/scripted.py` — the test double moved out of tests, plus `arrange`/`deny`/`recover` scripts and a `DEMO-*`-only scenario table. Labeled wiring verification everywhere.\n- `agent/capped.py` — `BudgetedChatModel`: counts every `_generate` call (retries included, since they re-enter it) and raises `BudgetExceeded` past the cap. Loud failure, never fake success.\n- `agent/studio_flow.py` — `prepare → agent → verify` parent graphs. The agent is the nested production `build_agent()` graph (same tools/prompts/loop), checkpointer-free so the parent thread owns persistence; Studio expands it per turn/tool call. Prepare seeds isolated `studio_data/<case>/` DBs, refuses to reset active cases, arms scenario faults with cleanup. Verify derives the outcome from DB state and renders the reply + evidence.\n- `studio.py` / `langgraph.json` — two labeled assistants: `swapdesk_offline` (default, zero requests) and `swapdesk_live` (explicit `budget` + `SWAPDESK_MODEL` + `GEMINI_API_KEY`, else a clear pre-call error).\n\n**Why one tools node:** the prebuilt agent compiles the whole tool list into a single `ToolNode`; each call still lands as its own `ToolMessage`, so the subgraph trace shows every call/result. That's now in the README too.\n\n**Verification (exact commands):**\n- `uv run pytest -q` → **57 passed** (46 existing + 11 new `test_studio.py`: arrange/deny/recover with visible tool execution, isolation refusal, resume preservation, no-budget/no-config live errors, budget gate + counting, holdout disjointness, entrypoint/config shape).\n- `uv run langgraph dev --help` → CLI 0.4.33 works; protobuf 6.33.6 (override holds). One console-only wart: bare `--help` crashes on Windows echo without `PYTHONIOENCODING=utf-8` — help text rendering, not a dep conflict.\n- Offline tests prove zero live construction (live classes patched to explode if touched).\n\n**Honest failures fixed along the way (5):** duplicate tool import, `maybe_wrap_gemini` crashing on non-class input instead of passing through, graph not forcing its own mode (live input could smuggle offline), missing `exchange_id` in parent state, tests polluting `repo/studio_data` (now `SWAPDESK_STUDIO_ROOT`-isolated; debris removed).\n\n**Deliberately not done:** `hackathon.md` untouched (still awaiting your ruling on the build log), no live Gemini run (budget respected — zero model calls made), Slice 5 untouched.",
+          "time": {
+            "start": 1791629380149,
+            "end": 1791629384210
+          },
+          "metadata": {
+            "openai": {
+              "itemId": "msg_01a1256ec964714db646197868419917"
+            }
+          },
+          "id": "prt_1256eca35001XLaL7i9oGG481o",
+          "sessionID": "ses_edbbdf128ffeRKDNSF0rKfxKpl",
+          "messageID": "msg_1256ebb5b001s2ANWcibL7KCES"
+        },
+        {
+          "reason": "stop",
+          "snapshot": "b1e3d0c6ef203af5da6af8a824ce853fd3390dc1",
+          "type": "step-finish",
+          "tokens": {
+            "total": 342671,
+            "input": 691,
+            "output": 619,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 341361
+            }
+          },
+          "cost": 0,
+          "id": "prt_1256edb75001ts5x5RgERe7Tw1",
+          "sessionID": "ses_edbbdf128ffeRKDNSF0rKfxKpl",
+          "messageID": "msg_1256ebb5b001s2ANWcibL7KCES"
         }
       ]
     }
