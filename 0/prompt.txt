@@ -1,0 +1,160 @@
+hi
+
+---
+
+hi
+
+---
+
+hi
+
+---
+
+hi
+
+---
+
+hi
+
+---
+
+We are starting SwapDesk now. The user reports that the hackathon organizers
+have explicitly authorized the start. Record that as user-reported
+authorization; do not claim you independently verified it. Do not block
+work using the previously published start time or alter commit timestamps.
+
+Work only in this repository. Preserve existing work and instructions.
+
+FIRST, READ
+- AGENTS.md, if present
+- SwapDesk neatHack Build Plan.md
+- Existing hackathon.md
+Load the neathack skill. If unavailable, read
+.opencode/skills/neathack/SKILL.md and report discovery as pending.
+
+PROJECT
+SwapDesk arranges exchanges for a fictional shoe shop.
+One item per request. Outcomes: exchange arranged, clarification,
+policy denial, or escalation.
+No refund execution, real shipping, payments or customer data.
+Cowrywise is unrelated.
+cfo.ai workspace: SwapDesk, org_id 102985.
+Do not change its financial model in this task.
+
+WORK IN SMALL VERIFIED MILESTONES.
+After each milestone, report changes, actual test results, evidence,
+remaining failures and the next step. Never report planned work as done.
+
+MILESTONE 1 — VERIFY ENTIRE BEFORE FEATURE DEVELOPMENT
+1. Inspect Git status. Identify and preserve unrelated uncommitted work.
+2. Run `entire version` and `entire status`.
+3. Consult official setup instructions:
+   https://docs.entire.io/quickstart
+   https://docs.entire.io/agents/opencode
+4. Check `.opencode/plugins/entire.ts` and installed-version requirements.
+   If installation, enablement or restart is needed, give the exact
+   supported steps. Never overwrite existing configuration blindly.
+5. Inspect checkpoint-upload settings without exposing secrets.
+   Do not upload or publish session data without my approval.
+6. Once capture is configured, append a small documentation entry to
+   hackathon.md through this OpenCode session.
+7. Review the diff, stage only your relevant documentation change,
+   and make a local commit.
+8. Run `entire checkpoint list` and inspect the resulting checkpoint
+   using commands supported by the installed CLI.
+9. Verify session/prompt, tool activity, changed file and commit linkage.
+
+If capture cannot be verified, STOP and give the redacted error,
+installed versions and exact recovery steps.
+Do not treat plugin presence or a successful commit as proof of capture.
+If a restart or browser action is required, stop for that action.
+
+MILESTONE 2 — VERIFY NEATLOGS
+Proceed only after Entire capture is verified.
+Use the existing stack; default to Python if none exists.
+
+Read https://docs.neatlogs.com/sdk/python.
+Use environment-provided credentials; never print or read secret values
+into the transcript. Ask me to supply credentials locally if missing.
+
+Create the smallest synthetic workflow containing:
+- One real model call through the instrumented provider client
+- One custom tool call
+- One controlled failure and retry
+- One explicit state transition
+
+Use documented workflow/tool instrumentation and correct flush/shutdown.
+Confirm dashboard or authorized readback coverage. If you cannot inspect
+the dashboard, ask me to confirm it and mark that check pending.
+Record exact model ID, tokens/cost where available and observed results.
+Do not spend time on optional MCP integrations.
+
+STOP after this milestone for my review.
+
+MILESTONE 3 — ON MY “NEXT”, BUILD TOOLS AND CHECKER
+Build the deterministic mock environment before the agent:
+- Orders/items and stock
+- Exchanges, reservations, returns and mock labels
+- Operation intents/results
+- Durable progress and transactional action journal
+
+Backend rules:
+- Stable operation keys persisted before execution
+- Same key/same payload returns the saved result
+- Same key/different payload is rejected
+- Atomic stock reservation and nonnegative inventory
+- At most one active exchange per order item across different cases
+- Side effect, result and audit record committed atomically in the mock
+- Timeout after commit does not mean the action failed
+- Escalation releases holds; failed cleanup remains visibly pending
+- No silent size substitutions
+- Final replies use templates based on verified saved outcomes
+
+Implement the local tools named in the corrected plan.
+Freeze synthetic benchmark cases and failure schedules before V1.
+Keep expected answers hidden from the agent.
+
+Write an independent deterministic checker:
+- Arranged exchange: correct eligible item/size and one set of actions
+- Denial/clarification: no exchange writes
+- Escalation: accurate partial state and verified cleanup or explicit failure
+- Duplicate request: existing exchange reused
+- Inventory/history reconcile; unrelated orders remain unchanged
+
+Run tests. Report actual pass/fail counts and stop.
+
+LATER MILESTONES
+On subsequent NEXT instructions:
+1. Single bounded tool-using agent and honest V1 baseline
+2. Trace-led recovery improvements and same-benchmark V2 comparison
+3. UI from real saved state
+4. Actual cfo.ai business model and sanitized submission evidence
+
+Do not deliberately weaken V1 to manufacture improvement.
+
+EVERY MILESTONE
+- Inspect changes and run relevant tests
+- Append timestamp/timezone, results and failures to hackathon.md
+- Keep evidence links pending until actual artifacts exist
+- Make reviewed local commits of relevant files only
+- Verify Entire checkpoint coverage
+- Never expose secrets or private transcripts
+- No push, publish, deployment or submission without instruction
+
+START WITH MILESTONE 1 NOW.
+
+---
+
+Continue if you have next steps, or stop and ask for clarification if you are unsure how to proceed.
+
+---
+
+i have restarted check
+
+---
+
+Continue if you have next steps, or stop and ask for clarification if you are unsure how to proceed.
+
+---
+
+Continue if you have next steps, or stop and ask for clarification if you are unsure how to proceed.
