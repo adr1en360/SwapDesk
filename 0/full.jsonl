@@ -19,17 +19,17 @@
     },
     "cost": 0,
     "tokens": {
-      "input": 322510,
-      "output": 72282,
+      "input": 324489,
+      "output": 73017,
       "reasoning": 6043,
       "cache": {
-        "read": 8554624,
+        "read": 8862848,
         "write": 0
       }
     },
     "time": {
       "created": 1791661472008,
-      "updated": 1791666611536
+      "updated": 1791666664701
     }
   },
   "messages": [
@@ -10358,6 +10358,13 @@
         "summary": {
           "diffs": [
             {
+              "file": ".gitignore",
+              "patch": "Index: .gitignore\n===================================================================\n--- .gitignore\t\n+++ .gitignore\t\n@@ -1,9 +1,10 @@\n .env\r\n __pycache__/\r\n *.pyc\r\n .venv/\r\n venv/\r\n *.db\r\n *.sqlite\r\n *.sqlite3\r\n .langgraph_api/\r\n+studio_data/\r\n",
+              "additions": 1,
+              "deletions": 0,
+              "status": "modified"
+            },
+            {
               "file": "frontend/app/page.tsx",
               "patch": "Index: frontend/app/page.tsx\n===================================================================\n--- frontend/app/page.tsx\t\n+++ frontend/app/page.tsx\t\n@@ -1,204 +1,206 @@\n \"use client\";\r\n \r\n import Link from \"next/link\";\r\n import { useState } from \"react\";\r\n import {\r\n   ArrowUpRight,\r\n   Check,\r\n   ChevronDown,\r\n   CircleDollarSign,\r\n   Clock3,\r\n   PackageCheck,\r\n   RotateCcw,\r\n   ShieldAlert,\r\n   ShieldCheck,\r\n   Tag,\r\n } from \"lucide-react\";\r\n import { AppShell } from \"@/components/AppShell\";\r\n import { useSwapDesk, type TicketStatus } from \"@/store/swapdesk\";\r\n \r\n const metrics = [\r\n   {\r\n     label: \"Completion Rate\",\r\n     value: \"96%\",\r\n     detail: \"Recoverable cases\",\r\n     icon: Check,\r\n     tone: \"green\",\r\n     footnote: \"↑ 4.2% this week\",\r\n   },\r\n   {\r\n     label: \"Duplicate-Action Rate\",\r\n     value: \"0%\",\r\n     detail: \"Down from 40% in V1\",\r\n     icon: RotateCcw,\r\n     tone: \"green\",\r\n     footnote: \"Idempotency verified\",\r\n   },\r\n   {\r\n     label: \"Wrongful-Action Rate\",\r\n     value: \"0%\",\r\n     detail: \"Safety under policy\",\r\n     icon: ShieldCheck,\r\n     tone: \"green\",\r\n     footnote: \"Policy checks active\",\r\n   },\r\n   {\r\n     label: \"Cost per Case\",\r\n     value: \"$0.24\",\r\n     detail: \"Avg Bedrock token cost\",\r\n     icon: CircleDollarSign,\r\n     tone: \"neutral\",\r\n     footnote: \"−12% vs. last week\",\r\n   },\r\n ] as const;\r\n \r\n export default function MissionControlPage() {\r\n   const { tickets } = useSwapDesk();\r\n   const [filter, setFilter] = useState<\"all\" | TicketStatus>(\"all\");\r\n   const visibleTickets = tickets.filter((ticket) => filter === \"all\" || ticket.status === filter);\r\n \r\n   return (\r\n     <AppShell crumbs={[{ label: \"SwapDesk\", to: \"/\" }, { label: \"Mission Control\" }]} metrics={false}>\r\n       <div className=\"space-y-8 pb-8\">\r\n         <section className=\"flex flex-wrap items-end justify-between gap-4\">\r\n           <div>\r\n             <p className=\"mb-2 font-mono text-[11px] uppercase tracking-[0.22em] text-muted-foreground\">\r\n               Operations overview <span className=\"text-success/70\">/</span> 24h window\r\n             </p>\r\n             <div className=\"flex flex-wrap items-center gap-x-4 gap-y-2\">\r\n               <h1 className=\"font-display text-3xl font-semibold tracking-tight sm:text-4xl\">Mission Control</h1>\r\n               <span className=\"inline-flex items-center gap-2 rounded-full border border-success/20 bg-success/[0.07] px-3 py-1.5 font-mono text-[11px] text-success\">\r\n                 <span className=\"pulse-dot h-1.5 w-1.5 rounded-full bg-success shadow-[0_0_10px_var(--color-success)]\" />\r\n                 Live: V2 Production\r\n               </span>\r\n             </div>\r\n             <p className=\"mt-2 text-sm text-muted-foreground\">\r\n               Autonomous support performance, policy safety, and live execution health.\r\n             </p>\r\n           </div>\r\n           <div className=\"flex items-center gap-2 rounded-lg border border-hairline bg-card/65 px-3 py-2 text-xs text-muted-foreground\">\r\n             <Clock3 className=\"h-3.5 w-3.5\" />\r\n             Updated just now\r\n           </div>\r\n         </section>\r\n \r\n         <section aria-label=\"Agent performance metrics\" className=\"grid gap-3 sm:grid-cols-2 xl:grid-cols-4\">\r\n           {metrics.map(({ label, value, detail, icon: Icon, tone, footnote }, index) => (\r\n             <article\r\n               key={label}\r\n               className=\"panel rise relative overflow-hidden p-5\"\r\n               style={{ animationDelay: `${index * 60}ms` }}\r\n             >\r\n               <div className=\"absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/[0.12] to-transparent\" />\r\n               <div className=\"flex items-start justify-between gap-3\">\r\n                 <div>\r\n                   <p className=\"text-xs font-medium text-muted-foreground\">{label}</p>\r\n                   <p className={`num mt-4 text-4xl font-semibold tracking-tight ${tone === \"green\" ? \"text-success\" : \"\"}`}>\r\n                     {value}\r\n                   </p>\r\n                 </div>\r\n                 <span className={`grid h-9 w-9 place-items-center rounded-xl border ${tone === \"green\" ? \"border-success/15 bg-success/[0.07] text-success\" : \"border-hairline bg-white/[0.025] text-muted-foreground\"}`}>\r\n                   <Icon className=\"h-4 w-4\" />\r\n                 </span>\r\n               </div>\r\n               <div className=\"mt-3 flex flex-wrap items-center justify-between gap-2\">\r\n                 <span className=\"text-xs text-foreground/75\">{detail}</span>\r\n                 <span className=\"font-mono text-[10px] text-muted-foreground/80\">{footnote}</span>\r\n               </div>\r\n             </article>\r\n           ))}\r\n         </section>\r\n \r\n         <section aria-labelledby=\"executions-title\">\r\n           <div className=\"mb-4 flex flex-wrap items-end justify-between gap-4\">\r\n             <div>\r\n               <div className=\"mb-1.5 flex items-center gap-2\">\r\n                 <span className=\"h-1.5 w-1.5 rounded-full bg-success shadow-[0_0_10px_var(--color-success)]\" />\r\n                 <p className=\"font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground\">Live agent inbox</p>\r\n               </div>\r\n               <h2 id=\"executions-title\" className=\"font-display text-xl font-semibold tracking-tight sm:text-2xl\">\r\n                 Recent Support Executions\r\n               </h2>\r\n             </div>\r\n             <label className=\"relative flex items-center gap-2 rounded-lg border border-hairline bg-card/80 py-2 pl-3 pr-9 text-xs text-muted-foreground transition-colors focus-within:border-success/40\">\r\n               <span className=\"text-[11px]\">Filter</span>\r\n               <select\r\n                 aria-label=\"Filter support executions\"\r\n                 className=\"cursor-pointer appearance-none bg-transparent font-medium text-foreground outline-none\"\r\n                 value={filter}\r\n                 onChange={(event) => setFilter(event.target.value as \"all\" | TicketStatus)}\r\n               >\r\n                 <option value=\"all\">All</option>\r\n+                <option value=\"processing\">Agent Processing</option>\r\n                 <option value=\"resolved\">Resolved</option>\r\n                 <option value=\"escalated\">Escalated</option>\r\n               </select>\r\n               <ChevronDown className=\"pointer-events-none absolute right-3 h-3.5 w-3.5\" />\r\n             </label>\r\n           </div>\r\n \r\n           <div className=\"space-y-3\">\r\n             {visibleTickets.map((ticket, index) => {\r\n               const escalated = ticket.status === \"escalated\";\r\n+              const processing = ticket.status === \"processing\";\r\n               return (\r\n                 <Link\r\n                   key={ticket.id}\r\n                   href={`/ticket/${ticket.id}`}\r\n                   className=\"group block rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-success/50\"\r\n                 >\r\n                   <article\r\n                     className=\"panel relative overflow-hidden p-4 transition duration-200 ease-out group-hover:-translate-y-0.5 group-hover:border-success/25 group-hover:shadow-[0_14px_45px_-28px_rgba(91,255,159,0.22)] sm:p-5\"\r\n                     style={{ animationDelay: `${index * 70}ms` }}\r\n                   >\r\n-                    <div className={`absolute inset-y-0 left-0 w-[2px] ${escalated ? \"bg-warning/70\" : \"bg-success/50\"}`} />\r\n+                    <div className={`absolute inset-y-0 left-0 w-[2px] ${escalated ? \"bg-warning/70\" : processing ? \"bg-primary/60\" : \"bg-success/50\"}`} />\r\n                     <div className=\"flex flex-col gap-4 sm:flex-row sm:items-center\">\r\n                       <div className=\"flex min-w-0 flex-1 items-start gap-4\">\r\n-                        <span className={`mt-0.5 grid h-10 w-10 shrink-0 place-items-center rounded-xl border ${escalated ? \"border-warning/15 bg-warning/[0.06] text-warning\" : \"border-success/15 bg-success/[0.06] text-success\"}`}>\r\n-                          {escalated ? <ShieldAlert className=\"h-[18px] w-[18px]\" /> : <PackageCheck className=\"h-[18px] w-[18px]\" />}\r\n+                        <span className={`mt-0.5 grid h-10 w-10 shrink-0 place-items-center rounded-xl border ${escalated ? \"border-warning/15 bg-warning/[0.06] text-warning\" : processing ? \"border-primary/15 bg-primary/[0.06] text-primary\" : \"border-success/15 bg-success/[0.06] text-success\"}`}>\r\n+                          {escalated ? <ShieldAlert className=\"h-[18px] w-[18px]\" /> : processing ? <Clock3 className=\"h-[18px] w-[18px]\" /> : <PackageCheck className=\"h-[18px] w-[18px]\" />}\r\n                         </span>\r\n                         <div className=\"min-w-0 flex-1\">\r\n                           <div className=\"mb-1.5 flex flex-wrap items-center gap-x-2.5 gap-y-1\">\r\n                             <span className=\"font-mono text-[11px] tracking-wide text-muted-foreground\">{ticket.id}</span>\r\n                             <span className=\"h-1 w-1 rounded-full bg-muted-foreground/40\" />\r\n                             <span className=\"text-[11px] text-muted-foreground\">{ticket.time}</span>\r\n                           </div>\r\n                           <p className=\"text-sm font-medium leading-relaxed text-foreground/90 sm:text-[15px]\">{ticket.message}</p>\r\n                           <div className=\"mt-3 flex flex-wrap gap-1.5\">\r\n                             {ticket.actions.map((action) => (\r\n                               <span\r\n                                 key={action}\r\n                                 className={`inline-flex items-center gap-1.5 rounded-md border px-2 py-1 font-mono text-[9px] tracking-wide ${action.includes(\"RECOVERED\") ? \"border-success/15 bg-success/[0.045] text-success/90\" : \"border-hairline bg-white/[0.025] text-muted-foreground\"}`}\r\n                               >\r\n                                 {action.includes(\"LABEL\") ? <Tag className=\"h-3 w-3\" /> : <span className=\"text-[8px] opacity-70\">›</span>}\r\n                                 {action}\r\n                               </span>\r\n                             ))}\r\n                           </div>\r\n                         </div>\r\n                       </div>\r\n                       <div className=\"flex items-center justify-between gap-3 pl-14 sm:justify-end sm:pl-0\">\r\n-                        <span className={`inline-flex items-center gap-2 rounded-full border px-2.5 py-1.5 text-[10px] font-medium ${escalated ? \"border-warning/20 bg-warning/[0.06] text-warning\" : \"border-success/20 bg-success/[0.06] text-success\"}`}>\r\n-                          <span className={`h-1.5 w-1.5 rounded-full ${escalated ? \"bg-warning\" : \"bg-success\"}`} />\r\n+                        <span className={`inline-flex items-center gap-2 rounded-full border px-2.5 py-1.5 text-[10px] font-medium ${escalated ? \"border-warning/20 bg-warning/[0.06] text-warning\" : processing ? \"border-primary/20 bg-primary/[0.06] text-primary\" : \"border-success/20 bg-success/[0.06] text-success\"}`}>\r\n+                          <span className={`h-1.5 w-1.5 rounded-full ${escalated ? \"bg-warning\" : processing ? \"bg-primary pulse-dot\" : \"bg-success\"}`} />\r\n                           {ticket.statusLabel}\r\n                         </span>\r\n                         <ArrowUpRight className=\"h-4 w-4 shrink-0 text-muted-foreground/40 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-foreground/80\" />\r\n                       </div>\r\n                     </div>\r\n                   </article>\r\n                 </Link>\r\n               );\r\n             })}\r\n           </div>\r\n           <div className=\"mt-4 flex items-center justify-between border-t border-hairline pt-4\">\r\n             <span className=\"font-mono text-[10px] text-muted-foreground/75\">\r\n               SHOWING {visibleTickets.length.toString().padStart(2, \"0\")} OF 128 EXECUTIONS\r\n             </span>\r\n             <Link href=\"/inbox\" className=\"group inline-flex items-center gap-1.5 text-xs text-muted-foreground transition hover:text-foreground\">\r\n               Open full inbox\r\n               <ArrowUpRight className=\"h-3.5 w-3.5 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5\" />\r\n             </Link>\r\n           </div>\r\n         </section>\r\n       </div>\r\n     </AppShell>\r\n   );\r\n }\r\n",
               "additions": 7,
@@ -12639,19 +12646,22 @@
         },
         "cost": 0,
         "tokens": {
-          "input": 0,
-          "output": 0,
+          "total": 61761,
+          "input": 743,
+          "output": 90,
           "reasoning": 0,
           "cache": {
-            "read": 0,
-            "write": 0
+            "write": 0,
+            "read": 60928
           }
         },
         "modelID": "big-pickle",
         "providerID": "opencode",
         "time": {
-          "created": 1791666611531
+          "created": 1791666611531,
+          "completed": 1791666631077
         },
+        "finish": "tool-calls",
         "id": "msg_127a6e54b001t3rz3GwOKuwLmE",
         "sessionID": "ses_ed8a786f7ffeUozR3mhAyaYoTD"
       },
@@ -12679,21 +12689,417 @@
           "tool": "bash",
           "callID": "call_9e3ff618fe3b410db73749d0",
           "state": {
-            "metadata": {
-              "output": ""
-            },
-            "status": "running",
+            "status": "completed",
             "input": {
               "command": "git commit -m \"Add Customer Simulation widget and /simulate page; route to agent with Agent Processing status\" 2>&1 | Select-Object -Last 3",
               "timeout": 180000
             },
+            "output": " 6 files changed, 140 insertions(+), 15 deletions(-)\r\n create mode 100644 frontend/app/simulate/page.tsx\r\n create mode 100644 frontend/src/components/CustomerSimulationWidget.tsx\r\n",
+            "metadata": {
+              "output": " 6 files changed, 140 insertions(+), 15 deletions(-)\r\n create mode 100644 frontend/app/simulate/page.tsx\r\n create mode 100644 frontend/src/components/CustomerSimulationWidget.tsx\r\n",
+              "exit": 0,
+              "truncated": false
+            },
+            "title": "git commit -m \"Add Customer Simulation widget and /simulate page; route to agent with Agent Processing status\" 2>&1 | Select-Object -Last 3",
             "time": {
-              "start": 1791666614718
+              "start": 1791666614718,
+              "end": 1791666629901
             }
           },
           "id": "prt_127a6f1b2001suPng3GNhqxVb6",
           "sessionID": "ses_ed8a786f7ffeUozR3mhAyaYoTD",
           "messageID": "msg_127a6e54b001t3rz3GwOKuwLmE"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "d952b4c6da0c27169550c935acb2a677cd4d510e",
+          "type": "step-finish",
+          "tokens": {
+            "total": 61761,
+            "input": 743,
+            "output": 90,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 60928
+            }
+          },
+          "cost": 0,
+          "id": "prt_127a7303b001dnO0VPeCl5laBe",
+          "sessionID": "ses_ed8a786f7ffeUozR3mhAyaYoTD",
+          "messageID": "msg_127a6e54b001t3rz3GwOKuwLmE"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_127a281d9001RtaxQRi0Pvwmvk",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "C:\\Users\\Joshua\\Documents\\My Webs\\Hackathons\\SwapDesk",
+          "root": "C:\\Users\\Joshua\\Documents\\My Webs\\Hackathons\\SwapDesk"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 61894,
+          "input": 385,
+          "output": 69,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 61440
+          }
+        },
+        "modelID": "big-pickle",
+        "providerID": "opencode",
+        "time": {
+          "created": 1791666631111,
+          "completed": 1791666645585
+        },
+        "finish": "tool-calls",
+        "id": "msg_127a731c7001tkbNj8MdQtCyZW",
+        "sessionID": "ses_ed8a786f7ffeUozR3mhAyaYoTD"
+      },
+      "parts": [
+        {
+          "snapshot": "d952b4c6da0c27169550c935acb2a677cd4d510e",
+          "type": "step-start",
+          "id": "prt_127a73ec9001bMGwGKvztNUrNm",
+          "sessionID": "ses_ed8a786f7ffeUozR3mhAyaYoTD",
+          "messageID": "msg_127a731c7001tkbNj8MdQtCyZW"
+        },
+        {
+          "type": "text",
+          "text": "</think>",
+          "time": {
+            "start": 1791666634444,
+            "end": 1791666634736
+          },
+          "id": "prt_127a73ecb001wL68I22eysy8MB",
+          "sessionID": "ses_ed8a786f7ffeUozR3mhAyaYoTD",
+          "messageID": "msg_127a731c7001tkbNj8MdQtCyZW"
+        },
+        {
+          "type": "tool",
+          "tool": "bash",
+          "callID": "call_f6b2dbeee5854eca8bb1fd49",
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "git push 2>&1 | Select-Object -Last 5",
+              "timeout": 180000
+            },
+            "output": "\u001b[31;1mhint: Updates were rejected because the remote contains work that you do\u001b[0m\r\n\u001b[31;1mhint: not have locally. This is usually caused by another repository pushing\u001b[0m\r\n\u001b[31;1mhint: to the same ref. You may want to first integrate the remote changes\u001b[0m\r\n\u001b[31;1mhint: (e.g., 'git pull ...') before pushing again.\u001b[0m\r\n\u001b[31;1mhint: See the 'Note about fast-forwards' in 'git push --help' for details.\u001b[0m\r\n",
+            "metadata": {
+              "output": "\u001b[31;1mhint: Updates were rejected because the remote contains work that you do\u001b[0m\r\n\u001b[31;1mhint: not have locally. This is usually caused by another repository pushing\u001b[0m\r\n\u001b[31;1mhint: to the same ref. You may want to first integrate the remote changes\u001b[0m\r\n\u001b[31;1mhint: (e.g., 'git pull ...') before pushing again.\u001b[0m\r\n\u001b[31;1mhint: See the 'Note about fast-forwards' in 'git push --help' for details.\u001b[0m\r\n",
+              "exit": 1,
+              "truncated": false
+            },
+            "title": "git push 2>&1 | Select-Object -Last 5",
+            "time": {
+              "start": 1791666634687,
+              "end": 1791666644612
+            }
+          },
+          "id": "prt_127a73fb60011gPmP5h1NcRiyk",
+          "sessionID": "ses_ed8a786f7ffeUozR3mhAyaYoTD",
+          "messageID": "msg_127a731c7001tkbNj8MdQtCyZW"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "d952b4c6da0c27169550c935acb2a677cd4d510e",
+          "type": "step-finish",
+          "tokens": {
+            "total": 61894,
+            "input": 385,
+            "output": 69,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 61440
+            }
+          },
+          "cost": 0,
+          "id": "prt_127a768ce001sfiXWPBRpNCOv5",
+          "sessionID": "ses_ed8a786f7ffeUozR3mhAyaYoTD",
+          "messageID": "msg_127a731c7001tkbNj8MdQtCyZW"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_127a281d9001RtaxQRi0Pvwmvk",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "C:\\Users\\Joshua\\Documents\\My Webs\\Hackathons\\SwapDesk",
+          "root": "C:\\Users\\Joshua\\Documents\\My Webs\\Hackathons\\SwapDesk"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 62129,
+          "input": 354,
+          "output": 79,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 61696
+          }
+        },
+        "modelID": "big-pickle",
+        "providerID": "opencode",
+        "time": {
+          "created": 1791666645622,
+          "completed": 1791666656259
+        },
+        "finish": "tool-calls",
+        "id": "msg_127a76a76001IfcCoN6kWOIRQJ",
+        "sessionID": "ses_ed8a786f7ffeUozR3mhAyaYoTD"
+      },
+      "parts": [
+        {
+          "snapshot": "d952b4c6da0c27169550c935acb2a677cd4d510e",
+          "type": "step-start",
+          "id": "prt_127a7745e001Cm3cA6ryaOqFu4",
+          "sessionID": "ses_ed8a786f7ffeUozR3mhAyaYoTD",
+          "messageID": "msg_127a76a76001IfcCoN6kWOIRQJ"
+        },
+        {
+          "type": "text",
+          "text": "</think>",
+          "time": {
+            "start": 1791666648161,
+            "end": 1791666648465
+          },
+          "id": "prt_127a77461001nN8PQLb17Ich61",
+          "sessionID": "ses_ed8a786f7ffeUozR3mhAyaYoTD",
+          "messageID": "msg_127a76a76001IfcCoN6kWOIRQJ"
+        },
+        {
+          "type": "tool",
+          "tool": "bash",
+          "callID": "call_11b704a7720c4c7fb922a4db",
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "git pull --no-rebase --no-edit origin main 2>&1 | Select-Object -Last 12",
+              "timeout": 180000
+            },
+            "output": "\u001b[31;1mFrom https://github.com/adr1en360/SwapDesk\u001b[0m\r\n\u001b[31;1m * branch            main       -> FETCH_HEAD\u001b[0m\r\n\u001b[31;1m   1c4ba66..5865b3e  main       -> origin/main\u001b[0m\r\nMerge made by the 'ort' strategy.\r\n .gitignore | 1 +\r\n 1 file changed, 1 insertion(+)\r\n",
+            "metadata": {
+              "output": "\u001b[31;1mFrom https://github.com/adr1en360/SwapDesk\u001b[0m\r\n\u001b[31;1m * branch            main       -> FETCH_HEAD\u001b[0m\r\n\u001b[31;1m   1c4ba66..5865b3e  main       -> origin/main\u001b[0m\r\nMerge made by the 'ort' strategy.\r\n .gitignore | 1 +\r\n 1 file changed, 1 insertion(+)\r\n",
+              "exit": 0,
+              "truncated": false
+            },
+            "title": "git pull --no-rebase --no-edit origin main 2>&1 | Select-Object -Last 12",
+            "time": {
+              "start": 1791666648453,
+              "end": 1791666654230
+            }
+          },
+          "id": "prt_127a7757c001eux3pLkXpwUC9y",
+          "sessionID": "ses_ed8a786f7ffeUozR3mhAyaYoTD",
+          "messageID": "msg_127a76a76001IfcCoN6kWOIRQJ"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "d86c46fb901fc9209e4b3fe07a8c23da5cee3b79",
+          "type": "step-finish",
+          "tokens": {
+            "total": 62129,
+            "input": 354,
+            "output": 79,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 61696
+            }
+          },
+          "cost": 0,
+          "id": "prt_127a7914e0014mu5dDdcqNQto0",
+          "sessionID": "ses_ed8a786f7ffeUozR3mhAyaYoTD",
+          "messageID": "msg_127a76a76001IfcCoN6kWOIRQJ"
+        },
+        {
+          "type": "patch",
+          "hash": "d952b4c6da0c27169550c935acb2a677cd4d510e",
+          "files": [
+            "C:/Users/Joshua/Documents/My Webs/Hackathons/SwapDesk/.gitignore"
+          ],
+          "id": "prt_127a793ff001RTGZLsBu4Wtma1",
+          "sessionID": "ses_ed8a786f7ffeUozR3mhAyaYoTD",
+          "messageID": "msg_127a76a76001IfcCoN6kWOIRQJ"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_127a281d9001RtaxQRi0Pvwmvk",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "C:\\Users\\Joshua\\Documents\\My Webs\\Hackathons\\SwapDesk",
+          "root": "C:\\Users\\Joshua\\Documents\\My Webs\\Hackathons\\SwapDesk"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 62336,
+          "input": 298,
+          "output": 86,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 61952
+          }
+        },
+        "modelID": "big-pickle",
+        "providerID": "opencode",
+        "time": {
+          "created": 1791666656290,
+          "completed": 1791666664655
+        },
+        "finish": "tool-calls",
+        "id": "msg_127a79422001JUbjSXZk4ECreg",
+        "sessionID": "ses_ed8a786f7ffeUozR3mhAyaYoTD"
+      },
+      "parts": [
+        {
+          "snapshot": "d86c46fb901fc9209e4b3fe07a8c23da5cee3b79",
+          "type": "step-start",
+          "id": "prt_127a79a3d001fTQoWD5JzM9CpK",
+          "sessionID": "ses_ed8a786f7ffeUozR3mhAyaYoTD",
+          "messageID": "msg_127a79422001JUbjSXZk4ECreg"
+        },
+        {
+          "type": "text",
+          "text": "</think>Clean merge. Push.",
+          "time": {
+            "start": 1791666657856,
+            "end": 1791666658376
+          },
+          "id": "prt_127a79a40001YdfvE2b2F3JaaV",
+          "sessionID": "ses_ed8a786f7ffeUozR3mhAyaYoTD",
+          "messageID": "msg_127a79422001JUbjSXZk4ECreg"
+        },
+        {
+          "type": "tool",
+          "tool": "bash",
+          "callID": "call_3c813689a05f43f99f7f7f5e",
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "git push 2>&1 | Select-Object -Last 4; git status -sb | Select-Object -First 2",
+              "timeout": 180000
+            },
+            "output": "\u001b[31;1mTo https://github.com/adr1en360/SwapDesk\u001b[0m\r\n\u001b[31;1m   5865b3e..4bbc721  main -> main\u001b[0m\r\n## main...origin/main\r\n",
+            "metadata": {
+              "output": "\u001b[31;1mTo https://github.com/adr1en360/SwapDesk\u001b[0m\r\n\u001b[31;1m   5865b3e..4bbc721  main -> main\u001b[0m\r\n## main...origin/main\r\n",
+              "exit": 0,
+              "truncated": false
+            },
+            "title": "git push 2>&1 | Select-Object -Last 4; git status -sb | Select-Object -First 2",
+            "time": {
+              "start": 1791666658327,
+              "end": 1791666663823
+            }
+          },
+          "id": "prt_127a79c0c001fHypUm10nUPuUh",
+          "sessionID": "ses_ed8a786f7ffeUozR3mhAyaYoTD",
+          "messageID": "msg_127a79422001JUbjSXZk4ECreg"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "d86c46fb901fc9209e4b3fe07a8c23da5cee3b79",
+          "type": "step-finish",
+          "tokens": {
+            "total": 62336,
+            "input": 298,
+            "output": 86,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 61952
+            }
+          },
+          "cost": 0,
+          "id": "prt_127a7b33a001euBBr8Ej5ct70O",
+          "sessionID": "ses_ed8a786f7ffeUozR3mhAyaYoTD",
+          "messageID": "msg_127a79422001JUbjSXZk4ECreg"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_127a281d9001RtaxQRi0Pvwmvk",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "C:\\Users\\Joshua\\Documents\\My Webs\\Hackathons\\SwapDesk",
+          "root": "C:\\Users\\Joshua\\Documents\\My Webs\\Hackathons\\SwapDesk"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 62818,
+          "input": 199,
+          "output": 411,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 62208
+          }
+        },
+        "modelID": "big-pickle",
+        "providerID": "opencode",
+        "time": {
+          "created": 1791666664688,
+          "completed": 1791666671764
+        },
+        "finish": "stop",
+        "id": "msg_127a7b4f0001tWlJsBgGl6K1H5",
+        "sessionID": "ses_ed8a786f7ffeUozR3mhAyaYoTD"
+      },
+      "parts": [
+        {
+          "snapshot": "d86c46fb901fc9209e4b3fe07a8c23da5cee3b79",
+          "type": "step-start",
+          "id": "prt_127a7bb2b001vk5uGCGpKCKC4U",
+          "sessionID": "ses_ed8a786f7ffeUozR3mhAyaYoTD",
+          "messageID": "msg_127a7b4f0001tWlJsBgGl6K1H5"
+        },
+        {
+          "type": "text",
+          "text": "Done. Let me summarize concisely.\n\nThe user's task is complete. Let me give a brief summary.</think>Done. Pushed as `4bbc721`.\n\n**What I built** (no backend; React Context):\n\n- **`src/store/swapdesk.tsx`** — added `\"processing\"` status and `submitCustomerTicket(message)` which appends a ticket (`statusLabel: \"Agent Processing\"`, actions `INTAKE · ROUTING`) to the queue.\n- **`src/components/CustomerSimulationWidget.tsx`** — new. Textarea (placeholder = your Jordan 4 size-43 example), **Submit to SwapDesk** button → shows **\"Routing to Autonomous Agent...\"** with a spinner for 900ms, then appends the ticket and shows a success panel with a **View Mission Control** link.\n- **`app/simulate/page.tsx`** — new dedicated page (server component w/ metadata, matching the `inbox`/`traces` pattern) rendering `AppShell` + `PageTitle` + the widget.\n- **`src/components/AppShell.tsx`** — the header **Simulate Ticket** button now opens `/simulate`.\n- **`app/page.tsx`** — Mission Control renders the new ticket with a distinct **Agent Processing** badge (primary color + pulsing dot + clock icon), including an \"Agent Processing\" filter option.\n- **`app/ticket/[id]/page.tsx`** — status tile handles the processing state.\n\nTheme tokens only (`card #111113`, `border #2222225`, Bricolage/Plus Jakarta via `font-display`/`font-sans`); no existing visual design altered. `tsc --noEmit` and `eslint` both pass; no dev server was started.\n\nNote: since tickets live in Context (in-memory), a full browser refresh resets the queue — expected without persistence.",
+          "time": {
+            "start": 1791666666287,
+            "end": 1791666671003
+          },
+          "id": "prt_127a7bb2f0016dpfhyFI6ViUlG",
+          "sessionID": "ses_ed8a786f7ffeUozR3mhAyaYoTD",
+          "messageID": "msg_127a7b4f0001tWlJsBgGl6K1H5"
+        },
+        {
+          "reason": "stop",
+          "snapshot": "d86c46fb901fc9209e4b3fe07a8c23da5cee3b79",
+          "type": "step-finish",
+          "tokens": {
+            "total": 62818,
+            "input": 199,
+            "output": 411,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 62208
+            }
+          },
+          "cost": 0,
+          "id": "prt_127a7cf380014HYUq3s81WpsK6",
+          "sessionID": "ses_ed8a786f7ffeUozR3mhAyaYoTD",
+          "messageID": "msg_127a7b4f0001tWlJsBgGl6K1H5"
         }
       ]
     }
