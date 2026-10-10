@@ -1,0 +1,1 @@
+Add a second line to frontend/setup.md that says 'Testing capture fix' and commit the change.

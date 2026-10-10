@@ -1,0 +1,340 @@
+{
+  "info": {
+    "id": "ses_ed8a786f7ffeUozR3mhAyaYoTD",
+    "slug": "lucky-forest",
+    "projectID": "cdb9d20c80baae4623f383af2203ab365d39f910",
+    "directory": "C:\\Users\\Joshua\\Documents\\My Webs\\Hackathons\\SwapDesk",
+    "path": "",
+    "title": "Append \"Testing capture fix\" to setup.md",
+    "agent": "build",
+    "model": {
+      "id": "big-pickle",
+      "providerID": "opencode"
+    },
+    "version": "1.18.35",
+    "summary": {
+      "additions": 0,
+      "deletions": 0,
+      "files": 0
+    },
+    "cost": 0,
+    "tokens": {
+      "input": 517,
+      "output": 170,
+      "reasoning": 7,
+      "cache": {
+        "read": 17152,
+        "write": 0
+      }
+    },
+    "time": {
+      "created": 1791661472008,
+      "updated": 1791661523390
+    }
+  },
+  "messages": [
+    {
+      "info": {
+        "role": "user",
+        "time": {
+          "created": 1791661473454
+        },
+        "agent": "build",
+        "model": {
+          "providerID": "opencode",
+          "modelID": "big-pickle"
+        },
+        "summary": {
+          "diffs": [
+            {
+              "file": "frontend/setup.md",
+              "patch": "Index: frontend/setup.md\n===================================================================\n--- frontend/setup.md\t\n+++ frontend/setup.md\t\n@@ -1,1 +1,2 @@\n-Test frontend capture\n\\ No newline at end of file\n+Test frontend capture\n+Testing capture fix\n\\ No newline at end of file\n",
+              "additions": 2,
+              "deletions": 1,
+              "status": "modified"
+            }
+          ]
+        },
+        "id": "msg_127587eae001l2jIyU0RpC8UXF",
+        "sessionID": "ses_ed8a786f7ffeUozR3mhAyaYoTD"
+      },
+      "parts": [
+        {
+          "type": "text",
+          "text": "Add a second line to frontend/setup.md that says 'Testing capture fix' and commit the change.",
+          "id": "prt_127587eb2001dFK8vg2aUhX2MX",
+          "sessionID": "ses_ed8a786f7ffeUozR3mhAyaYoTD",
+          "messageID": "msg_127587eae001l2jIyU0RpC8UXF"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_127587eae001l2jIyU0RpC8UXF",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "C:\\Users\\Joshua\\Documents\\My Webs\\Hackathons\\SwapDesk",
+          "root": "C:\\Users\\Joshua\\Documents\\My Webs\\Hackathons\\SwapDesk"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 8734,
+          "input": 88,
+          "output": 63,
+          "reasoning": 7,
+          "cache": {
+            "write": 0,
+            "read": 8576
+          }
+        },
+        "modelID": "big-pickle",
+        "providerID": "opencode",
+        "time": {
+          "created": 1791661489847,
+          "completed": 1791661516384
+        },
+        "finish": "tool-calls",
+        "id": "msg_12758beb70015ujFjLIwkJxLOd",
+        "sessionID": "ses_ed8a786f7ffeUozR3mhAyaYoTD"
+      },
+      "parts": [
+        {
+          "snapshot": "9adfd910927890d0a98171eb48683764cb386023",
+          "type": "step-start",
+          "id": "prt_127591ece001zJKhmvdQm1VV1L",
+          "sessionID": "ses_ed8a786f7ffeUozR3mhAyaYoTD",
+          "messageID": "msg_12758beb70015ujFjLIwkJxLOd"
+        },
+        {
+          "type": "reasoning",
+          "text": "Let me read the file first.",
+          "time": {
+            "start": 1791661514453,
+            "end": 1791661514501
+          },
+          "id": "prt_127591ed5001gFxy2cAnEJ0SJs",
+          "sessionID": "ses_ed8a786f7ffeUozR3mhAyaYoTD",
+          "messageID": "msg_12758beb70015ujFjLIwkJxLOd"
+        },
+        {
+          "type": "tool",
+          "tool": "read",
+          "callID": "call_00_s7o1br2izxb16dvu1nnfvogm",
+          "state": {
+            "status": "completed",
+            "input": {
+              "filePath": "C:\\Users\\Joshua\\Documents\\My Webs\\Hackathons\\SwapDesk\\frontend\\setup.md"
+            },
+            "output": "<path>C:\\Users\\Joshua\\Documents\\My Webs\\Hackathons\\SwapDesk\\frontend\\setup.md</path>\n<type>file</type>\n<content>\n1: Test frontend capture\n\n(End of file - total 1 lines)\n</content>\n\n<system-reminder>\nInstructions from: C:\\Users\\Joshua\\Documents\\My Webs\\Hackathons\\SwapDesk\\frontend\\AGENTS.md\n<!-- BEGIN:nextjs-agent-rules -->\n\n## This is NOT the Next.js you know\n\nThis version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.\n\nThis block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.\n\n<!-- END:nextjs-agent-rules -->\n\n</system-reminder>",
+            "metadata": {
+              "preview": "Test frontend capture",
+              "truncated": false,
+              "loaded": [
+                "C:\\Users\\Joshua\\Documents\\My Webs\\Hackathons\\SwapDesk\\frontend\\AGENTS.md"
+              ],
+              "display": {
+                "type": "file",
+                "path": "C:\\Users\\Joshua\\Documents\\My Webs\\Hackathons\\SwapDesk\\frontend\\setup.md",
+                "text": "Test frontend capture",
+                "lineStart": 1,
+                "lineEnd": 1,
+                "totalLines": 1,
+                "truncated": false
+              }
+            },
+            "title": "frontend\\setup.md",
+            "time": {
+              "start": 1791661514881,
+              "end": 1791661515501
+            }
+          },
+          "id": "prt_127591f0c001mDHBNWPnuMFMH7",
+          "sessionID": "ses_ed8a786f7ffeUozR3mhAyaYoTD",
+          "messageID": "msg_12758beb70015ujFjLIwkJxLOd"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "9adfd910927890d0a98171eb48683764cb386023",
+          "type": "step-finish",
+          "tokens": {
+            "total": 8734,
+            "input": 88,
+            "output": 63,
+            "reasoning": 7,
+            "cache": {
+              "write": 0,
+              "read": 8576
+            }
+          },
+          "cost": 0,
+          "id": "prt_1275924a3001zzl6HCv6m721ww",
+          "sessionID": "ses_ed8a786f7ffeUozR3mhAyaYoTD",
+          "messageID": "msg_12758beb70015ujFjLIwkJxLOd"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_127587eae001l2jIyU0RpC8UXF",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "C:\\Users\\Joshua\\Documents\\My Webs\\Hackathons\\SwapDesk",
+          "root": "C:\\Users\\Joshua\\Documents\\My Webs\\Hackathons\\SwapDesk"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 9112,
+          "input": 429,
+          "output": 107,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 8576
+          }
+        },
+        "modelID": "big-pickle",
+        "providerID": "opencode",
+        "time": {
+          "created": 1791661516392,
+          "completed": 1791661523377
+        },
+        "finish": "tool-calls",
+        "id": "msg_127592668001Gkjy6LybzanSze",
+        "sessionID": "ses_ed8a786f7ffeUozR3mhAyaYoTD"
+      },
+      "parts": [
+        {
+          "snapshot": "9adfd910927890d0a98171eb48683764cb386023",
+          "type": "step-start",
+          "id": "prt_127592e6c001lMZ25rsobIYkyA",
+          "sessionID": "ses_ed8a786f7ffeUozR3mhAyaYoTD",
+          "messageID": "msg_127592668001Gkjy6LybzanSze"
+        },
+        {
+          "type": "tool",
+          "tool": "edit",
+          "callID": "call_00_bd9cgf3v3pcln4d8fxya1t17",
+          "state": {
+            "status": "completed",
+            "input": {
+              "filePath": "C:\\Users\\Joshua\\Documents\\My Webs\\Hackathons\\SwapDesk\\frontend\\setup.md",
+              "oldString": "Test frontend capture",
+              "newString": "Test frontend capture\nTesting capture fix"
+            },
+            "output": "Edit applied successfully.",
+            "metadata": {
+              "diagnostics": {},
+              "diff": "Index: C:\\Users\\Joshua\\Documents\\My Webs\\Hackathons\\SwapDesk\\frontend\\setup.md\n===================================================================\n--- C:\\Users\\Joshua\\Documents\\My Webs\\Hackathons\\SwapDesk\\frontend\\setup.md\n+++ C:\\Users\\Joshua\\Documents\\My Webs\\Hackathons\\SwapDesk\\frontend\\setup.md\n@@ -1,1 +1,2 @@\n-Test frontend capture\n\\ No newline at end of file\n+Test frontend capture\n+Testing capture fix\n\\ No newline at end of file\n",
+              "filediff": {
+                "file": "C:\\Users\\Joshua\\Documents\\My Webs\\Hackathons\\SwapDesk\\frontend\\setup.md",
+                "patch": "Index: C:\\Users\\Joshua\\Documents\\My Webs\\Hackathons\\SwapDesk\\frontend\\setup.md\n===================================================================\n--- C:\\Users\\Joshua\\Documents\\My Webs\\Hackathons\\SwapDesk\\frontend\\setup.md\n+++ C:\\Users\\Joshua\\Documents\\My Webs\\Hackathons\\SwapDesk\\frontend\\setup.md\n@@ -1,1 +1,2 @@\n-Test frontend capture\n\\ No newline at end of file\n+Test frontend capture\n+Testing capture fix\n\\ No newline at end of file\n",
+                "additions": 2,
+                "deletions": 1
+              },
+              "truncated": false
+            },
+            "title": "frontend\\setup.md",
+            "time": {
+              "start": 1791661518836,
+              "end": 1791661518869
+            }
+          },
+          "id": "prt_127592e73001CxVpQHKR6yt1Rt",
+          "sessionID": "ses_ed8a786f7ffeUozR3mhAyaYoTD",
+          "messageID": "msg_127592668001Gkjy6LybzanSze"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "d9448d336e6f209d0626dbda43e0e38cf8078250",
+          "type": "step-finish",
+          "tokens": {
+            "total": 9112,
+            "input": 429,
+            "output": 107,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 8576
+            }
+          },
+          "cost": 0,
+          "id": "prt_127593f440013iUwv2hK98imdZ",
+          "sessionID": "ses_ed8a786f7ffeUozR3mhAyaYoTD",
+          "messageID": "msg_127592668001Gkjy6LybzanSze"
+        },
+        {
+          "type": "patch",
+          "hash": "9adfd910927890d0a98171eb48683764cb386023",
+          "files": [
+            "C:/Users/Joshua/Documents/My Webs/Hackathons/SwapDesk/frontend/setup.md"
+          ],
+          "id": "prt_1275941ab001Q3iHujysh34uPm",
+          "sessionID": "ses_ed8a786f7ffeUozR3mhAyaYoTD",
+          "messageID": "msg_127592668001Gkjy6LybzanSze"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_127587eae001l2jIyU0RpC8UXF",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "C:\\Users\\Joshua\\Documents\\My Webs\\Hackathons\\SwapDesk",
+          "root": "C:\\Users\\Joshua\\Documents\\My Webs\\Hackathons\\SwapDesk"
+        },
+        "cost": 0,
+        "tokens": {
+          "input": 0,
+          "output": 0,
+          "reasoning": 0,
+          "cache": {
+            "read": 0,
+            "write": 0
+          }
+        },
+        "modelID": "big-pickle",
+        "providerID": "opencode",
+        "time": {
+          "created": 1791661523386
+        },
+        "id": "msg_1275941ba0013CQk7eYr4LgVPG",
+        "sessionID": "ses_ed8a786f7ffeUozR3mhAyaYoTD"
+      },
+      "parts": [
+        {
+          "snapshot": "d9448d336e6f209d0626dbda43e0e38cf8078250",
+          "type": "step-start",
+          "id": "prt_127594ea9001T5Kv2mKER364OZ",
+          "sessionID": "ses_ed8a786f7ffeUozR3mhAyaYoTD",
+          "messageID": "msg_1275941ba0013CQk7eYr4LgVPG"
+        },
+        {
+          "type": "tool",
+          "tool": "bash",
+          "callID": "call_00_pckit53l8xsk5cujhaze88rj",
+          "state": {
+            "metadata": {
+              "output": "warning: in the working copy of 'frontend/setup.md', LF will be replaced by CRLF the next time Git touches it\n"
+            },
+            "status": "running",
+            "input": {
+              "command": "git add frontend/setup.md && git commit -m \"Add testing capture fix line to setup.md\""
+            },
+            "time": {
+              "start": 1791661526922
+            }
+          },
+          "id": "prt_127594eb1001zyGP0rNEc9Xvb0",
+          "sessionID": "ses_ed8a786f7ffeUozR3mhAyaYoTD",
+          "messageID": "msg_1275941ba0013CQk7eYr4LgVPG"
+        }
+      ]
+    }
+  ]
+}
