@@ -1,0 +1,75 @@
+{
+  "cli_version": "0.11.4",
+  "checkpoint_id": "01M4KRZVXYRZVYTA45HMBT9VYK",
+  "session_id": "ses_ed8a786f7ffeUozR3mhAyaYoTD",
+  "strategy": "manual-commit",
+  "created_at": "2026-10-10T20:45:33.8559029Z",
+  "branch": "main",
+  "checkpoints_count": 2,
+  "files_touched": [
+    ".github/instructions/postman-collections-post-response-2.instructions.md",
+    ".github/instructions/postman-collections-post-response.instructions.md",
+    ".github/instructions/postman-collections-pre-request-2.instructions.md",
+    ".github/instructions/postman-collections-pre-request.instructions.md",
+    ".github/instructions/postman-folder-post-response-2.instructions.md",
+    ".github/instructions/postman-folder-post-response.instructions.md",
+    ".github/instructions/postman-folder-pre-request-2.instructions.md",
+    ".github/instructions/postman-folder-pre-request.instructions.md",
+    ".github/instructions/postman-http-request-post-response-2.instructions.md",
+    ".github/instructions/postman-http-request-post-response.instructions.md",
+    ".github/instructions/postman-http-request-pre-request-2.instructions.md",
+    ".github/instructions/postman-http-request-pre-request.instructions.md"
+  ],
+  "agent": "OpenCode",
+  "model": "big-pickle",
+  "turn_id": "ee76618f1cfb",
+  "checkpoint_transcript_start": 52,
+  "transcript_lines_at_start": 52,
+  "compact_transcript_start": 52,
+  "token_usage": {
+    "input_tokens": 7962,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 260864,
+    "output_tokens": 4721,
+    "api_call_count": 4
+  },
+  "session_metrics": {
+    "turn_count": 2
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-10-10T20:45:33.7554395Z",
+    "agent_lines": 0,
+    "agent_removed": 0,
+    "human_added": 0,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 0,
+    "total_lines_changed": 0,
+    "agent_percentage": 0,
+    "metric_version": 2
+  },
+  "prompt_attributions": [
+    {
+      "checkpoint_number": 1,
+      "user_lines_added": 1001,
+      "user_lines_removed": 0,
+      "agent_lines_added": 0,
+      "agent_lines_removed": 0,
+      "user_added_per_file": {
+        ".github/instructions/postman-collections-post-response-2.instructions.md": 71,
+        ".github/instructions/postman-collections-post-response.instructions.md": 71,
+        ".github/instructions/postman-collections-pre-request-2.instructions.md": 50,
+        ".github/instructions/postman-collections-pre-request.instructions.md": 50,
+        ".github/instructions/postman-folder-post-response-2.instructions.md": 71,
+        ".github/instructions/postman-folder-post-response.instructions.md": 71,
+        ".github/instructions/postman-folder-pre-request-2.instructions.md": 50,
+        ".github/instructions/postman-folder-pre-request.instructions.md": 50,
+        ".github/instructions/postman-http-request-post-response-2.instructions.md": 72,
+        ".github/instructions/postman-http-request-post-response.instructions.md": 72,
+        ".github/instructions/postman-http-request-pre-request-2.instructions.md": 52,
+        ".github/instructions/postman-http-request-pre-request.instructions.md": 52,
+        ".opencode/plugins/entire.ts": 269
+      }
+    }
+  ]
+}
