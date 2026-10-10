@@ -20,17 +20,17 @@
     },
     "cost": 0,
     "tokens": {
-      "input": 5997313,
-      "output": 217878,
-      "reasoning": 232249,
+      "input": 5998589,
+      "output": 218505,
+      "reasoning": 232497,
       "cache": {
-        "read": 172440847,
+        "read": 174269282,
         "write": 0
       }
     },
     "time": {
       "created": 1791609671383,
-      "updated": 1791639593108
+      "updated": 1791639629537
     }
   },
   "messages": [
@@ -72189,19 +72189,22 @@
         },
         "cost": 0,
         "tokens": {
-          "input": 0,
-          "output": 0,
-          "reasoning": 0,
+          "total": 609585,
+          "input": 193,
+          "output": 174,
+          "reasoning": 81,
           "cache": {
-            "read": 0,
-            "write": 0
+            "write": 0,
+            "read": 609137
           }
         },
         "modelID": "muse-spark-1.3-contributor-free",
         "providerID": "opencode",
         "time": {
-          "created": 1791639593103
+          "created": 1791639593103,
+          "completed": 1791639621338
         },
+        "finish": "tool-calls",
         "id": "msg_1260aa08f001cA4VWuZfTckAl9",
         "sessionID": "ses_edbbdf128ffeRKDNSF0rKfxKpl"
       },
@@ -72235,16 +72238,21 @@
           "tool": "bash",
           "callID": "call_01a1260ab8c5731fae69d7d95b212fba",
           "state": {
-            "metadata": {
-              "output": " M .env.example\n M README.md\n M frontend/package-lock.json\n M pyproject.toml\n M src/swapdesk/agent/graph.py\n M src/swapdesk/telemetry.py\n M uv.lock\n?? tests/test_provider.py\nwarning: in the working copy of '.env.example', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'pyproject.toml', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'src/swapdesk/telemetry.py', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'uv.lock', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'tests/test_provider.py', LF will be replaced by CRLF the next time Git touches it\n"
-            },
-            "status": "running",
+            "status": "completed",
             "input": {
               "command": "git status --porcelain=v1; git add -- src/swapdesk/agent/graph.py src/swapdesk/telemetry.py tests/test_provider.py .env.example README.md pyproject.toml uv.lock; git commit -m \"Add env-driven model provider switch with LiteLLM support\" 2>&1 | Select-Object -First 3; & \"C:\\Users\\DELL\\.local\\bin\\entire.exe\" checkpoint explain HEAD 2>$null | Select-Object -First 6",
               "workdir": "C:\\Users\\DELL\\Documents\\SwapDesk"
             },
+            "output": " M .env.example\n M README.md\n M frontend/package-lock.json\n M pyproject.toml\n M src/swapdesk/agent/graph.py\n M src/swapdesk/telemetry.py\n M uv.lock\n?? tests/test_provider.py\nwarning: in the working copy of '.env.example', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'pyproject.toml', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'src/swapdesk/telemetry.py', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'uv.lock', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'tests/test_provider.py', LF will be replaced by CRLF the next time Git touches it\n[main 699ddb1] Add env-driven model provider switch with LiteLLM support\r\n 7 files changed, 430 insertions(+), 15 deletions(-)\r\n create mode 100644 tests/test_provider.py\r\n● Checkpoint 01M4K0NG50GNBBWWXQ1Q7KJGY2\r\n  session  ses_edbbdf128ffeRKDNSF0rKfxKpl\r\n  created  2026-10-10 13:40:18\r\n  author   adr1en360 <adrienoke@gmail.com>\r\n  tokens   11447k\r\n  commits  699ddb1 Add env-driven model provider switch with LiteLLM support\r\n",
+            "metadata": {
+              "output": " M .env.example\n M README.md\n M frontend/package-lock.json\n M pyproject.toml\n M src/swapdesk/agent/graph.py\n M src/swapdesk/telemetry.py\n M uv.lock\n?? tests/test_provider.py\nwarning: in the working copy of '.env.example', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'pyproject.toml', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'src/swapdesk/telemetry.py', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'uv.lock', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'tests/test_provider.py', LF will be replaced by CRLF the next time Git touches it\n[main 699ddb1] Add env-driven model provider switch with LiteLLM support\r\n 7 files changed, 430 insertions(+), 15 deletions(-)\r\n create mode 100644 tests/test_provider.py\r\n● Checkpoint 01M4K0NG50GNBBWWXQ1Q7KJGY2\r\n  session  ses_edbbdf128ffeRKDNSF0rKfxKpl\r\n  created  2026-10-10 13:40:18\r\n  author   adr1en360 <adrienoke@gmail.com>\r\n  tokens   11447k\r\n  commits  699ddb1 Add env-driven model provider switch with LiteLLM support\r\n",
+              "exit": 1,
+              "truncated": false
+            },
+            "title": "git status --porcelain=v1; git add -- src/swapdesk/agent/graph.py src/swapdesk/telemetry.py tests/test_provider.py .env.example README.md pyproject.toml uv.lock; git commit -m \"Add env-driven model provider switch with LiteLLM support\" 2>&1 | Select-Object -First 3; & \"C:\\Users\\DELL\\.local\\bin\\entire.exe\" checkpoint explain HEAD 2>$null | Select-Object -First 6",
             "time": {
-              "start": 1791639600093
+              "start": 1791639600093,
+              "end": 1791639620731
             }
           },
           "metadata": {
@@ -72255,6 +72263,251 @@
           "id": "prt_1260ab82e001XTmB4pB5fbfCpt",
           "sessionID": "ses_edbbdf128ffeRKDNSF0rKfxKpl",
           "messageID": "msg_1260aa08f001cA4VWuZfTckAl9"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "f98b3b81df7287766eeaa4c040f7f5167a79fb05",
+          "type": "step-finish",
+          "tokens": {
+            "total": 609585,
+            "input": 193,
+            "output": 174,
+            "reasoning": 81,
+            "cache": {
+              "write": 0,
+              "read": 609137
+            }
+          },
+          "cost": 0,
+          "id": "prt_1260b0da9001cmNtviPkOL0rDb",
+          "sessionID": "ses_edbbdf128ffeRKDNSF0rKfxKpl",
+          "messageID": "msg_1260aa08f001cA4VWuZfTckAl9"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_126041c0e0019858R2Qv5wZNEh",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "variant": "xhigh",
+        "path": {
+          "cwd": "C:\\Users\\DELL\\Documents\\SwapDesk",
+          "root": "C:\\Users\\DELL\\Documents\\SwapDesk"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 610273,
+          "input": 799,
+          "output": 170,
+          "reasoning": 167,
+          "cache": {
+            "write": 0,
+            "read": 609137
+          }
+        },
+        "modelID": "muse-spark-1.3-contributor-free",
+        "providerID": "opencode",
+        "time": {
+          "created": 1791639621427,
+          "completed": 1791639629451
+        },
+        "finish": "tool-calls",
+        "id": "msg_1260b0f33001FDdiBnAMxExk0o",
+        "sessionID": "ses_edbbdf128ffeRKDNSF0rKfxKpl"
+      },
+      "parts": [
+        {
+          "snapshot": "f98b3b81df7287766eeaa4c040f7f5167a79fb05",
+          "type": "step-start",
+          "id": "prt_1260b2355001cwkW48dRhzrL5v",
+          "sessionID": "ses_edbbdf128ffeRKDNSF0rKfxKpl",
+          "messageID": "msg_1260b0f33001FDdiBnAMxExk0o"
+        },
+        {
+          "type": "reasoning",
+          "text": "",
+          "time": {
+            "start": 1791639626584,
+            "end": 1791639628079
+          },
+          "metadata": {
+            "openai": {
+              "itemId": "rs_6aca404a2931ab3aaef2481b:rs_01a1260b235d73b8a14fde62e8d226b0",
+              "reasoningEncryptedContent": "REDACTED"
+            }
+          },
+          "id": "prt_1260b2358001ZFua5FLwd1ZS3i",
+          "sessionID": "ses_edbbdf128ffeRKDNSF0rKfxKpl",
+          "messageID": "msg_1260b0f33001FDdiBnAMxExk0o"
+        },
+        {
+          "type": "tool",
+          "tool": "todowrite",
+          "callID": "call_01a1260b29ee7111a9276ae590203d22",
+          "state": {
+            "status": "completed",
+            "input": {
+              "todos": [
+                {
+                  "content": "LiteLLM key test (1 call, models list)",
+                  "status": "completed",
+                  "priority": "high"
+                },
+                {
+                  "content": "Provider factory in build_model + wrap for OpenAI client",
+                  "status": "completed",
+                  "priority": "high"
+                },
+                {
+                  "content": "Factory tests (mocked, zero spend); full suite green",
+                  "status": "completed",
+                  "priority": "high"
+                },
+                {
+                  "content": ".env.example + README; commit + checkpoint; stop for slice 6",
+                  "status": "completed",
+                  "priority": "medium"
+                }
+              ]
+            },
+            "output": "[\n  {\n    \"content\": \"LiteLLM key test (1 call, models list)\",\n    \"status\": \"completed\",\n    \"priority\": \"high\"\n  },\n  {\n    \"content\": \"Provider factory in build_model + wrap for OpenAI client\",\n    \"status\": \"completed\",\n    \"priority\": \"high\"\n  },\n  {\n    \"content\": \"Factory tests (mocked, zero spend); full suite green\",\n    \"status\": \"completed\",\n    \"priority\": \"high\"\n  },\n  {\n    \"content\": \".env.example + README; commit + checkpoint; stop for slice 6\",\n    \"status\": \"completed\",\n    \"priority\": \"medium\"\n  }\n]",
+            "metadata": {
+              "todos": [
+                {
+                  "content": "LiteLLM key test (1 call, models list)",
+                  "status": "completed",
+                  "priority": "high"
+                },
+                {
+                  "content": "Provider factory in build_model + wrap for OpenAI client",
+                  "status": "completed",
+                  "priority": "high"
+                },
+                {
+                  "content": "Factory tests (mocked, zero spend); full suite green",
+                  "status": "completed",
+                  "priority": "high"
+                },
+                {
+                  "content": ".env.example + README; commit + checkpoint; stop for slice 6",
+                  "status": "completed",
+                  "priority": "medium"
+                }
+              ],
+              "truncated": false
+            },
+            "title": "0 todos",
+            "time": {
+              "start": 1791639628844,
+              "end": 1791639628848
+            }
+          },
+          "metadata": {
+            "openai": {
+              "itemId": "fc_01a1260b29ee7111a9276ae590203d22"
+            }
+          },
+          "id": "prt_1260b294d001n1yISiXvTiBGlf",
+          "sessionID": "ses_edbbdf128ffeRKDNSF0rKfxKpl",
+          "messageID": "msg_1260b0f33001FDdiBnAMxExk0o"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "f98b3b81df7287766eeaa4c040f7f5167a79fb05",
+          "type": "step-finish",
+          "tokens": {
+            "total": 610273,
+            "input": 799,
+            "output": 170,
+            "reasoning": 167,
+            "cache": {
+              "write": 0,
+              "read": 609137
+            }
+          },
+          "cost": 0,
+          "id": "prt_1260b2d76001b4nq9VkIFdrRkT",
+          "sessionID": "ses_edbbdf128ffeRKDNSF0rKfxKpl",
+          "messageID": "msg_1260b0f33001FDdiBnAMxExk0o"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_126041c0e0019858R2Qv5wZNEh",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "variant": "xhigh",
+        "path": {
+          "cwd": "C:\\Users\\DELL\\Documents\\SwapDesk",
+          "root": "C:\\Users\\DELL\\Documents\\SwapDesk"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 610728,
+          "input": 284,
+          "output": 283,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 610161
+          }
+        },
+        "modelID": "muse-spark-1.3-contributor-free",
+        "providerID": "opencode",
+        "time": {
+          "created": 1791639629530,
+          "completed": 1791639636836
+        },
+        "finish": "stop",
+        "id": "msg_1260b2eda001BqF6HCGdBUCJIO",
+        "sessionID": "ses_edbbdf128ffeRKDNSF0rKfxKpl"
+      },
+      "parts": [
+        {
+          "snapshot": "f98b3b81df7287766eeaa4c040f7f5167a79fb05",
+          "type": "step-start",
+          "id": "prt_1260b41d0001QjshI56iOO8ECx",
+          "sessionID": "ses_edbbdf128ffeRKDNSF0rKfxKpl",
+          "messageID": "msg_1260b2eda001BqF6HCGdBUCJIO"
+        },
+        {
+          "type": "text",
+          "text": "Done and stopped — no Slice 6 work started.\n\n**Test result: TRUE.** One call (`GET /v1/models`, zero generation spend): HTTP 200, key valid, all 7 models listed from this machine.\n\n**Implemented** (committed as `699ddb1` → checkpoint `01M4K0NG50…`):\n- `build_model()` is now a provider factory: `LITELLM_API_KEY` set → OpenAI-compatible client at the proxy (model/base-URL overridable, retries off); else `GEMINI_API_KEY` → direct Gemini; else a clear error. Same tools, graph, and budget middleware either way.\n- neatlogs wrap extended to OpenAI clients; `.env.example` + README document the switch.\n- 5 mocked factory tests, zero spend. Full suite: **100 passed, 1 skipped**.\n\n**Two things for you:**\n1. Set `SWAPDESK_MODEL` to one of the 7 for LiteLLM runs (it's still `gemini-3.8-flash`, which the proxy won't serve). `claude-haiku` is the default if unset.\n2. I left `frontend/package-lock.json` (someone else's modification) untouched.\n\nTotal LiteLLM spend so far: one free metadata call. Say the word when you want Slice 6.",
+          "time": {
+            "start": 1791639634387,
+            "end": 1791639636047
+          },
+          "metadata": {
+            "openai": {
+              "itemId": "msg_01a1260b40f7701ca30375041fdd5208"
+            }
+          },
+          "id": "prt_1260b41d3001x94pwaDgfgdRz3",
+          "sessionID": "ses_edbbdf128ffeRKDNSF0rKfxKpl",
+          "messageID": "msg_1260b2eda001BqF6HCGdBUCJIO"
+        },
+        {
+          "reason": "stop",
+          "snapshot": "f98b3b81df7287766eeaa4c040f7f5167a79fb05",
+          "type": "step-finish",
+          "tokens": {
+            "total": 610728,
+            "input": 284,
+            "output": 283,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 610161
+            }
+          },
+          "cost": 0,
+          "id": "prt_1260b4a36001oRkMMGgeEosml1",
+          "sessionID": "ses_edbbdf128ffeRKDNSF0rKfxKpl",
+          "messageID": "msg_1260b2eda001BqF6HCGdBUCJIO"
         }
       ]
     }
