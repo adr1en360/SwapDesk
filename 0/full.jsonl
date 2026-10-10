@@ -20,17 +20,17 @@
     },
     "cost": 0,
     "tokens": {
-      "input": 132563,
-      "output": 32406,
-      "reasoning": 16972,
+      "input": 135336,
+      "output": 33530,
+      "reasoning": 17325,
       "cache": {
-        "read": 8381084,
+        "read": 9023072,
         "write": 0
       }
     },
     "time": {
       "created": 1791656876609,
-      "updated": 1791658588921
+      "updated": 1791658626257
     }
   },
   "messages": [
@@ -12125,19 +12125,22 @@
         },
         "cost": 0,
         "tokens": {
-          "input": 0,
-          "output": 0,
-          "reasoning": 0,
+          "total": 160541,
+          "input": 789,
+          "output": 133,
+          "reasoning": 18,
           "cache": {
-            "read": 0,
-            "write": 0
+            "write": 0,
+            "read": 159601
           }
         },
         "modelID": "muse-spark-1.3-contributor-free",
         "providerID": "opencode",
         "time": {
-          "created": 1791658588906
+          "created": 1791658588906,
+          "completed": 1791658612328
         },
+        "finish": "tool-calls",
         "id": "msg_1272c7aea0016eprd0wS0gBHTv",
         "sessionID": "ses_ed8eda5beffePZFI4CujbQZDS6"
       },
@@ -12171,16 +12174,21 @@
           "tool": "bash",
           "callID": "call_01a1272c86d171479b2028a78570328f",
           "state": {
-            "metadata": {
-              "output": ""
-            },
-            "status": "running",
+            "status": "completed",
             "input": {
               "command": "git commit -m \"Fix evidence path: return decided data from run_agent; map denial/escalation in _run_log; add evidence-path regression tests\" ; echo \"---COMMIT-DONE---\"; git log --oneline -3; echo \"---\"; git status --porcelain",
               "workdir": "C:\\Users\\DELL\\Documents\\SwapDesk"
             },
+            "output": "[main 90c89d8] Fix evidence path: return decided data from run_agent; map denial/escalation in _run_log; add evidence-path regression tests\n 3 files changed, 402 insertions(+)\n create mode 100644 eval/baseline.py\n create mode 100644 tests/test_evidence_path.py\n---COMMIT-DONE---\r\n90c89d8 Fix evidence path: return decided data from run_agent; map denial/escalation in _run_log; add evidence-path regression tests\ne4e280d Restyle mobile bottom nav with solid elevated tab bar and active pill\n58bc7ed Merge branch 'main' of https://github.com/adr1en360/SwapDesk\n---\r\n M .env.example\n M eval/driver.py\n M frontend/AGENTS.md\n M frontend/package-lock.json\n M opencode.json\n M src/swapdesk/__init__.py\n M src/swapdesk/agent/prompts.py\n M src/swapdesk/agent/tools.py\n M src/swapdesk/models.py\n M src/swapdesk/operations.py\n M src/swapdesk/service.py\n M tests/test_exchange.py\n?? eval/results/baseline_v1.json\n?? eval/results/baseline_v2.json\n",
+            "metadata": {
+              "output": "[main 90c89d8] Fix evidence path: return decided data from run_agent; map denial/escalation in _run_log; add evidence-path regression tests\n 3 files changed, 402 insertions(+)\n create mode 100644 eval/baseline.py\n create mode 100644 tests/test_evidence_path.py\n---COMMIT-DONE---\r\n90c89d8 Fix evidence path: return decided data from run_agent; map denial/escalation in _run_log; add evidence-path regression tests\ne4e280d Restyle mobile bottom nav with solid elevated tab bar and active pill\n58bc7ed Merge branch 'main' of https://github.com/adr1en360/SwapDesk\n---\r\n M .env.example\n M eval/driver.py\n M frontend/AGENTS.md\n M frontend/package-lock.json\n M opencode.json\n M src/swapdesk/__init__.py\n M src/swapdesk/agent/prompts.py\n M src/swapdesk/agent/tools.py\n M src/swapdesk/models.py\n M src/swapdesk/operations.py\n M src/swapdesk/service.py\n M tests/test_exchange.py\n?? eval/results/baseline_v1.json\n?? eval/results/baseline_v2.json\n",
+              "exit": 0,
+              "truncated": false
+            },
+            "title": "git commit -m \"Fix evidence path: return decided data from run_agent; map denial/escalation in _run_log; add evidence-path regression tests\" ; echo \"---COMMIT-DONE---\"; git log --oneline -3; echo \"---\"; git status --porcelain",
             "time": {
-              "start": 1791658592044
+              "start": 1791658592044,
+              "end": 1791658611790
             }
           },
           "metadata": {
@@ -12191,6 +12199,370 @@
           "id": "prt_1272c84e3001jTLERWS6SfEfnd",
           "sessionID": "ses_ed8eda5beffePZFI4CujbQZDS6",
           "messageID": "msg_1272c7aea0016eprd0wS0gBHTv"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "96882999ed4c31aeadcdb7dd2068b85071b193ee",
+          "type": "step-finish",
+          "tokens": {
+            "total": 160541,
+            "input": 789,
+            "output": 133,
+            "reasoning": 18,
+            "cache": {
+              "write": 0,
+              "read": 159601
+            }
+          },
+          "cost": 0,
+          "id": "prt_1272cd5570011x9svw5xhFCs0B",
+          "sessionID": "ses_ed8eda5beffePZFI4CujbQZDS6",
+          "messageID": "msg_1272c7aea0016eprd0wS0gBHTv"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_127291980001gPQmS6LnX44Qlu",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "variant": "xhigh",
+        "path": {
+          "cwd": "C:\\Users\\DELL\\Documents\\SwapDesk",
+          "root": "C:\\Users\\DELL\\Documents\\SwapDesk"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 160960,
+          "input": 706,
+          "output": 115,
+          "reasoning": 26,
+          "cache": {
+            "write": 0,
+            "read": 160113
+          }
+        },
+        "modelID": "muse-spark-1.3-contributor-free",
+        "providerID": "opencode",
+        "time": {
+          "created": 1791658612357,
+          "completed": 1791658619960
+        },
+        "finish": "tool-calls",
+        "id": "msg_1272cd685001js7K2VDLJIpfyu",
+        "sessionID": "ses_ed8eda5beffePZFI4CujbQZDS6"
+      },
+      "parts": [
+        {
+          "snapshot": "96882999ed4c31aeadcdb7dd2068b85071b193ee",
+          "type": "step-start",
+          "id": "prt_1272cdee5001f7DUIoQ2a0cH0X",
+          "sessionID": "ses_ed8eda5beffePZFI4CujbQZDS6",
+          "messageID": "msg_1272cd685001js7K2VDLJIpfyu"
+        },
+        {
+          "type": "reasoning",
+          "text": "",
+          "time": {
+            "start": 1791658614504,
+            "end": 1791658614509
+          },
+          "metadata": {
+            "openai": {
+              "itemId": "rs_6aca8a7600653c9430364109:rs_01a1272ce09b75ecb409e983441558d7",
+              "reasoningEncryptedContent": "REDACTED"
+            }
+          },
+          "id": "prt_1272cdee80014wdBO46xJlRVaS",
+          "sessionID": "ses_ed8eda5beffePZFI4CujbQZDS6",
+          "messageID": "msg_1272cd685001js7K2VDLJIpfyu"
+        },
+        {
+          "type": "tool",
+          "tool": "bash",
+          "callID": "call_01a1272ce15b7545b9e1e4052d963e24",
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "entire checkpoint list 2>&1 | Select-Object -First 12; echo \"===\"; entire checkpoint explain 90c89d8 2>&1 | Select-Object -First 25",
+              "workdir": "C:\\Users\\DELL\\Documents\\SwapDesk"
+            },
+            "output": "  branch       main\r\n  checkpoints  29\r\n\r\n● 01M4KYEQ87SJSJ87C70EMN0RHY  \"check the entire status\"\r\n  10-10 15:20 (e4e280d) Restyle mobile bottom nav with solid elevated tab bar and active pill\r\n\r\n● 01M4KXN1TARDQP2SXVZQ3YEEGX  \"check the entire status\"\r\n  10-10 15:06 (71ea534) Remove neatlogs trace page, add full SEO to all routes, and write frontend RE...\r\n\r\n● 01M4KVKQRJECPT2TEYWEDKMS8C  \"check the entire status\"\r\n  10-10 14:30 (5f79752) Fix blocking prerender on /ticket/[id] by wrapping useParams in Suspense with...\r\n\r\n===\r\n● Checkpoint 01M4KJS2K88G9T2AWH11WVZG44\r\n  session  ses_edbbdf128ffeRKDNSF0rKfxKpl\r\n  created  2026-10-10 18:56:50\r\n  author   adr1en360 <adrienoke@gmail.com>\r\n  tokens   71746.3k\r\n  commits  90c89d8 Fix evidence path: return decided data from run_agent; map denial/escalation in _run_log; add evidence-path regression tests\r\n────────────────────────────────────────────────────────────\r\n## Intent\r\n\r\ncontinue, make no mistakes\r\n\r\n## Summary\r\n\r\n*Not generated yet. Run ‘entire checkpoint explain --generate 01M4KJS2K88G9T2AWH11WVZG44‘ to create an AI summary.*\r\n\r\n## Files (2)\r\n\r\n- `eval/baseline.py`\r\n- `src/swapdesk/agent/graph.py`\r\n\r\n── Transcript (checkpoint scope) ───────────────────────────\r\n[User] continue, make no mistakes\r\n\r\n[Assistant] Carefully resuming — verifying file state and disk first, no assumptions.\r\n\r\n",
+            "metadata": {
+              "output": "  branch       main\r\n  checkpoints  29\r\n\r\n● 01M4KYEQ87SJSJ87C70EMN0RHY  \"check the entire status\"\r\n  10-10 15:20 (e4e280d) Restyle mobile bottom nav with solid elevated tab bar and active pill\r\n\r\n● 01M4KXN1TARDQP2SXVZQ3YEEGX  \"check the entire status\"\r\n  10-10 15:06 (71ea534) Remove neatlogs trace page, add full SEO to all routes, and write frontend RE...\r\n\r\n● 01M4KVKQRJECPT2TEYWEDKMS8C  \"check the entire status\"\r\n  10-10 14:30 (5f79752) Fix blocking prerender on /ticket/[id] by wrapping useParams in Suspense with...\r\n\r\n===\r\n● Checkpoint 01M4KJS2K88G9T2AWH11WVZG44\r\n  session  ses_edbbdf128ffeRKDNSF0rKfxKpl\r\n  created  2026-10-10 18:56:50\r\n  author   adr1en360 <adrienoke@gmail.com>\r\n  tokens   71746.3k\r\n  commits  90c89d8 Fix evidence path: return decided data from run_agent; map denial/escalation in _run_log; add evidence-path regression tests\r\n────────────────────────────────────────────────────────────\r\n## Intent\r\n\r\ncontinue, make no mistakes\r\n\r\n## Summary\r\n\r\n*Not generated yet. Run ‘entire checkpoint explain --generate 01M4KJS2K88G9T2AWH11WVZG44‘ to create an AI summary.*\r\n\r\n## Files (2)\r\n\r\n- `eval/baseline.py`\r\n- `src/swapdesk/agent/graph.py`\r\n\r\n── Transcript (checkpoint scope) ───────────────────────────\r\n[User] continue, make no mistakes\r\n\r\n[Assistant] Carefully resuming — verifying file state and disk first, no assumptions.\r\n\r\n",
+              "exit": 1,
+              "truncated": false
+            },
+            "title": "entire checkpoint list 2>&1 | Select-Object -First 12; echo \"===\"; entire checkpoint explain 90c89d8 2>&1 | Select-Object -First 25",
+            "time": {
+              "start": 1791658615022,
+              "end": 1791658619358
+            }
+          },
+          "metadata": {
+            "openai": {
+              "itemId": "fc_01a1272ce15b7545b9e1e4052d963e24"
+            }
+          },
+          "id": "prt_1272cdef1001cgzZ4igR14CRVV",
+          "sessionID": "ses_ed8eda5beffePZFI4CujbQZDS6",
+          "messageID": "msg_1272cd685001js7K2VDLJIpfyu"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "96882999ed4c31aeadcdb7dd2068b85071b193ee",
+          "type": "step-finish",
+          "tokens": {
+            "total": 160960,
+            "input": 706,
+            "output": 115,
+            "reasoning": 26,
+            "cache": {
+              "write": 0,
+              "read": 160113
+            }
+          },
+          "cost": 0,
+          "id": "prt_1272cf3180014KbLN55aukFlOd",
+          "sessionID": "ses_ed8eda5beffePZFI4CujbQZDS6",
+          "messageID": "msg_1272cd685001js7K2VDLJIpfyu"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_127291980001gPQmS6LnX44Qlu",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "variant": "xhigh",
+        "path": {
+          "cwd": "C:\\Users\\DELL\\Documents\\SwapDesk",
+          "root": "C:\\Users\\DELL\\Documents\\SwapDesk"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 161943,
+          "input": 792,
+          "output": 217,
+          "reasoning": 309,
+          "cache": {
+            "write": 0,
+            "read": 160625
+          }
+        },
+        "modelID": "muse-spark-1.3-contributor-free",
+        "providerID": "opencode",
+        "time": {
+          "created": 1791658619977,
+          "completed": 1791658626227
+        },
+        "finish": "tool-calls",
+        "id": "msg_1272cf449001GoceEXYAumDOQz",
+        "sessionID": "ses_ed8eda5beffePZFI4CujbQZDS6"
+      },
+      "parts": [
+        {
+          "snapshot": "96882999ed4c31aeadcdb7dd2068b85071b193ee",
+          "type": "step-start",
+          "id": "prt_1272d0282001f91tDguYk0hhnu",
+          "sessionID": "ses_ed8eda5beffePZFI4CujbQZDS6",
+          "messageID": "msg_1272cf449001GoceEXYAumDOQz"
+        },
+        {
+          "type": "reasoning",
+          "text": "Verifying checkpoint authenticity and session mismatch between current and referenced session.",
+          "time": {
+            "start": 1791658623620,
+            "end": 1791658624976
+          },
+          "metadata": {
+            "openai": {
+              "itemId": "rs_6aca8a7eb2262151ef984d68:rs_01a1272cffca7623a0125dd6c686c31a",
+              "reasoningEncryptedContent": "REDACTED"
+            }
+          },
+          "id": "prt_1272d0284001TsNDhEBKOWdMMS",
+          "sessionID": "ses_ed8eda5beffePZFI4CujbQZDS6",
+          "messageID": "msg_1272cf449001GoceEXYAumDOQz"
+        },
+        {
+          "type": "tool",
+          "tool": "todowrite",
+          "callID": "call_01a1272d0ab87798b65e86836244bd47",
+          "state": {
+            "status": "completed",
+            "input": {
+              "todos": [
+                {
+                  "content": "Retain run_agent data fix + correct _run_log outcome mapping",
+                  "status": "completed",
+                  "priority": "high"
+                },
+                {
+                  "content": "Add deterministic regression tests (denial/clarification/escalation full path)",
+                  "status": "completed",
+                  "priority": "high"
+                },
+                {
+                  "content": "Demonstrate before/after on identical scripted inputs ($0)",
+                  "status": "completed",
+                  "priority": "high"
+                },
+                {
+                  "content": "Run relevant + full deterministic suite",
+                  "status": "completed",
+                  "priority": "high"
+                },
+                {
+                  "content": "Focused commit (explicit hunks only) + Entire checkpoint verify, no push",
+                  "status": "completed",
+                  "priority": "high"
+                }
+              ]
+            },
+            "output": "[\n  {\n    \"content\": \"Retain run_agent data fix + correct _run_log outcome mapping\",\n    \"status\": \"completed\",\n    \"priority\": \"high\"\n  },\n  {\n    \"content\": \"Add deterministic regression tests (denial/clarification/escalation full path)\",\n    \"status\": \"completed\",\n    \"priority\": \"high\"\n  },\n  {\n    \"content\": \"Demonstrate before/after on identical scripted inputs ($0)\",\n    \"status\": \"completed\",\n    \"priority\": \"high\"\n  },\n  {\n    \"content\": \"Run relevant + full deterministic suite\",\n    \"status\": \"completed\",\n    \"priority\": \"high\"\n  },\n  {\n    \"content\": \"Focused commit (explicit hunks only) + Entire checkpoint verify, no push\",\n    \"status\": \"completed\",\n    \"priority\": \"high\"\n  }\n]",
+            "metadata": {
+              "todos": [
+                {
+                  "content": "Retain run_agent data fix + correct _run_log outcome mapping",
+                  "status": "completed",
+                  "priority": "high"
+                },
+                {
+                  "content": "Add deterministic regression tests (denial/clarification/escalation full path)",
+                  "status": "completed",
+                  "priority": "high"
+                },
+                {
+                  "content": "Demonstrate before/after on identical scripted inputs ($0)",
+                  "status": "completed",
+                  "priority": "high"
+                },
+                {
+                  "content": "Run relevant + full deterministic suite",
+                  "status": "completed",
+                  "priority": "high"
+                },
+                {
+                  "content": "Focused commit (explicit hunks only) + Entire checkpoint verify, no push",
+                  "status": "completed",
+                  "priority": "high"
+                }
+              ],
+              "truncated": false
+            },
+            "title": "0 todos",
+            "time": {
+              "start": 1791658625706,
+              "end": 1791658625711
+            }
+          },
+          "metadata": {
+            "openai": {
+              "itemId": "fc_01a1272d0ab87798b65e86836244bd47"
+            }
+          },
+          "id": "prt_1272d081f001BN0EmLDLosp0vP",
+          "sessionID": "ses_ed8eda5beffePZFI4CujbQZDS6",
+          "messageID": "msg_1272cf449001GoceEXYAumDOQz"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "96882999ed4c31aeadcdb7dd2068b85071b193ee",
+          "type": "step-finish",
+          "tokens": {
+            "total": 161943,
+            "input": 792,
+            "output": 217,
+            "reasoning": 309,
+            "cache": {
+              "write": 0,
+              "read": 160625
+            }
+          },
+          "cost": 0,
+          "id": "prt_1272d0bc6001c0u6RO6Jo5PpC6",
+          "sessionID": "ses_ed8eda5beffePZFI4CujbQZDS6",
+          "messageID": "msg_1272cf449001GoceEXYAumDOQz"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_127291980001gPQmS6LnX44Qlu",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "variant": "xhigh",
+        "path": {
+          "cwd": "C:\\Users\\DELL\\Documents\\SwapDesk",
+          "root": "C:\\Users\\DELL\\Documents\\SwapDesk"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 162794,
+          "input": 486,
+          "output": 659,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 161649
+          }
+        },
+        "modelID": "muse-spark-1.3-contributor-free",
+        "providerID": "opencode",
+        "time": {
+          "created": 1791658626244,
+          "completed": 1791658632624
+        },
+        "finish": "stop",
+        "id": "msg_1272d0cc4001BDNAQVnxjeRY7e",
+        "sessionID": "ses_ed8eda5beffePZFI4CujbQZDS6"
+      },
+      "parts": [
+        {
+          "snapshot": "96882999ed4c31aeadcdb7dd2068b85071b193ee",
+          "type": "step-start",
+          "id": "prt_1272d158f001xmNu7oxkAwh0RJ",
+          "sessionID": "ses_ed8eda5beffePZFI4CujbQZDS6",
+          "messageID": "msg_1272d0cc4001BDNAQVnxjeRY7e"
+        },
+        {
+          "type": "text",
+          "text": "Focused correction complete. Runner/harness correctness — not improved model reasoning. $0 paid calls. Nothing pushed.\n\n**Before/after (identical scripted inputs, ScriptedChatModel)**\n- DENIAL before: `has_data=False`, `log_reason=''`, checker `[\"expected message containing 'final sale', got ''\"]`\n- DENIAL after: `reason='sold as final sale'`, `log_reason='sold as final sale'`, checker `passed=True, fails=[]`\n- ESCALATION before: `has_data=False`, `log_reason=''`, checker `[\"expected escalation reason 'customer asked for a human', got ''\"]`\n- ESCALATION after: `reason='customer asked for a human'`, `log_reason` same, `passed=True`\n- Assertion flips: `expected message True→False`; `expected escalation reason True→False`. Clarification already passed (strings coincided) and still passes.\n\n**Tests**\n- New `tests/test_evidence_path.py` (denial/clarification/escalation, state→run_agent→_run_log→checker): 3 passed.\n- Full deterministic suite: **106 passed, 1 skipped** (`pytest tests/ -x -q`). No prompt optimization started. (Atexit neatlogs SDK log-close noise only, not a failure.)\n\n**Commit (local only, no push)**\n- SHA `90c89d8` — \"Fix evidence path: return decided data from run_agent; map denial/escalation in _run_log; add evidence-path regression tests\"\n- Contains only: `src/swapdesk/agent/graph.py` (+1 line `\"data\": decided[\"data\"]`), `eval/baseline.py` (new, 273 lines — required home of the `_run_log` fix; secret scan clean, only usage-accounting `tokens_in/out` matches), `tests/test_evidence_path.py` (new, 128 lines). Staged explicitly, never `git add .`.\n- `_run_log` change: `== \"denied\"` → `in (\"denied\",\"denial\")`; `== \"escalated\"` → `in (\"escalated\",\"escalation\")`. Checker and prompts untouched.\n\n**Checkpoint (genuine, not fabricated)**\n- `entire checkpoint explain 90c89d8` → checkpoint `01M4KJS2K88G9T2AWH11WVZG44` lists commit `90c89d8`. Files shown: `eval/baseline.py`, `src/swapdesk/agent/graph.py`.\n\n**Remaining unstaged (untouched)**\n- Modified: `.env.example`, `eval/driver.py`, `frontend/AGENTS.md`, `frontend/package-lock.json`, `opencode.json`, `src/swapdesk/__init__.py`, `agent/prompts.py`, `agent/tools.py`, `models.py`, `operations.py`, `service.py`, `tests/test_exchange.py`\n- Untracked: `eval/results/baseline_v1.json`, `eval/results/baseline_v2.json`\n- Still open: model decision errors in v2 (wrong outcomes/paraphrases) are out of scope for this plumbing fix.\n",
+          "time": {
+            "start": 1791658628498,
+            "end": 1791658631886
+          },
+          "metadata": {
+            "openai": {
+              "itemId": "msg_01a1272d16bb72d783cbd29b8b27e975"
+            }
+          },
+          "id": "prt_1272d1592001OEpfEkiZWsbMhf",
+          "sessionID": "ses_ed8eda5beffePZFI4CujbQZDS6",
+          "messageID": "msg_1272d0cc4001BDNAQVnxjeRY7e"
+        },
+        {
+          "reason": "stop",
+          "snapshot": "96882999ed4c31aeadcdb7dd2068b85071b193ee",
+          "type": "step-finish",
+          "tokens": {
+            "total": 162794,
+            "input": 486,
+            "output": 659,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 161649
+            }
+          },
+          "cost": 0,
+          "id": "prt_1272d241f001r19spi8VSNpPfX",
+          "sessionID": "ses_ed8eda5beffePZFI4CujbQZDS6",
+          "messageID": "msg_1272d0cc4001BDNAQVnxjeRY7e"
         }
       ]
     }
