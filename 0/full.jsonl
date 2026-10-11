@@ -19,17 +19,17 @@
     },
     "cost": 0,
     "tokens": {
-      "input": 690934,
-      "output": 86893,
-      "reasoning": 44189,
+      "input": 703253,
+      "output": 89373,
+      "reasoning": 46594,
       "cache": {
-        "read": 16662912,
+        "read": 17438720,
         "write": 0
       }
     },
     "time": {
       "created": 1791700257555,
-      "updated": 1791750753922
+      "updated": 1791751150090
     }
   },
   "messages": [
@@ -25049,7 +25049,78 @@
           "modelID": "big-pickle"
         },
         "summary": {
-          "diffs": []
+          "diffs": [
+            {
+              "file": "frontend/app/database/layout.tsx",
+              "patch": "Index: frontend/app/database/layout.tsx\n===================================================================\n--- frontend/app/database/layout.tsx\t\n+++ frontend/app/database/layout.tsx\t\n@@ -1,12 +0,0 @@\n-import type { Metadata } from \"next\";\r\n-import { pageMetadata } from \"@/lib/seo\";\r\n-\r\n-export const metadata: Metadata = pageMetadata({\r\n-  title: \"Database Schema\",\r\n-  description: \"Tables the SwapDesk agent reads and writes during autonomous support.\",\r\n-  path: \"/database\",\r\n-});\r\n-\r\n-export default function DatabaseLayout({ children }: { children: React.ReactNode }) {\r\n-  return children;\r\n-}\r\n",
+              "additions": 0,
+              "deletions": 12,
+              "status": "deleted"
+            },
+            {
+              "file": "frontend/app/database/page.tsx",
+              "patch": "Index: frontend/app/database/page.tsx\n===================================================================\n--- frontend/app/database/page.tsx\t\n+++ frontend/app/database/page.tsx\t\n@@ -1,45 +0,0 @@\n-\"use client\";\r\n-\r\n-import { useState } from \"react\";\r\n-import { AppShell, PageTitle } from \"@/components/AppShell\";\r\n-\r\n-const tables: Record<string, string[]> = {\r\n-  Orders: [\"id TEXT PK\", \"customer_id TEXT\", \"sku TEXT\", \"delivered_at TIMESTAMPTZ\", \"status TEXT\"],\r\n-  Return_Policy: [\"category TEXT PK\", \"window_days INT\", \"swap_allowed BOOL\", \"requires_unworn BOOL\"],\r\n-  inventory: [\"sku TEXT PK\", \"size INT\", \"stock INT\", \"reserved INT\", \"warehouse TEXT\"],\r\n-  shipping_labels: [\"label_id TEXT PK\", \"op_id TEXT UNIQUE\", \"carrier TEXT\", \"status TEXT\", \"created_at TIMESTAMPTZ\"],\r\n-  operations: [\"op_id TEXT PK\", \"ticket_id TEXT\", \"tool TEXT\", \"status TEXT\", \"latency_ms INT\"],\r\n-};\r\n-\r\n-export default function DatabasePage() {\r\n-  const names = Object.keys(tables);\r\n-  const [sel, setSel] = useState<string>(\"Orders\");\r\n-\r\n-  return (\r\n-    <AppShell crumbs={[{ label: \"SwapDesk\", to: \"/\" }, { label: \"Database\" }]}>\r\n-      <PageTitle title=\"Database\" sub=\"op_id UNIQUE constraints enforce idempotency at the storage layer.\" />\r\n-      <div className=\"grid gap-4 md:grid-cols-[220px_minmax(0,1fr)]\">\r\n-        <div className=\"panel flex gap-1 overflow-x-auto p-2 md:flex-col\">\r\n-          {names.map((n) => (\r\n-            <button\r\n-              key={n}\r\n-              onClick={() => setSel(n)}\r\n-              className={`shrink-0 rounded-lg px-3 py-2 text-left font-mono text-xs transition-colors ${sel === n ? \"bg-accent text-foreground\" : \"text-muted-foreground hover:bg-accent/50\"}`}\r\n-            >\r\n-              {n}\r\n-            </button>\r\n-          ))}\r\n-        </div>\r\n-        <div className=\"panel min-w-0 p-5 font-mono text-sm\">\r\n-          <p className=\"mb-3 text-success\">CREATE TABLE {sel} (</p>\r\n-          {(tables[sel] ?? []).map((c) => (\r\n-            <p key={c} className=\"break-words pl-5 text-foreground/85\">\r\n-              {c},\r\n-            </p>\r\n-          ))}\r\n-          <p className=\"mt-1 text-success\">);</p>\r\n-        </div>\r\n-      </div>\r\n-    </AppShell>\r\n-  );\r\n-}\r\n",
+              "additions": 0,
+              "deletions": 45,
+              "status": "deleted"
+            },
+            {
+              "file": "frontend/app/integrations/layout.tsx",
+              "patch": "Index: frontend/app/integrations/layout.tsx\n===================================================================\n--- frontend/app/integrations/layout.tsx\t\n+++ frontend/app/integrations/layout.tsx\t\n@@ -1,12 +0,0 @@\n-import type { Metadata } from \"next\";\r\n-import { pageMetadata } from \"@/lib/seo\";\r\n-\r\n-export const metadata: Metadata = pageMetadata({\r\n-  title: \"Integrations\",\r\n-  description: \"Connect your existing helpdesk to route tickets to the SwapDesk AI via inbound webhooks.\",\r\n-  path: \"/integrations\",\r\n-});\r\n-\r\n-export default function IntegrationsLayout({ children }: { children: React.ReactNode }) {\r\n-  return children;\r\n-}\r\n",
+              "additions": 0,
+              "deletions": 12,
+              "status": "deleted"
+            },
+            {
+              "file": "frontend/app/integrations/page.tsx",
+              "patch": "Index: frontend/app/integrations/page.tsx\n===================================================================\n--- frontend/app/integrations/page.tsx\t\n+++ frontend/app/integrations/page.tsx\t\n@@ -1,136 +0,0 @@\n-\"use client\";\r\n-\r\n-import { useState } from \"react\";\r\n-import { toast } from \"sonner\";\r\n-import { Check, Copy, LifeBuoy, MessagesSquare, ShoppingBag } from \"lucide-react\";\r\n-import { AppShell, PageTitle } from \"@/components/AppShell\";\r\n-\r\n-const integrations = [\r\n-  {\r\n-    key: \"zendesk\",\r\n-    name: \"Zendesk\",\r\n-    desc: \"Route new support tickets straight into the SwapDesk agent pipeline.\",\r\n-    webhook: \"https://api.swapdesk.io/webhook/zd-1a2b\",\r\n-    lastPing: \"2 mins ago\",\r\n-    icon: LifeBuoy,\r\n-    tile: \"border-success/15 bg-success/[0.06] text-success\",\r\n-  },\r\n-  {\r\n-    key: \"shopify\",\r\n-    name: \"Shopify Inbox\",\r\n-    desc: \"Turn storefront chats and exchange requests into routable tickets.\",\r\n-    webhook: \"https://api.swapdesk.io/webhook/sh-4f9c\",\r\n-    lastPing: \"—\",\r\n-    icon: ShoppingBag,\r\n-    tile: \"border-primary/15 bg-primary/[0.06] text-primary\",\r\n-  },\r\n-  {\r\n-    key: \"gorgias\",\r\n-    name: \"Gorgias\",\r\n-    desc: \"Forward ecommerce conversations to SwapDesk for autonomous handling.\",\r\n-    webhook: \"https://api.swapdesk.io/webhook/gg-7d3e\",\r\n-    lastPing: \"—\",\r\n-    icon: MessagesSquare,\r\n-    tile: \"border-warning/15 bg-warning/[0.06] text-warning\",\r\n-  },\r\n-] as const;\r\n-\r\n-export default function IntegrationsPage() {\r\n-  const [on, setOn] = useState<Record<string, boolean>>({ zendesk: true, shopify: false, gorgias: false });\r\n-  const [copied, setCopied] = useState<string | null>(null);\r\n-\r\n-  const copy = (key: string, webhook: string) => {\r\n-    navigator.clipboard?.writeText(webhook).catch(() => {});\r\n-    setCopied(key);\r\n-    toast(\"Webhook URL copied to clipboard\");\r\n-    window.setTimeout(() => setCopied((current) => (current === key ? null : current)), 1500);\r\n-  };\r\n-\r\n-  return (\r\n-    <AppShell crumbs={[{ label: \"SwapDesk\", to: \"/\" }, { label: \"Integrations\" }]} metrics={false}>\r\n-      <PageTitle\r\n-        title=\"Inbound Triggers (Webhooks)\"\r\n-        sub=\"Connect your existing helpdesk to route tickets to the SwapDesk AI.\"\r\n-      />\r\n-\r\n-      <div className=\"grid gap-4 lg:grid-cols-2 xl:grid-cols-3\">\r\n-        {integrations.map((integration) => {\r\n-          const enabled = on[integration.key];\r\n-          const Icon = integration.icon;\r\n-          return (\r\n-            <article key={integration.key} className=\"panel flex flex-col p-5\">\r\n-              <div className=\"flex items-start justify-between gap-4\">\r\n-                <div className=\"flex min-w-0 items-start gap-3\">\r\n-                  <span className={`grid h-11 w-11 shrink-0 place-items-center rounded-xl border ${integration.tile}`}>\r\n-                    <Icon className=\"h-5 w-5\" />\r\n-                  </span>\r\n-                  <div className=\"min-w-0\">\r\n-                    <div className=\"flex flex-wrap items-center gap-2\">\r\n-                      <p className=\"text-sm font-semibold\">{integration.name}</p>\r\n-                      {enabled && (\r\n-                        <span className=\"inline-flex items-center gap-1.5 rounded-full border border-success/20 bg-success/[0.06] px-2 py-0.5 font-mono text-[9px] uppercase tracking-wide text-success\">\r\n-                          <span className=\"h-1.5 w-1.5 rounded-full bg-success pulse-dot\" />\r\n-                          Live\r\n-                        </span>\r\n-                      )}\r\n-                    </div>\r\n-                    <p className=\"mt-1 text-xs leading-relaxed text-muted-foreground\">{integration.desc}</p>\r\n-                  </div>\r\n-                </div>\r\n-\r\n-                <button\r\n-                  type=\"button\"\r\n-                  role=\"switch\"\r\n-                  aria-checked={enabled}\r\n-                  aria-label={`Toggle ${integration.name}`}\r\n-                  onClick={() => {\r\n-                    setOn((prev) => ({ ...prev, [integration.key]: !prev[integration.key] }));\r\n-                    toast(`${integration.name} ${enabled ? \"disconnected\" : \"connected\"}`);\r\n-                  }}\r\n-                  className={`relative h-6 w-11 shrink-0 rounded-full border border-hairline transition-colors ${enabled ? \"bg-primary\" : \"bg-muted\"}`}\r\n-                >\r\n-                  <span\r\n-                    className={`absolute top-0.5 h-[18px] w-[18px] rounded-full bg-foreground transition-all ${enabled ? \"left-[22px]\" : \"left-0.5\"}`}\r\n-                  />\r\n-                </button>\r\n-              </div>\r\n-\r\n-              {enabled && (\r\n-                <div className=\"rise mt-5 space-y-3 border-t border-hairline pt-5\">\r\n-                  <div className=\"space-y-1.5\">\r\n-                    <label htmlFor={`webhook-${integration.key}`} className=\"flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground\">\r\n-                      Webhook URL\r\n-                    </label>\r\n-                    <div className=\"flex items-center gap-2\">\r\n-                      <input\r\n-                        id={`webhook-${integration.key}`}\r\n-                        readOnly\r\n-                        value={integration.webhook}\r\n-                        onFocus={(event) => event.target.select()}\r\n-                        className=\"min-w-0 flex-1 rounded-lg border border-hairline bg-background/60 px-3 py-2 font-mono text-xs text-foreground/90 outline-none transition-colors focus:border-success/40\"\r\n-                      />\r\n-                      <button\r\n-                        type=\"button\"\r\n-                        onClick={() => copy(integration.key, integration.webhook)}\r\n-                        aria-label={`Copy ${integration.name} webhook URL`}\r\n-                        className=\"grid h-9 w-9 shrink-0 place-items-center rounded-lg border border-hairline bg-card/60 text-muted-foreground transition-colors hover:bg-accent/60 hover:text-foreground\"\r\n-                      >\r\n-                        {copied === integration.key ? <Check className=\"h-3.5 w-3.5 text-success\" /> : <Copy className=\"h-3.5 w-3.5\" />}\r\n-                      </button>\r\n-                    </div>\r\n-                  </div>\r\n-\r\n-                  <div className=\"flex items-center gap-2 text-xs\">\r\n-                    <span className=\"h-1.5 w-1.5 rounded-full bg-success pulse-dot\" />\r\n-                    <span className=\"font-medium text-success\">Connected</span>\r\n-                    <span className=\"text-muted-foreground\">· Last Ping: {integration.lastPing}</span>\r\n-                  </div>\r\n-                </div>\r\n-              )}\r\n-            </article>\r\n-          );\r\n-        })}\r\n-      </div>\r\n-    </AppShell>\r\n-  );\r\n-}\r\n",
+              "additions": 0,
+              "deletions": 136,
+              "status": "deleted"
+            },
+            {
+              "file": "frontend/app/mission-control.tsx",
+              "patch": "Index: frontend/app/mission-control.tsx\n===================================================================\n--- frontend/app/mission-control.tsx\t\n+++ frontend/app/mission-control.tsx\t\n@@ -1,314 +1,321 @@\n \"use client\";\r\n \r\n import Link from \"next/link\";\r\n import { useState } from \"react\";\r\n-import {\r\n-  ArrowUpRight,\r\n-  Check,\r\n-  ChevronDown,\r\n-  CircleDollarSign,\r\n-  Clock3,\r\n-  PackageCheck,\r\n-  ShieldAlert,\r\n-} from \"lucide-react\";\r\n+import { ArrowUpRight, Check, ChevronDown, Clock3, ShieldAlert } from \"lucide-react\";\r\n import { AppShell } from \"@/components/AppShell\";\r\n import { useSwapDesk } from \"@/store/swapdesk\";\r\n import type { AgentCase } from \"@/lib/api\";\r\n \r\n type Filter = \"all\" | \"active\" | \"needs-input\" | \"done\" | \"failed\";\r\n \r\n function matchesFilter(ticket: AgentCase, filter: Filter): boolean {\r\n   if (filter === \"all\") return true;\r\n   if (filter === \"active\")\r\n     return ticket.execution_status === \"queued\" || ticket.execution_status === \"running\";\r\n   if (filter === \"needs-input\") return ticket.execution_status === \"waiting_input\";\r\n   if (filter === \"done\") return ticket.execution_status === \"completed\";\r\n   return ticket.execution_status === \"failed\";\r\n }\r\n \r\n-function statusLabel(ticket: AgentCase): string {\r\n-  return ticket.outcome ?? ticket.execution_status;\r\n+function outcomeTone(outcome: string | null): string {\r\n+  if (outcome === \"arranged\") return \"bg-success\";\r\n+  if (outcome === \"denial\" || outcome === \"escalation\") return \"bg-warning\";\r\n+  if (outcome === \"clarification\") return \"bg-primary\";\r\n+  return \"bg-muted-foreground/40\";\r\n }\r\n \r\n+function executionTone(status: string): string {\r\n+  if (status === \"failed\") return \"text-warning\";\r\n+  if (status === \"completed\") return \"text-success\";\r\n+  return \"text-primary\";\r\n+}\r\n+\r\n export function MissionControl() {\r\n   const {\r\n     cases,\r\n     summary,\r\n     total,\r\n     loading,\r\n     error,\r\n     health,\r\n     ready,\r\n     refreshStatus,\r\n     executionFilter,\r\n     setExecutionFilter,\r\n     hasMore,\r\n     loadMore,\r\n     refresh,\r\n   } = useSwapDesk();\r\n   const [filter, setFilter] = useState<Filter>(\"all\");\r\n   const visibleTickets = cases.filter((ticket) => matchesFilter(ticket, filter));\r\n \r\n   const queuedDepth = ready?.queued_depth ?? 0;\r\n   const backendLabel =\r\n     health === \"online\" ? \"Backend online\" : health === \"offline\" ? \"Backend offline\" : \"Checking…\";\r\n \r\n   const execCounts = summary?.execution_status ?? {};\r\n   const outcomeCounts = summary?.outcome ?? {};\r\n+  const arrangedCount = outcomeCounts.arranged ?? 0;\r\n+  const failedCount = execCounts.failed ?? 0;\r\n   const activeCount =\r\n     (execCounts.queued ?? 0) + (execCounts.running ?? 0) + (execCounts.waiting_input ?? 0);\r\n-  const arrangedCount = outcomeCounts.arranged ?? 0;\r\n   const completionRate = total > 0 ? `${Math.round((arrangedCount / total) * 100)}%` : \"N/A\";\r\n \r\n-  const metrics = [\r\n-    {\r\n-      label: \"Completion Rate\",\r\n-      value: completionRate,\r\n-      detail: `${arrangedCount} arranged of ${total} cases`,\r\n-      icon: Check,\r\n-      tone: \"green\",\r\n-      footnote: \"From the saved case list\",\r\n-    },\r\n-    {\r\n-      label: \"Active Cases\",\r\n-      value: `${activeCount}`,\r\n-      detail: \"Queued, running, or waiting\",\r\n-      icon: Clock3,\r\n-      tone: \"green\",\r\n-      footnote: \"Polls while active\",\r\n-    },\r\n-    {\r\n-      label: \"Needs Input\",\r\n-      value: `${execCounts.waiting_input ?? 0}`,\r\n-      detail: \"Waiting on a reply\",\r\n-      icon: ShieldAlert,\r\n-      tone: \"green\",\r\n-      footnote: \"Reply on the ticket page\",\r\n-    },\r\n-    {\r\n-      label: \"Cost per execution\",\r\n-      value: \"Demo Mode\",\r\n-      detail: \"No backend billed\",\r\n-      icon: CircleDollarSign,\r\n-      tone: \"neutral\",\r\n-      footnote: \"Requests counted per run\",\r\n-    },\r\n+  const kpis = [\r\n+    { label: \"Total cases\", value: `${total}`, detail: \"Saved in this view\", icon: Check },\r\n+    { label: \"Arranged rate\", value: completionRate, detail: `${arrangedCount} arranged`, icon: Check },\r\n+    { label: \"Active\", value: `${activeCount}`, detail: \"Queued, running, or waiting\", icon: Clock3 },\r\n+    { label: \"Failed\", value: `${failedCount}`, detail: \"Ended in error\", icon: ShieldAlert },\r\n   ];\r\n \r\n+  const outcomeRows: Array<{ label: string; count: number; tone: string }> = [\r\n+    { label: \"Arranged\", count: outcomeCounts.arranged ?? 0, tone: \"bg-success\" },\r\n+    { label: \"Clarification\", count: outcomeCounts.clarification ?? 0, tone: \"bg-primary\" },\r\n+    { label: \"Denial\", count: outcomeCounts.denial ?? 0, tone: \"bg-warning\" },\r\n+    { label: \"Escalation\", count: outcomeCounts.escalation ?? 0, tone: \"bg-warning\" },\r\n+    { label: \"Pending\", count: outcomeCounts.pending ?? 0, tone: \"bg-muted-foreground/40\" },\r\n+  ];\r\n+  const outcomeMax = Math.max(1, ...outcomeRows.map((r) => r.count));\r\n+\r\n+  const execRows: Array<{ label: string; count: number }> = [\r\n+    { label: \"Queued\", count: execCounts.queued ?? 0 },\r\n+    { label: \"Running\", count: execCounts.running ?? 0 },\r\n+    { label: \"Waiting input\", count: execCounts.waiting_input ?? 0 },\r\n+    { label: \"Completed\", count: execCounts.completed ?? 0 },\r\n+    { label: \"Failed\", count: execCounts.failed ?? 0 },\r\n+  ];\r\n+  const execMax = Math.max(1, ...execRows.map((r) => r.count));\r\n+\r\n   return (\r\n     <AppShell crumbs={[{ label: \"SwapDesk\", to: \"/\" }, { label: \"Mission Control\" }]} metrics={false}>\r\n-      <div className=\"space-y-8 pb-8\">\r\n+      <div className=\"space-y-6 pb-8\">\r\n         <section className=\"flex flex-wrap items-end justify-between gap-4\">\r\n           <div>\r\n             <p className=\"mb-2 font-mono text-[11px] uppercase tracking-[0.22em] text-muted-foreground\">\r\n               Operations overview <span className=\"text-success/70\">/</span> saved cases\r\n             </p>\r\n-            <div className=\"flex flex-wrap items-center gap-x-4 gap-y-2\">\r\n-              <h1 className=\"font-display text-3xl font-semibold tracking-tight sm:text-4xl\">Mission Control</h1>\r\n-            </div>\r\n+            <h1 className=\"font-display text-3xl font-semibold tracking-tight sm:text-4xl\">Mission Control</h1>\r\n             <p className=\"mt-2 text-sm text-muted-foreground\">\r\n-              Autonomous support performance, policy safety, and live execution health.\r\n+              Case volume, outcomes, and execution health from the saved case list.\r\n             </p>\r\n           </div>\r\n           <div className=\"flex items-center gap-2\">\r\n             <span\r\n               className={`inline-flex items-center gap-2 rounded-lg border px-3 py-2 text-xs ${\r\n                 health === \"offline\"\r\n                   ? \"border-warning/25 bg-warning/[0.06] text-warning\"\r\n                   : \"border-success/20 bg-success/[0.06] text-success\"\r\n               }`}\r\n               title={ready?.note ?? backendLabel}\r\n             >\r\n               <span\r\n                 className={`h-1.5 w-1.5 rounded-full ${\r\n                   health === \"online\"\r\n                     ? \"bg-success pulse-dot\"\r\n                     : health === \"offline\"\r\n                       ? \"bg-warning\"\r\n                       : \"bg-muted-foreground\"\r\n                 }`}\r\n               />\r\n               {backendLabel}\r\n               {health === \"online\" && (\r\n                 <span className=\"font-mono text-[10px] text-muted-foreground\">\r\n                   Queue {queuedDepth}\r\n                 </span>\r\n               )}\r\n             </span>\r\n             <select\r\n               aria-label=\"Filter by execution status\"\r\n               className=\"cursor-pointer appearance-none rounded-lg border border-hairline bg-card/80 px-3 py-2 text-xs text-foreground outline-none\"\r\n               value={executionFilter}\r\n               onChange={(event) => setExecutionFilter(event.target.value)}\r\n             >\r\n               <option value=\"\">All executions</option>\r\n               <option value=\"queued\">Queued</option>\r\n               <option value=\"running\">Running</option>\r\n               <option value=\"waiting_input\">Waiting input</option>\r\n               <option value=\"completed\">Completed</option>\r\n               <option value=\"failed\">Failed</option>\r\n             </select>\r\n             <button\r\n               type=\"button\"\r\n               onClick={() => {\r\n                 void refresh();\r\n                 void refreshStatus();\r\n               }}\r\n               className=\"inline-flex items-center gap-2 rounded-lg border border-hairline bg-card/65 px-3 py-2 text-xs text-muted-foreground transition-colors hover:bg-accent/60\"\r\n             >\r\n               <Clock3 className=\"h-3.5 w-3.5\" />\r\n               Refresh\r\n             </button>\r\n           </div>\r\n         </section>\r\n \r\n         {error && (\r\n           <div className=\"panel border-warning/20 p-4\">\r\n             <p className=\"text-sm text-warning\">{error}</p>\r\n           </div>\r\n         )}\r\n \r\n-        <section aria-label=\"Agent performance metrics\" className=\"grid gap-3 sm:grid-cols-2 xl:grid-cols-4\">\r\n-          {metrics.map(({ label, value, detail, icon: Icon, tone, footnote }, index) => (\r\n-            <article\r\n-              key={label}\r\n-              className=\"panel rise relative overflow-hidden p-5\"\r\n-              style={{ animationDelay: `${index * 60}ms` }}\r\n-            >\r\n+        <section aria-label=\"Key indicators\" className=\"grid gap-3 sm:grid-cols-2 xl:grid-cols-4\">\r\n+          {kpis.map(({ label, value, detail, icon: Icon }, index) => (\r\n+            <article key={label} className=\"panel rise relative overflow-hidden p-5\" style={{ animationDelay: `${index * 60}ms` }}>\r\n               <div className=\"absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/[0.12] to-transparent\" />\r\n               <div className=\"flex items-start justify-between gap-3\">\r\n                 <div>\r\n                   <p className=\"text-xs font-medium text-muted-foreground\">{label}</p>\r\n-                  <p className={`num mt-4 text-4xl font-semibold tracking-tight ${tone === \"green\" ? \"text-success\" : \"\"}`}>\r\n-                    {value}\r\n-                  </p>\r\n+                  <p className=\"num mt-4 text-4xl font-semibold tracking-tight\">{value}</p>\r\n                 </div>\r\n-                <span className={`grid h-9 w-9 place-items-center rounded-xl border ${tone === \"green\" ? \"border-success/15 bg-success/[0.07] text-success\" : \"border-hairline bg-white/[0.025] text-muted-foreground\"}`}>\r\n+                <span className=\"grid h-9 w-9 place-items-center rounded-xl border border-hairline bg-white/[0.025] text-muted-foreground\">\r\n                   <Icon className=\"h-4 w-4\" />\r\n                 </span>\r\n               </div>\r\n-              <div className=\"mt-3 flex flex-wrap items-center justify-between gap-2\">\r\n-                <span className=\"text-xs text-foreground/75\">{detail}</span>\r\n-                <span className=\"font-mono text-[10px] text-muted-foreground/80\">{footnote}</span>\r\n-              </div>\r\n+              <p className=\"mt-3 text-xs text-foreground/75\">{detail}</p>\r\n             </article>\r\n           ))}\r\n         </section>\r\n \r\n-        <section aria-labelledby=\"executions-title\">\r\n-          <div className=\"mb-4 flex flex-wrap items-end justify-between gap-4\">\r\n-            <div>\r\n-              <div className=\"mb-1.5 flex items-center gap-2\">\r\n-                <span className=\"h-1.5 w-1.5 rounded-full bg-success shadow-[0_0_10px_var(--color-success)]\" />\r\n-                <p className=\"font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground\">Saved agent cases</p>\r\n+        <section className=\"grid gap-3 xl:grid-cols-2\" aria-label=\"Distributions\">\r\n+          <div className=\"panel space-y-4 p-5\">\r\n+            <div className=\"flex items-baseline justify-between\">\r\n+              <h2 className=\"font-display text-lg font-semibold tracking-tight\">Outcomes</h2>\r\n+              <span className=\"font-mono text-[10px] text-muted-foreground/80\">{total} CASES</span>\r\n+            </div>\r\n+            {outcomeRows.map((row) => (\r\n+              <div key={row.label}>\r\n+                <div className=\"mb-1.5 flex items-baseline justify-between text-xs\">\r\n+                  <span className=\"text-foreground/85\">{row.label}</span>\r\n+                  <span className=\"num font-mono text-muted-foreground\">{row.count}</span>\r\n+                </div>\r\n+                <div className=\"h-1.5 overflow-hidden rounded-full bg-white/[0.04]\">\r\n+                  <div className={`h-full rounded-full ${row.tone}`} style={{ width: `${Math.round((row.count / outcomeMax) * 100)}%` }} />\r\n+                </div>\r\n               </div>\r\n-              <h2 id=\"executions-title\" className=\"font-display text-xl font-semibold tracking-tight sm:text-2xl\">\r\n-                Recent Support Executions\r\n-              </h2>\r\n+            ))}\r\n+          </div>\r\n+          <div className=\"panel space-y-4 p-5\">\r\n+            <div className=\"flex items-baseline justify-between\">\r\n+              <h2 className=\"font-display text-lg font-semibold tracking-tight\">Execution states</h2>\r\n+              <span className=\"font-mono text-[10px] text-muted-foreground/80\">{total} CASES</span>\r\n             </div>\r\n+            {execRows.map((row) => (\r\n+              <div key={row.label}>\r\n+                <div className=\"mb-1.5 flex items-baseline justify-between text-xs\">\r\n+                  <span className=\"text-foreground/85\">{row.label}</span>\r\n+                  <span className=\"num font-mono text-muted-foreground\">{row.count}</span>\r\n+                </div>\r\n+                <div className=\"h-1.5 overflow-hidden rounded-full bg-white/[0.04]\">\r\n+                  <div className=\"h-full rounded-full bg-primary/70\" style={{ width: `${Math.round((row.count / execMax) * 100)}%` }} />\r\n+                </div>\r\n+              </div>\r\n+            ))}\r\n+          </div>\r\n+        </section>\r\n+\r\n+        <section aria-labelledby=\"executions-title\">\r\n+          <div className=\"mb-4 flex flex-wrap items-end justify-between gap-4\">\r\n+            <h2 id=\"executions-title\" className=\"font-display text-xl font-semibold tracking-tight sm:text-2xl\">\r\n+              Recent cases\r\n+            </h2>\r\n             <label className=\"relative flex items-center gap-2 rounded-lg border border-hairline bg-card/80 py-2 pl-3 pr-9 text-xs text-muted-foreground transition-colors focus-within:border-success/40\">\r\n               <span className=\"text-[11px]\">Filter</span>\r\n               <select\r\n                 aria-label=\"Filter support executions\"\r\n                 className=\"cursor-pointer appearance-none bg-transparent font-medium text-foreground outline-none\"\r\n                 value={filter}\r\n                 onChange={(event) => setFilter(event.target.value as Filter)}\r\n               >\r\n                 <option value=\"all\">All</option>\r\n                 <option value=\"active\">Active</option>\r\n                 <option value=\"needs-input\">Needs input</option>\r\n                 <option value=\"done\">Done</option>\r\n                 <option value=\"failed\">Failed</option>\r\n               </select>\r\n               <ChevronDown className=\"pointer-events-none absolute right-3 h-3.5 w-3.5\" />\r\n             </label>\r\n           </div>\r\n \r\n-          <div className=\"space-y-3\">\r\n-            {loading && visibleTickets.length === 0 && (\r\n-              <p className=\"text-sm text-muted-foreground\">Loading saved cases…</p>\r\n-            )}\r\n-            {!loading && visibleTickets.length === 0 && !error && (\r\n-              <p className=\"text-sm text-muted-foreground\">\r\n-                No cases yet. Submit one from Customer Simulation.\r\n-              </p>\r\n-            )}\r\n-            {visibleTickets.map((ticket, index) => {\r\n-              const failed = ticket.execution_status === \"failed\";\r\n-              const waiting =\r\n-                ticket.execution_status === \"waiting_input\" ||\r\n-                ticket.execution_status === \"queued\" ||\r\n-                ticket.execution_status === \"running\";\r\n-              return (\r\n-                <Link\r\n-                  key={ticket.case_id}\r\n-                  href={`/ticket/${ticket.case_id}`}\r\n-                  className=\"group block rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-success/50\"\r\n-                >\r\n-                  <article\r\n-                    className=\"panel relative overflow-hidden p-4 transition duration-200 ease-out group-hover:-translate-y-0.5 group-hover:border-success/25 group-hover:shadow-[0_14px_45px_-28px_rgba(91,255,159,0.22)] sm:p-5\"\r\n-                    style={{ animationDelay: `${index * 70}ms` }}\r\n-                  >\r\n-                    <div className={`absolute inset-y-0 left-0 w-[2px] ${failed ? \"bg-warning/70\" : waiting ? \"bg-primary/60\" : \"bg-success/50\"}`} />\r\n-                    <div className=\"flex flex-col gap-4 sm:flex-row sm:items-center\">\r\n-                      <div className=\"flex min-w-0 flex-1 items-start gap-4\">\r\n-                        <span className={`mt-0.5 grid h-10 w-10 shrink-0 place-items-center rounded-xl border ${failed ? \"border-warning/15 bg-warning/[0.06] text-warning\" : waiting ? \"border-primary/15 bg-primary/[0.06] text-primary\" : \"border-success/15 bg-success/[0.06] text-success\"}`}>\r\n-                          {failed ? <ShieldAlert className=\"h-[18px] w-[18px]\" /> : waiting ? <Clock3 className=\"h-[18px] w-[18px]\" /> : <PackageCheck className=\"h-[18px] w-[18px]\" />}\r\n-                        </span>\r\n-                        <div className=\"min-w-0 flex-1\">\r\n-                          <div className=\"mb-1.5 flex flex-wrap items-center gap-x-2.5 gap-y-1\">\r\n-                            <span className=\"font-mono text-[11px] tracking-wide text-muted-foreground\">{ticket.case_id}</span>\r\n-                            <span className=\"h-1 w-1 rounded-full bg-muted-foreground/40\" />\r\n-                            <span className=\"text-[11px] text-muted-foreground\">{ticket.current_run_id}</span>\r\n-                          </div>\r\n-                          <p className=\"text-sm font-medium leading-relaxed text-foreground/90 sm:text-[15px]\">{ticket.message}</p>\r\n-                          <div className=\"mt-3 flex flex-wrap gap-1.5\">\r\n-                            <span className=\"inline-flex items-center gap-1.5 rounded-md border border-hairline bg-white/[0.025] px-2 py-1 font-mono text-[9px] tracking-wide text-muted-foreground\">\r\n-                              {ticket.execution_status}\r\n-                            </span>\r\n-                            {ticket.outcome && (\r\n-                              <span className=\"inline-flex items-center gap-1.5 rounded-md border border-hairline bg-white/[0.025] px-2 py-1 font-mono text-[9px] tracking-wide text-muted-foreground\">\r\n-                                {ticket.outcome}\r\n-                              </span>\r\n-                            )}\r\n-                          </div>\r\n-                        </div>\r\n-                      </div>\r\n-                      <div className=\"flex items-center justify-between gap-3 pl-14 sm:justify-end sm:pl-0\">\r\n-                        <span className={`inline-flex items-center gap-2 rounded-full border px-2.5 py-1.5 text-[10px] font-medium ${failed ? \"border-warning/20 bg-warning/[0.06] text-warning\" : waiting ? \"border-primary/20 bg-primary/[0.06] text-primary\" : \"border-success/20 bg-success/[0.06] text-success\"}`}>\r\n-                          <span className={`h-1.5 w-1.5 rounded-full ${failed ? \"bg-warning\" : waiting ? \"bg-primary pulse-dot\" : \"bg-success\"}`} />\r\n-                          {statusLabel(ticket)}\r\n-                        </span>\r\n-                        <ArrowUpRight className=\"h-4 w-4 shrink-0 text-muted-foreground/40 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-foreground/80\" />\r\n-                      </div>\r\n-                    </div>\r\n-                  </article>\r\n-                </Link>\r\n-              );\r\n-            })}\r\n+          <div className=\"panel overflow-x-auto\">\r\n+            <table className=\"w-full min-w-[720px] text-sm\">\r\n+              <thead className=\"text-left text-xs text-muted-foreground\">\r\n+                <tr className=\"border-b border-hairline\">\r\n+                  {[\"Case\", \"Request\", \"Execution\", \"Outcome\", \"Run\", \"\"].map((h) => (\r\n+                    <th key={h} className=\"px-5 py-3 font-medium\">{h}</th>\r\n+                  ))}\r\n+                </tr>\r\n+              </thead>\r\n+              <tbody className=\"divide-y divide-hairline\">\r\n+                {loading && visibleTickets.length === 0 && (\r\n+                  <tr>\r\n+                    <td colSpan={6} className=\"px-5 py-4 text-sm text-muted-foreground\">\r\n+                      Loading saved cases…\r\n+                    </td>\r\n+                  </tr>\r\n+                )}\r\n+                {!loading && visibleTickets.length === 0 && !error && (\r\n+                  <tr>\r\n+                    <td colSpan={6} className=\"px-5 py-4 text-sm text-muted-foreground\">\r\n+                      No cases yet. Submit one from Customer Simulation.\r\n+                    </td>\r\n+                  </tr>\r\n+                )}\r\n+                {visibleTickets.map((ticket) => (\r\n+                  <tr key={ticket.case_id} className=\"hover:bg-accent/30\">\r\n+                    <td className=\"whitespace-nowrap px-5 py-3 font-mono text-xs\">\r\n+                      <Link href={`/ticket/${ticket.case_id}`} className=\"transition-colors hover:text-foreground\">\r\n+                        {ticket.case_id}\r\n+                      </Link>\r\n+                    </td>\r\n+                    <td className=\"max-w-[320px] truncate px-5 py-3\">{ticket.message}</td>\r\n+                    <td className={`whitespace-nowrap px-5 py-3 font-mono text-xs ${executionTone(ticket.execution_status)}`}>\r\n+                      {ticket.execution_status}\r\n+                    </td>\r\n+                    <td className=\"whitespace-nowrap px-5 py-3\">\r\n+                      <span className=\"mr-2 inline-block h-1.5 w-1.5 rounded-full align-middle\">\r\n+                        <span className={`block h-full w-full rounded-full ${outcomeTone(ticket.outcome)}`} />\r\n+                      </span>\r\n+                      <span className=\"font-mono text-xs\">{ticket.outcome ?? \"pending\"}</span>\r\n+                    </td>\r\n+                    <td className=\"whitespace-nowrap px-5 py-3 font-mono text-xs text-muted-foreground\">\r\n+                      {ticket.current_run_id}\r\n+                    </td>\r\n+                    <td className=\"whitespace-nowrap px-5 py-3 text-right\">\r\n+                      <Link\r\n+                        href={`/ticket/${ticket.case_id}`}\r\n+                        className=\"text-xs text-muted-foreground transition hover:text-foreground\"\r\n+                        aria-label={`Open ${ticket.case_id}`}\r\n+                      >\r\n+                        <ArrowUpRight className=\"inline h-4 w-4\" />\r\n+                      </Link>\r\n+                    </td>\r\n+                  </tr>\r\n+                ))}\r\n+              </tbody>\r\n+            </table>\r\n           </div>\r\n           <div className=\"mt-4 flex items-center justify-between border-t border-hairline pt-4\">\r\n             <span className=\"font-mono text-[10px] text-muted-foreground/75\">\r\n               SHOWING {visibleTickets.length.toString().padStart(2, \"0\")} OF {total.toString().padStart(2, \"0\")} CASES\r\n             </span>\r\n             <div className=\"flex items-center gap-3\">\r\n               {hasMore && (\r\n                 <button\r\n                   type=\"button\"\r\n                   onClick={() => void loadMore()}\r\n                   className=\"text-xs text-muted-foreground transition hover:text-foreground\"\r\n                 >\r\n                   Load more\r\n                 </button>\r\n               )}\r\n               <Link href=\"/inbox\" className=\"group inline-flex items-center gap-1.5 text-xs text-muted-foreground transition hover:text-foreground\">\r\n                 Open full inbox\r\n                 <ArrowUpRight className=\"h-3.5 w-3.5 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5\" />\r\n               </Link>\r\n             </div>\r\n           </div>\r\n         </section>\r\n       </div>\r\n     </AppShell>\r\n   );\r\n }\r\n",
+              "additions": 143,
+              "deletions": 136,
+              "status": "modified"
+            },
+            {
+              "file": "frontend/app/needs-input/needs-input-list.tsx",
+              "patch": "Index: frontend/app/needs-input/needs-input-list.tsx\n===================================================================\n--- frontend/app/needs-input/needs-input-list.tsx\t\n+++ frontend/app/needs-input/needs-input-list.tsx\t\n@@ -0,0 +1,83 @@\n+\"use client\";\r\n+\r\n+import { useEffect, useState } from \"react\";\r\n+import Link from \"next/link\";\r\n+import { getCase, listCases, type AgentCase, type CaseDetail } from \"@/lib/api\";\r\n+\r\n+type Row = AgentCase & { question: string | null };\r\n+\r\n+export function NeedsInputList() {\r\n+  const [rows, setRows] = useState<Row[]>([]);\r\n+  const [loading, setLoading] = useState(true);\r\n+  const [error, setError] = useState<string | null>(null);\r\n+\r\n+  useEffect(() => {\r\n+    let cancelled = false;\r\n+    const load = async () => {\r\n+      try {\r\n+        const page = await listCases({ execution: \"waiting_input\", limit: 100 });\r\n+        const withQuestions = await Promise.all(\r\n+          page.items.map(async (item): Promise<Row> => {\r\n+            try {\r\n+              const detail: CaseDetail = await getCase(item.case_id);\r\n+              return { ...item, question: detail.clarification };\r\n+            } catch {\r\n+              return { ...item, question: null };\r\n+            }\r\n+          }),\r\n+        );\r\n+        if (cancelled) return;\r\n+        setRows(withQuestions);\r\n+        setError(null);\r\n+      } catch (err) {\r\n+        if (cancelled) return;\r\n+        setError(err instanceof Error ? err.message : \"Worklist failed to load\");\r\n+      } finally {\r\n+        if (!cancelled) setLoading(false);\r\n+      }\r\n+    };\r\n+    // Initial load on mount; guarded by cancelled flag.\r\n+    void load();\r\n+    return () => {\r\n+      cancelled = true;\r\n+    };\r\n+  }, []);\r\n+\r\n+  return (\r\n+    <>\r\n+      {error && (\r\n+        <div className=\"panel mb-4 border-warning/20 p-4\">\r\n+          <p className=\"text-sm text-warning\">{error}</p>\r\n+        </div>\r\n+      )}\r\n+      <div className=\"panel divide-y divide-hairline overflow-hidden\">\r\n+        {loading && (\r\n+          <p className=\"p-5 text-sm text-muted-foreground\">Loading cases that need you…</p>\r\n+        )}\r\n+        {!loading && rows.length === 0 && !error && (\r\n+          <p className=\"p-5 text-sm text-muted-foreground\">\r\n+            Nothing waiting. Every case is moving without you.\r\n+          </p>\r\n+        )}\r\n+        {rows.map((t) => (\r\n+          <Link\r\n+            key={t.case_id}\r\n+            href={`/ticket/${t.case_id}`}\r\n+            className=\"flex flex-col gap-2 p-4 transition-colors hover:bg-accent/40 sm:flex-row sm:items-center sm:gap-4 sm:p-5\"\r\n+          >\r\n+            <span className=\"font-mono text-xs text-muted-foreground sm:w-36 sm:shrink-0\">\r\n+              {t.case_id}\r\n+            </span>\r\n+            <div className=\"min-w-0 flex-1\">\r\n+              <p className=\"truncate text-sm font-semibold\">{t.message}</p>\r\n+              <p className=\"mt-0.5 truncate text-sm text-muted-foreground\">\r\n+                {t.question ?? \"Waiting on a reply — open to see details.\"}\r\n+              </p>\r\n+            </div>\r\n+            <span className=\"font-mono text-xs text-muted-foreground\">{t.current_run_id}</span>\r\n+          </Link>\r\n+        ))}\r\n+      </div>\r\n+    </>\r\n+  );\r\n+}\r\n",
+              "additions": 83,
+              "deletions": 0,
+              "status": "added"
+            },
+            {
+              "file": "frontend/app/needs-input/page.tsx",
+              "patch": "Index: frontend/app/needs-input/page.tsx\n===================================================================\n--- frontend/app/needs-input/page.tsx\t\n+++ frontend/app/needs-input/page.tsx\t\n@@ -0,0 +1,19 @@\n+import type { Metadata } from \"next\";\r\n+import { AppShell, PageTitle } from \"@/components/AppShell\";\r\n+import { pageMetadata } from \"@/lib/seo\";\r\n+import { NeedsInputList } from \"./needs-input-list\";\r\n+\r\n+export const metadata: Metadata = pageMetadata({\r\n+  title: \"Needs input\",\r\n+  description: \"Cases parked waiting on a human reply.\",\r\n+  path: \"/needs-input\",\r\n+});\r\n+\r\n+export default function NeedsInputPage() {\r\n+  return (\r\n+    <AppShell crumbs={[{ label: \"SwapDesk\", to: \"/\" }, { label: \"Needs input\" }]}>\r\n+      <PageTitle title=\"Needs input\" sub=\"Cases parked waiting on a human reply\" />\r\n+      <NeedsInputList />\r\n+    </AppShell>\r\n+  );\r\n+}\r\n",
+              "additions": 19,
+              "deletions": 0,
+              "status": "added"
+            },
+            {
+              "file": "frontend/app/sitemap.ts",
+              "patch": "Index: frontend/app/sitemap.ts\n===================================================================\n--- frontend/app/sitemap.ts\t\n+++ frontend/app/sitemap.ts\t\n@@ -1,22 +1,22 @@\n import type { MetadataRoute } from \"next\";\r\n import { SITE_URL } from \"@/lib/seo\";\r\n \r\n const routes: Array<{ path: string; priority: number }> = [\r\n   { path: \"\", priority: 1 },\r\n   { path: \"/inbox\", priority: 0.8 },\r\n   { path: \"/inventory\", priority: 0.7 },\r\n   { path: \"/integrations\", priority: 0.7 },\r\n   { path: \"/simulate\", priority: 0.6 },\r\n-  { path: \"/database\", priority: 0.5 },\r\n+  { path: \"/needs-input\", priority: 0.6 },\r\n   { path: \"/settings\", priority: 0.5 },\r\n ];\r\n \r\n export default function sitemap(): MetadataRoute.Sitemap {\r\n   const lastModified = new Date();\r\n   return routes.map(({ path, priority }) => ({\r\n     url: `${SITE_URL}${path}`,\r\n     lastModified,\r\n     changeFrequency: \"weekly\",\r\n     priority,\r\n   }));\r\n }\r\n",
+              "additions": 1,
+              "deletions": 1,
+              "status": "modified"
+            },
+            {
+              "file": "frontend/src/components/AppShell.tsx",
+              "patch": "Index: frontend/src/components/AppShell.tsx\n===================================================================\n--- frontend/src/components/AppShell.tsx\t\n+++ frontend/src/components/AppShell.tsx\t\n@@ -1,184 +1,227 @@\n \"use client\";\r\n \r\n import Link from \"next/link\";\r\n import { usePathname, useRouter } from \"next/navigation\";\r\n-import { Inbox, Boxes, Database, Settings, Plug, Ticket, ChevronRight, Zap } from \"lucide-react\";\r\n+import { useEffect, useState } from \"react\";\r\n+import { Inbox, Boxes, Settings, Ticket, ChevronRight, Zap, LayoutDashboard, PanelLeftClose, PanelLeftOpen, MessageCircleQuestion } from \"lucide-react\";\r\n import type { ReactNode } from \"react\";\r\n import { useSwapDesk } from \"@/store/swapdesk\";\r\n+import { API_BASE } from \"@/lib/api\";\r\n \r\n const nav = [\r\n-  { to: \"/\", label: \"Inbox\", icon: Inbox },\r\n+  { to: \"/\", label: \"Mission Control\", icon: LayoutDashboard },\r\n+  { to: \"/inbox\", label: \"Inbox\", icon: Inbox },\r\n   { to: \"/inventory\", label: \"Inventory\", icon: Boxes },\r\n-  { to: \"/database\", label: \"Database\", icon: Database },\r\n-  { to: \"/integrations\", label: \"Integrations\", icon: Plug },\r\n+  { to: \"/needs-input\", label: \"Needs input\", icon: MessageCircleQuestion },\r\n   { to: \"/settings\", label: \"Settings\", icon: Settings },\r\n ] as const;\r\n \r\n+type BackendState = \"checking\" | \"live\" | \"down\";\r\n+\r\n+function BackendStatus({ expanded }: { expanded: boolean }) {\r\n+  const [state, setState] = useState<BackendState>(\"checking\");\r\n+\r\n+  useEffect(() => {\r\n+    let cancelled = false;\r\n+    const check = async () => {\r\n+      try {\r\n+        const res = await fetch(`${API_BASE}/v1/health`);\r\n+        if (!cancelled) setState(res.ok ? \"live\" : \"down\");\r\n+      } catch {\r\n+        if (!cancelled) setState(\"down\");\r\n+      }\r\n+    };\r\n+    void check();\r\n+    const timer = window.setInterval(() => void check(), 30000);\r\n+    return () => {\r\n+      cancelled = true;\r\n+      window.clearInterval(timer);\r\n+    };\r\n+  }, []);\r\n+\r\n+  const label = state === \"live\" ? \"Service live\" : state === \"down\" ? \"Service unreachable\" : \"Checking service\";\r\n+  return (\r\n+    <div\r\n+      className={`grid h-10 place-items-center rounded-xl border border-hairline text-xs text-muted-foreground ${expanded ? \"w-full grid-cols-none px-3\" : \"w-10\"}`}\r\n+      title={label}\r\n+      role=\"status\"\r\n+      aria-label={label}\r\n+    >\r\n+      <span className=\"flex items-center gap-2\">\r\n+        <span\r\n+          className={`h-2 w-2 rounded-full ${state === \"live\" ? \"bg-success pulse-dot\" : state === \"down\" ? \"bg-danger\" : \"bg-muted-foreground/50\"}`}\r\n+        />\r\n+        {expanded && <span className=\"truncate text-[11px]\">{label}</span>}\r\n+        <span className=\"sr-only\">{label}</span>\r\n+      </span>\r\n+    </div>\r\n+  );\r\n+}\r\n+\r\n export function AppShell({ crumbs, children, metrics = true }: { crumbs: { label: string; to?: string }[]; children: ReactNode; metrics?: boolean }) {\r\n   const pathname = usePathname();\r\n   const router = useRouter();\r\n-  const { summary, total, health } = useSwapDesk();\r\n+  const { summary, total } = useSwapDesk();\r\n+  const [expanded, setExpanded] = useState(false);\r\n \r\n   const isActive = (to: string) => pathname === to;\r\n \r\n-  const statusTitle =\r\n-    health === \"online\"\r\n-      ? \"Backend online\"\r\n-      : health === \"offline\"\r\n-        ? \"Backend offline\"\r\n-        : \"Checking backend…\";\r\n-  const statusDot =\r\n-    health === \"online\"\r\n-      ? \"bg-success pulse-dot\"\r\n-      : health === \"offline\"\r\n-        ? \"bg-danger\"\r\n-        : \"bg-muted-foreground\";\r\n-\r\n   const arranged = summary?.outcome.arranged ?? 0;\r\n   const completionRate =\r\n     total > 0 ? `${Math.round((arranged / total) * 100)}%` : \"N/A\";\r\n \r\n   const handleSimulateTicket = () => {\r\n     router.push(\"/simulate\");\r\n   };\r\n \r\n   return (\r\n     <div className=\"flex min-h-screen w-full\">\r\n       {/* Desktop sidebar */}\r\n-      <aside className=\"glass fixed inset-y-0 left-0 z-40 hidden h-screen w-20 shrink-0 flex-col items-center gap-2 border-y-0 border-l-0 py-6 md:flex\">\r\n-        <Link href=\"/\" aria-label=\"SwapDesk Mission Control\" className=\"mb-6 flex items-center justify-center\">\r\n+      <aside className={`glass fixed inset-y-0 left-0 z-40 hidden h-screen shrink-0 flex-col items-center gap-2 border-y-0 border-l-0 py-6 md:flex ${expanded ? \"w-56 items-stretch px-4\" : \"w-20\"}`}>\r\n+        <Link href=\"/\" aria-label=\"SwapDesk Mission Control\" className={`mb-6 flex items-center ${expanded ? \"gap-3 px-2\" : \"justify-center\"}`}>\r\n           <span className=\"grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-primary/10 text-primary glow-success\">\r\n             <Ticket className=\"h-5 w-5\" />\r\n           </span>\r\n+          {expanded && <span className=\"truncate text-sm font-semibold\">SwapDesk</span>}\r\n         </Link>\r\n         {nav.map(({ to, label, icon: Icon }) => (\r\n           <Link\r\n             key={label}\r\n             href={to}\r\n             aria-current={isActive(to) ? \"page\" : undefined}\r\n-            className={`group flex w-12 items-center justify-center rounded-xl px-3 py-2.5 text-sm transition-colors hover:bg-accent/60 hover:text-foreground ${isActive(to) ? \"bg-accent/80 text-foreground\" : \"text-muted-foreground\"}`}\r\n             title={label}\r\n+            className={`group flex items-center rounded-xl px-3 py-2.5 text-sm transition-colors hover:bg-accent/60 hover:text-foreground ${isActive(to) ? \"bg-accent/80 text-foreground\" : \"text-muted-foreground\"} ${expanded ? \"w-full gap-3\" : \"w-12 justify-center\"}`}\r\n           >\r\n             <Icon className=\"h-[18px] w-[18px] shrink-0\" />\r\n-            <span className=\"sr-only\">{label}</span>\r\n+            {expanded ? (\r\n+              <span className=\"truncate\">{label}</span>\r\n+            ) : (\r\n+              <span className=\"sr-only\">{label}</span>\r\n+            )}\r\n           </Link>\r\n         ))}\r\n-        <div className=\"mt-auto grid h-10 w-10 place-items-center rounded-xl border border-hairline text-xs text-muted-foreground\" title={statusTitle}>\r\n-          <span className={`h-2 w-2 rounded-full ${statusDot}`} />\r\n-          <span className=\"sr-only\">{statusTitle}</span>\r\n+        <div className=\"mt-auto flex flex-col items-center gap-2\">\r\n+          <BackendStatus expanded={expanded} />\r\n+          <button\r\n+            type=\"button\"\r\n+            onClick={() => setExpanded((v) => !v)}\r\n+            aria-expanded={expanded}\r\n+            aria-label={expanded ? \"Collapse sidebar\" : \"Expand sidebar\"}\r\n+            title={expanded ? \"Collapse sidebar\" : \"Expand sidebar\"}\r\n+            className=\"grid h-10 w-10 place-items-center rounded-xl border border-hairline text-muted-foreground transition-colors hover:bg-accent/60 hover:text-foreground\"\r\n+          >\r\n+            {expanded ? <PanelLeftClose className=\"h-[18px] w-[18px]\" /> : <PanelLeftOpen className=\"h-[18px] w-[18px]\" />}\r\n+          </button>\r\n         </div>\r\n       </aside>\r\n \r\n-      <div className=\"flex min-w-0 flex-1 flex-col pb-[calc(5rem+env(safe-area-inset-bottom))] md:ml-20 md:pb-0\">\r\n+      <div className={`flex min-w-0 flex-1 flex-col pb-[calc(5rem+env(safe-area-inset-bottom))] md:pb-0 ${expanded ? \"md:ml-56\" : \"md:ml-20\"}`}>\r\n         <header className=\"glass sticky top-0 z-30 border-x-0 border-t-0\">\r\n           <div className=\"flex flex-col gap-3 px-4 py-3 sm:px-6 lg:flex-row lg:items-center lg:justify-between lg:px-8 lg:py-4\">\r\n             <nav className=\"flex min-w-0 items-center gap-1.5 text-sm\">\r\n               {crumbs.map((c, i) => (\r\n                 <span key={c.label} className=\"flex min-w-0 items-center gap-1.5\">\r\n                   {i > 0 && <ChevronRight className=\"h-3.5 w-3.5 shrink-0 text-muted-foreground/60\" />}\r\n                   {c.to ? (\r\n                     <Link href={c.to} className=\"truncate text-muted-foreground hover:text-foreground\">\r\n                       {c.label}\r\n                     </Link>\r\n                   ) : (\r\n                     <span className=\"truncate font-mono text-foreground\">{c.label}</span>\r\n                   )}\r\n                 </span>\r\n               ))}\r\n             </nav>\r\n             <div className=\"flex flex-wrap items-center gap-2 sm:gap-3\">\r\n               <button\r\n                 type=\"button\"\r\n                 onClick={handleSimulateTicket}\r\n                 className=\"inline-flex shrink-0 items-center gap-2 rounded-lg border border-hairline bg-card/60 px-3 py-2 text-xs font-medium text-foreground transition-colors hover:bg-accent/60\"\r\n                 title=\"Submit a ticket to the agent backend\"\r\n               >\r\n                 <Zap className=\"h-3.5 w-3.5 text-success\" />\r\n                 New Ticket\r\n               </button>\r\n               {metrics && (\r\n                 <div className=\"grid grid-cols-2 gap-2 sm:flex sm:gap-3\">\r\n                   <Metric label=\"Completion Rate\" value={completionRate} tone=\"success\" />\r\n-                  <Metric label=\"Cost per execution\" value=\"Demo Mode\" />\r\n                 </div>\r\n               )}\r\n             </div>\r\n           </div>\r\n         </header>\r\n         <main className=\"mx-auto min-w-0 w-full max-w-[1600px] flex-1 px-4 py-6 sm:px-6 lg:px-8\">{children}</main>\r\n       </div>\r\n \r\n       {/* Mobile bottom nav */}\r\n       <nav\r\n         aria-label=\"Main navigation\"\r\n-        className=\"fixed inset-x-0 bottom-0 z-40 grid grid-cols-5 border-t border-hairline bg-[#0b0b0d] px-3 pb-[calc(env(safe-area-inset-bottom)+0.6rem)] pt-2.5 shadow-[0_-16px_40px_-24px_rgba(0,0,0,0.95)] md:hidden\"\r\n+        className=\"fixed inset-x-0 bottom-0 z-40 grid grid-cols-6 border-t border-hairline bg-[#0b0b0d] px-3 pb-[calc(env(safe-area-inset-bottom)+0.6rem)] pt-2.5 shadow-[0_-16px_40px_-24px_rgba(0,0,0,0.95)] md:hidden\"\r\n       >\r\n         {nav.map(({ to, label, icon: Icon }) => {\r\n           const active = isActive(to);\r\n           return (\r\n             <Link\r\n               key={label}\r\n               href={to}\r\n               aria-current={active ? \"page\" : undefined}\r\n               className=\"group flex flex-col items-center gap-1 py-1 transition-transform duration-150 active:scale-90\"\r\n             >\r\n               <span\r\n-                className={`grid h-8 w-[4.25rem] place-items-center rounded-full transition-all duration-200 ${\r\n-                  active\r\n+                className={`grid h-8 w-[4.25rem] place-items-center rounded-full transition-all duration-200 ${active\r\n                     ? \"bg-primary/[0.12] text-primary shadow-[inset_0_0_0_1px_rgba(91,255,159,0.22),0_0_18px_-4px_rgba(91,255,159,0.35)]\"\r\n                     : \"text-muted-foreground group-hover:text-foreground group-active:bg-white/[0.06]\"\r\n-                }`}\r\n+                  }`}\r\n               >\r\n                 <Icon className=\"h-5 w-5\" />\r\n               </span>\r\n               <span\r\n-                className={`truncate max-w-full text-[10px] font-medium transition-colors ${\r\n-                  active ? \"text-primary\" : \"text-muted-foreground\"\r\n-                }`}\r\n+                className={`truncate max-w-full text-[10px] font-medium transition-colors ${active ? \"text-primary\" : \"text-muted-foreground\"\r\n+                  }`}\r\n               >\r\n                 {label.split(\" \")[0]}\r\n               </span>\r\n             </Link>\r\n           );\r\n         })}\r\n       </nav>\r\n     </div>\r\n   );\r\n }\r\n \r\n function Metric({ label, value, tone }: { label: string; value: string; tone?: \"success\" }) {\r\n   return (\r\n     <div className=\"flex min-w-0 items-center justify-between gap-3 rounded-xl border border-hairline bg-card/60 px-3 py-2 sm:justify-start\">\r\n       <span className=\"truncate text-xs text-muted-foreground\">{label}</span>\r\n       <span className={`num text-lg font-semibold ${tone === \"success\" ? \"text-success\" : \"text-foreground\"}`}>{value}</span>\r\n     </div>\r\n   );\r\n }\r\n \r\n export function PageTitle({ title, sub, right }: { title: string; sub?: string; right?: ReactNode }) {\r\n   return (\r\n     <div className=\"mb-6 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between\">\r\n       <div className=\"min-w-0\">\r\n         <h1 className=\"text-2xl font-semibold sm:text-3xl\">{title}</h1>\r\n         {sub && <p className=\"mt-1 text-sm text-muted-foreground\">{sub}</p>}\r\n       </div>\r\n       {right}\r\n     </div>\r\n   );\r\n }\r\n \r\n export function StatusPill({ status }: { status: \"success\" | \"warning\" | \"danger\" | \"idle\"; children?: ReactNode }) {\r\n   const map = {\r\n     success: \"bg-success/10 text-success border-success/25\",\r\n     warning: \"bg-warning/10 text-warning border-warning/25\",\r\n     danger: \"bg-danger/10 text-danger border-danger/25\",\r\n     idle: \"bg-muted text-muted-foreground border-hairline\",\r\n   } as const;\r\n   const label = { success: \"Resolved\", warning: \"Retrying\", danger: \"Failed\", idle: \"Queued\" }[status];\r\n   return (\r\n     <span className={`inline-flex shrink-0 items-center gap-1.5 rounded-full border px-2.5 py-0.5 text-xs font-medium ${map[status]}`}>\r\n       <span className=\"h-1.5 w-1.5 rounded-full bg-current\" />\r\n       {label}\r\n     </span>\r\n   );\r\n }\r\n",
+              "additions": 77,
+              "deletions": 34,
+              "status": "modified"
+            },
+            {
+              "file": "frontend/src/lib/api.ts",
+              "patch": "Index: frontend/src/lib/api.ts\n===================================================================\n--- frontend/src/lib/api.ts\t\n+++ frontend/src/lib/api.ts\t\n@@ -1,225 +1,226 @@\n /**\r\n  * Typed client for the SwapDesk agent backend (docs/API_CONTRACT.md).\r\n  *\r\n  * Only the base URL is configurable, via NEXT_PUBLIC_SWAPDESK_API\r\n  * (default https://swapdesk-7yvl.onrender.com). No secrets ever live in\r\n  * browser code: this backend has no auth. Every call is single-shot —\r\n  * no retries here.\r\n  */\r\n \r\n export const API_BASE =\r\n   process.env.NEXT_PUBLIC_SWAPDESK_API?.replace(/\\/$/, \"\") ??\r\n   \"https://swapdesk-7yvl.onrender.com\";\r\n \r\n export type HealthOut = {\r\n   ok: boolean;\r\n   service: string;\r\n };\r\n \r\n export type ReadyOut = {\r\n   ok: boolean;\r\n   service: string;\r\n   queued_depth: number;\r\n   oldest_queued_age_s: number | null;\r\n   last_terminal_at: string | null;\r\n   note: string;\r\n };\r\n \r\n export type ExecutionStatus =\r\n   | \"queued\"\r\n   | \"running\"\r\n   | \"waiting_input\"\r\n   | \"completed\"\r\n   | \"failed\";\r\n \r\n export type Outcome =\r\n   | \"arranged\"\r\n   | \"clarification\"\r\n   | \"denial\"\r\n   | \"escalation\"\r\n   | null;\r\n \r\n export type AgentCase = {\r\n   case_id: string;\r\n   message: string;\r\n   order_id: string | null;\r\n   order_item_id: string | null;\r\n   size: string | null;\r\n   qty: number;\r\n   execution_status: ExecutionStatus;\r\n   outcome: Outcome;\r\n   current_run_id: string;\r\n   runs: string[];\r\n   created_at: string;\r\n   updated_at: string;\r\n   reply: string | null;\r\n   clarification?: string | null;\r\n };\r\n \r\n export type CaseList = {\r\n   items: AgentCase[];\r\n   next_cursor: string | null;\r\n   total: number;\r\n   summary: {\r\n     execution_status: Record<string, number>;\r\n     outcome: Record<string, number>;\r\n   };\r\n };\r\n \r\n export type CaseDetail = AgentCase & {\r\n   clarification: string | null;\r\n   cleanup: string | null;\r\n   trace_id: string | null;\r\n   error: string | null;\r\n   requests_spent: number | null;\r\n   exchange_id: string | null;\r\n };\r\n \r\n export type TimelineEvent = {\r\n   op_key: string;\r\n   run_id: string;\r\n   op_type: string;\r\n   event: string;\r\n   status: string;\r\n   result: Record<string, unknown>;\r\n   created_at: string;\r\n };\r\n \r\n export type AcceptResponse = {\r\n   case_id: string;\r\n   run_id: string;\r\n   execution_status: ExecutionStatus;\r\n   status_url: string;\r\n   duplicate: boolean;\r\n };\r\n \r\n export type InventoryItem = {\r\n   sku: string;\r\n   size: string;\r\n   on_hand: number;\r\n   held: number;\r\n   available: number;\r\n };\r\n \r\n export type InventoryList = {\r\n   items: InventoryItem[];\r\n   limit: number;\r\n   offset: number;\r\n   total: number;\r\n };\r\n \r\n export class ApiError extends Error {\r\n   status: number;\r\n   constructor(status: number, message: string) {\r\n     super(message);\r\n     this.status = status;\r\n   }\r\n }\r\n \r\n async function request<T>(path: string, init?: RequestInit): Promise<T> {\r\n   let res: Response;\r\n   try {\r\n     res = await fetch(`${API_BASE}${path}`, {\r\n       ...init,\r\n       headers: { \"Content-Type\": \"application/json\", ...(init?.headers ?? {}) },\r\n     });\r\n   } catch {\r\n-    throw new ApiError(0, `API unreachable at ${API_BASE}. Is the backend running?`);\r\n+    console.error(`SwapDesk API unreachable at ${API_BASE}. Is the backend running?`);\r\n+    throw new ApiError(0, \"Service unreachable.\");\r\n   }\r\n   if (!res.ok) {\r\n     let detail = res.statusText;\r\n     try {\r\n       const body = (await res.json()) as { detail?: unknown };\r\n       if (typeof body.detail === \"string\" && body.detail) detail = body.detail;\r\n     } catch {\r\n       /* keep status text */\r\n     }\r\n     throw new ApiError(res.status, detail);\r\n   }\r\n   return (await res.json()) as T;\r\n }\r\n \r\n export function getHealth(): Promise<HealthOut> {\r\n   return request<HealthOut>(\"/v1/health\");\r\n }\r\n \r\n export function getReady(): Promise<ReadyOut> {\r\n   return request<ReadyOut>(\"/v1/ready\");\r\n }\r\n \r\n export function submitTicket(body: {\r\n   message: string;\r\n   order_id?: string | null;\r\n   order_item_id?: string | null;\r\n   size?: string | null;\r\n   qty?: number;\r\n   consent_size?: string | null;\r\n   case_id?: string | null;\r\n   idempotency_key?: string | null;\r\n }): Promise<AcceptResponse> {\r\n   return request<AcceptResponse>(\"/v1/agent/tickets\", {\r\n     method: \"POST\",\r\n     body: JSON.stringify(body),\r\n   });\r\n }\r\n \r\n export function listCases(params?: {\r\n   execution?: string;\r\n   outcome?: string;\r\n   limit?: number;\r\n   cursor?: string | null;\r\n }): Promise<CaseList> {\r\n   const q = new URLSearchParams();\r\n   if (params?.execution) q.set(\"execution\", params.execution);\r\n   if (params?.outcome) q.set(\"outcome\", params.outcome);\r\n   if (params?.limit) q.set(\"limit\", String(params.limit));\r\n   if (params?.cursor) q.set(\"cursor\", params.cursor);\r\n   const suffix = q.size > 0 ? `?${q.toString()}` : \"\";\r\n   return request<CaseList>(`/v1/agent/cases${suffix}`);\r\n }\r\n \r\n export function getCase(caseId: string): Promise<CaseDetail> {\r\n   return request<CaseDetail>(`/v1/agent/cases/${encodeURIComponent(caseId)}`);\r\n }\r\n \r\n export function getTimeline(caseId: string): Promise<TimelineEvent[]> {\r\n   return request<TimelineEvent[]>(\r\n     `/v1/agent/cases/${encodeURIComponent(caseId)}/timeline`,\r\n   );\r\n }\r\n \r\n export function continueCase(\r\n   caseId: string,\r\n   body: {\r\n     message?: string | null;\r\n     consent_size?: string | null;\r\n     order_id?: string | null;\r\n     order_item_id?: string | null;\r\n     size?: string | null;\r\n     qty?: number;\r\n   },\r\n ): Promise<AcceptResponse | CaseDetail> {\r\n   return request<AcceptResponse | CaseDetail>(\r\n     `/v1/agent/cases/${encodeURIComponent(caseId)}/continue`,\r\n     { method: \"POST\", body: JSON.stringify(body) },\r\n   );\r\n }\r\n \r\n export function getInventory(params?: {\r\n   sku?: string;\r\n   size?: string;\r\n   limit?: number;\r\n   offset?: number;\r\n }): Promise<InventoryList> {\r\n   const q = new URLSearchParams();\r\n   if (params?.sku) q.set(\"sku\", params.sku);\r\n   if (params?.size) q.set(\"size\", params.size);\r\n   if (params?.limit) q.set(\"limit\", String(params.limit));\r\n   if (params?.offset) q.set(\"offset\", String(params.offset));\r\n   const suffix = q.size > 0 ? `?${q.toString()}` : \"\";\r\n   return request<InventoryList>(`/v1/inventory${suffix}`);\r\n }\r\n \r\n export function isTerminalExecution(status: ExecutionStatus): boolean {\r\n   return status === \"completed\" || status === \"failed\";\r\n }\r\n",
+              "additions": 2,
+              "deletions": 1,
+              "status": "modified"
+            }
+          ]
         },
         "id": "msg_12ca9f362001t5OArNwXD2HEK5",
         "sessionID": "ses_ed657b4edffeC1aP1exexqOF40"
@@ -25389,19 +25460,22 @@
         },
         "cost": 0,
         "tokens": {
-          "input": 0,
-          "output": 0,
+          "total": 39739,
+          "input": 480,
+          "output": 91,
           "reasoning": 0,
           "cache": {
-            "read": 0,
-            "write": 0
+            "write": 0,
+            "read": 39168
           }
         },
         "modelID": "big-pickle",
         "providerID": "opencode",
         "time": {
-          "created": 1791750753522
+          "created": 1791750753522,
+          "completed": 1791750787329
         },
+        "finish": "tool-calls",
         "id": "msg_12caaccf2001GDCNgnsEWpGoJk",
         "sessionID": "ses_ed657b4edffeC1aP1exexqOF40"
       },
@@ -25418,21 +25492,1677 @@
           "tool": "bash",
           "callID": "call_00_wm8p6fxf70o2jee9udd28t8l",
           "state": {
-            "metadata": {
-              "output": ""
-            },
-            "status": "running",
+            "status": "completed",
             "input": {
               "command": "git commit -m \"Point frontend at deployed backend and add health and readiness status\" 2>&1",
               "workdir": "C:\\Users\\Chidi Mathaias\\Desktop\\SwapDesk-1"
             },
+            "output": "[main d108b72] Point frontend at deployed backend and add health and readiness status\n 4 files changed, 106 insertions(+), 14 deletions(-)\n",
+            "metadata": {
+              "output": "[main d108b72] Point frontend at deployed backend and add health and readiness status\n 4 files changed, 106 insertions(+), 14 deletions(-)\n",
+              "exit": 0,
+              "truncated": false
+            },
+            "title": "git commit -m \"Point frontend at deployed backend and add health and readiness status\" 2>&1",
             "time": {
-              "start": 1791750762599
+              "start": 1791750762599,
+              "end": 1791750779873
             }
           },
           "id": "prt_12caaeed9001BHy0H9tj6lmLvn",
           "sessionID": "ses_ed657b4edffeC1aP1exexqOF40",
           "messageID": "msg_12caaccf2001GDCNgnsEWpGoJk"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "011d73fe2b29cd449d8efa031f418e2cd95fcac9",
+          "type": "step-finish",
+          "tokens": {
+            "total": 39739,
+            "input": 480,
+            "output": 91,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 39168
+            }
+          },
+          "cost": 0,
+          "id": "prt_12cab43a8001XZglPbf0NGhXcv",
+          "sessionID": "ses_ed657b4edffeC1aP1exexqOF40",
+          "messageID": "msg_12caaccf2001GDCNgnsEWpGoJk"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_12ca9f362001t5OArNwXD2HEK5",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "C:\\Users\\Chidi Mathaias\\Desktop\\SwapDesk-1",
+          "root": "C:\\Users\\Chidi Mathaias\\Desktop\\SwapDesk-1"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 39928,
+          "input": 234,
+          "output": 78,
+          "reasoning": 64,
+          "cache": {
+            "write": 0,
+            "read": 39552
+          }
+        },
+        "modelID": "big-pickle",
+        "providerID": "opencode",
+        "time": {
+          "created": 1791750787446,
+          "completed": 1791750823805
+        },
+        "finish": "tool-calls",
+        "id": "msg_12cab5176001AnEUSu2u00Uzlg",
+        "sessionID": "ses_ed657b4edffeC1aP1exexqOF40"
+      },
+      "parts": [
+        {
+          "snapshot": "011d73fe2b29cd449d8efa031f418e2cd95fcac9",
+          "type": "step-start",
+          "id": "prt_12cab704a001eJFGAEHOMpvV7z",
+          "sessionID": "ses_ed657b4edffeC1aP1exexqOF40",
+          "messageID": "msg_12cab5176001AnEUSu2u00Uzlg"
+        },
+        {
+          "type": "reasoning",
+          "text": "Committed. Now pull. The incoming commit 1e5476b likely modifies the same files. Let me pull with rebase to keep linear history (recent history looks linear). Actually a merge might be fine. Let me try `git pull --rebase`. If conflicts, resolve.\n\nLet me pull.",
+          "time": {
+            "start": 1791750795877,
+            "end": 1791750795945
+          },
+          "id": "prt_12cab72650015BxguEF3wEjVw5",
+          "sessionID": "ses_ed657b4edffeC1aP1exexqOF40",
+          "messageID": "msg_12cab5176001AnEUSu2u00Uzlg"
+        },
+        {
+          "type": "tool",
+          "tool": "bash",
+          "callID": "call_00_pvd2k0a74lxdcjgou51icfjk",
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "git pull --rebase 2>&1",
+              "workdir": "C:\\Users\\Chidi Mathaias\\Desktop\\SwapDesk-1"
+            },
+            "output": "Auto-merging frontend/app/mission-control.tsx\nAuto-merging frontend/src/components/AppShell.tsx\nCONFLICT (content): Merge conflict in frontend/src/components/AppShell.tsx\nAuto-merging frontend/src/lib/api.ts\ngit : Rebasing (1/1)\r\nAt line:1 char:1\r\n+ git pull --rebase 2>&1\r\n+ ~~~~~~~~~~~~~~~~~~~~~~\r\n    + CategoryInfo          : NotSpecified: (Rebasing (1/1):String) [], RemoteException\r\n    + FullyQualifiedErrorId : NativeCommandError\r\n \r\nerror: could not apply d108b72... Point frontend at deployed backend and add health and readiness status\r\nhint: Resolve all conflicts manually, mark them as resolved with\r\nhint: \"git add/rm <conflicted_files>\", then run \"git rebase --continue\".\r\nhint: You can instead skip this commit: run \"git rebase --skip\".\r\nhint: To abort and get back to the state before \"git rebase\", run \"git rebase --abort\".\r\nhint: Disable this message with \"git config set advice.mergeConflict false\"\r\nCould not apply d108b72... # Point frontend at deployed backend and add health and readiness status\r\n",
+            "metadata": {
+              "output": "Auto-merging frontend/app/mission-control.tsx\nAuto-merging frontend/src/components/AppShell.tsx\nCONFLICT (content): Merge conflict in frontend/src/components/AppShell.tsx\nAuto-merging frontend/src/lib/api.ts\ngit : Rebasing (1/1)\r\nAt line:1 char:1\r\n+ git pull --rebase 2>&1\r\n+ ~~~~~~~~~~~~~~~~~~~~~~\r\n    + CategoryInfo          : NotSpecified: (Rebasing (1/1):String) [], RemoteException\r\n    + FullyQualifiedErrorId : NativeCommandError\r\n \r\nerror: could not apply d108b72... Point frontend at deployed backend and add health and readiness status\r\nhint: Resolve all conflicts manually, mark them as resolved with\r\nhint: \"git add/rm <conflicted_files>\", then run \"git rebase --continue\".\r\nhint: You can instead skip this commit: run \"git rebase --skip\".\r\nhint: To abort and get back to the state before \"git rebase\", run \"git rebase --abort\".\r\nhint: Disable this message with \"git config set advice.mergeConflict false\"\r\nCould not apply d108b72... # Point frontend at deployed backend and add health and readiness status\r\n",
+              "exit": 1,
+              "truncated": false
+            },
+            "title": "git pull --rebase 2>&1",
+            "time": {
+              "start": 1791750796083,
+              "end": 1791750808142
+            }
+          },
+          "id": "prt_12cab72ad0016Umq8n7yxyAhlk",
+          "sessionID": "ses_ed657b4edffeC1aP1exexqOF40",
+          "messageID": "msg_12cab5176001AnEUSu2u00Uzlg"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "262e526a34bf50df15650f80e6a1d834b619f35f",
+          "type": "step-finish",
+          "tokens": {
+            "total": 39928,
+            "input": 234,
+            "output": 78,
+            "reasoning": 64,
+            "cache": {
+              "write": 0,
+              "read": 39552
+            }
+          },
+          "cost": 0,
+          "id": "prt_12cabca9900158BZ7ADWjQgINV",
+          "sessionID": "ses_ed657b4edffeC1aP1exexqOF40",
+          "messageID": "msg_12cab5176001AnEUSu2u00Uzlg"
+        },
+        {
+          "type": "patch",
+          "hash": "011d73fe2b29cd449d8efa031f418e2cd95fcac9",
+          "files": [
+            "C:/Users/Chidi Mathaias/Desktop/SwapDesk-1/frontend/app/database/layout.tsx",
+            "C:/Users/Chidi Mathaias/Desktop/SwapDesk-1/frontend/app/database/page.tsx",
+            "C:/Users/Chidi Mathaias/Desktop/SwapDesk-1/frontend/app/integrations/layout.tsx",
+            "C:/Users/Chidi Mathaias/Desktop/SwapDesk-1/frontend/app/integrations/page.tsx",
+            "C:/Users/Chidi Mathaias/Desktop/SwapDesk-1/frontend/app/mission-control.tsx",
+            "C:/Users/Chidi Mathaias/Desktop/SwapDesk-1/frontend/app/needs-input/needs-input-list.tsx",
+            "C:/Users/Chidi Mathaias/Desktop/SwapDesk-1/frontend/app/needs-input/page.tsx",
+            "C:/Users/Chidi Mathaias/Desktop/SwapDesk-1/frontend/app/sitemap.ts",
+            "C:/Users/Chidi Mathaias/Desktop/SwapDesk-1/frontend/src/components/AppShell.tsx",
+            "C:/Users/Chidi Mathaias/Desktop/SwapDesk-1/frontend/src/lib/api.ts"
+          ],
+          "id": "prt_12cabdf79001W6FfBMjivLm4V8",
+          "sessionID": "ses_ed657b4edffeC1aP1exexqOF40",
+          "messageID": "msg_12cab5176001AnEUSu2u00Uzlg"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_12ca9f362001t5OArNwXD2HEK5",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "C:\\Users\\Chidi Mathaias\\Desktop\\SwapDesk-1",
+          "root": "C:\\Users\\Chidi Mathaias\\Desktop\\SwapDesk-1"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 40345,
+          "input": 550,
+          "output": 82,
+          "reasoning": 33,
+          "cache": {
+            "write": 0,
+            "read": 39680
+          }
+        },
+        "modelID": "big-pickle",
+        "providerID": "opencode",
+        "time": {
+          "created": 1791750823875,
+          "completed": 1791750846588
+        },
+        "finish": "tool-calls",
+        "id": "msg_12cabdfc3001sn7u64JO4J7oOI",
+        "sessionID": "ses_ed657b4edffeC1aP1exexqOF40"
+      },
+      "parts": [
+        {
+          "snapshot": "262e526a34bf50df15650f80e6a1d834b619f35f",
+          "type": "step-start",
+          "id": "prt_12cac0611001HVP3Y6DU5njdpt",
+          "sessionID": "ses_ed657b4edffeC1aP1exexqOF40",
+          "messageID": "msg_12cabdfc3001sn7u64JO4J7oOI"
+        },
+        {
+          "type": "reasoning",
+          "text": "Conflict in AppShell.tsx. Let me look at it. Also check what the incoming commit changed (1e5476b). Let me view the conflict.",
+          "time": {
+            "start": 1791750833743,
+            "end": 1791750833751
+          },
+          "id": "prt_12cac064f001kx4b2nXs14BvhM",
+          "sessionID": "ses_ed657b4edffeC1aP1exexqOF40",
+          "messageID": "msg_12cabdfc3001sn7u64JO4J7oOI"
+        },
+        {
+          "type": "tool",
+          "tool": "read",
+          "callID": "call_00_ftdanqcnob1gat8mj91su044",
+          "state": {
+            "status": "completed",
+            "input": {
+              "filePath": "C:\\Users\\Chidi Mathaias\\Desktop\\SwapDesk-1\\frontend\\src\\components\\AppShell.tsx",
+              "limit": 80
+            },
+            "output": "<path>C:\\Users\\Chidi Mathaias\\Desktop\\SwapDesk-1\\frontend\\src\\components\\AppShell.tsx</path>\n<type>file</type>\n<content>\n1: \"use client\";\n2: \n3: import Link from \"next/link\";\n4: import { usePathname, useRouter } from \"next/navigation\";\n5: import { useEffect, useState } from \"react\";\n6: import { Inbox, Boxes, Settings, Ticket, ChevronRight, Zap, LayoutDashboard, PanelLeftClose, PanelLeftOpen, MessageCircleQuestion } from \"lucide-react\";\n7: import type { ReactNode } from \"react\";\n8: import { useSwapDesk } from \"@/store/swapdesk\";\n9: import { API_BASE } from \"@/lib/api\";\n10: \n11: const nav = [\n12:   { to: \"/\", label: \"Mission Control\", icon: LayoutDashboard },\n13:   { to: \"/inbox\", label: \"Inbox\", icon: Inbox },\n14:   { to: \"/inventory\", label: \"Inventory\", icon: Boxes },\n15:   { to: \"/needs-input\", label: \"Needs input\", icon: MessageCircleQuestion },\n16:   { to: \"/settings\", label: \"Settings\", icon: Settings },\n17: ] as const;\n18: \n19: type BackendState = \"checking\" | \"live\" | \"down\";\n20: \n21: function BackendStatus({ expanded }: { expanded: boolean }) {\n22:   const [state, setState] = useState<BackendState>(\"checking\");\n23: \n24:   useEffect(() => {\n25:     let cancelled = false;\n26:     const check = async () => {\n27:       try {\n28:         const res = await fetch(`${API_BASE}/v1/health`);\n29:         if (!cancelled) setState(res.ok ? \"live\" : \"down\");\n30:       } catch {\n31:         if (!cancelled) setState(\"down\");\n32:       }\n33:     };\n34:     void check();\n35:     const timer = window.setInterval(() => void check(), 30000);\n36:     return () => {\n37:       cancelled = true;\n38:       window.clearInterval(timer);\n39:     };\n40:   }, []);\n41: \n42:   const label = state === \"live\" ? \"Service live\" : state === \"down\" ? \"Service unreachable\" : \"Checking service\";\n43:   return (\n44:     <div\n45:       className={`grid h-10 place-items-center rounded-xl border border-hairline text-xs text-muted-foreground ${expanded ? \"w-full grid-cols-none px-3\" : \"w-10\"}`}\n46:       title={label}\n47:       role=\"status\"\n48:       aria-label={label}\n49:     >\n50:       <span className=\"flex items-center gap-2\">\n51:         <span\n52:           className={`h-2 w-2 rounded-full ${state === \"live\" ? \"bg-success pulse-dot\" : state === \"down\" ? \"bg-danger\" : \"bg-muted-foreground/50\"}`}\n53:         />\n54:         {expanded && <span className=\"truncate text-[11px]\">{label}</span>}\n55:         <span className=\"sr-only\">{label}</span>\n56:       </span>\n57:     </div>\n58:   );\n59: }\n60: \n61: export function AppShell({ crumbs, children, metrics = true }: { crumbs: { label: string; to?: string }[]; children: ReactNode; metrics?: boolean }) {\n62:   const pathname = usePathname();\n63:   const router = useRouter();\n64: <<<<<<< HEAD\n65:   const { summary, total } = useSwapDesk();\n66:   const [expanded, setExpanded] = useState(false);\n67: =======\n68:   const { summary, total, health } = useSwapDesk();\n69: >>>>>>> d108b72 (Point frontend at deployed backend and add health and readiness status)\n70: \n71:   const isActive = (to: string) => pathname === to;\n72: \n73:   const statusTitle =\n74:     health === \"online\"\n75:       ? \"Backend online\"\n76:       : health === \"offline\"\n77:         ? \"Backend offline\"\n78:         : \"Checking backend…\";\n79:   const statusDot =\n80:     health === \"online\"\n\n(Showing lines 1-80 of 250. Use offset=81 to continue.)\n</content>",
+            "metadata": {
+              "preview": "\"use client\";\n\nimport Link from \"next/link\";\nimport { usePathname, useRouter } from \"next/navigation\";\nimport { useEffect, useState } from \"react\";\nimport { Inbox, Boxes, Settings, Ticket, ChevronRight, Zap, LayoutDashboard, PanelLeftClose, PanelLeftOpen, MessageCircleQuestion } from \"lucide-react\";\nimport type { ReactNode } from \"react\";\nimport { useSwapDesk } from \"@/store/swapdesk\";\nimport { API_BASE } from \"@/lib/api\";\n\nconst nav = [\n  { to: \"/\", label: \"Mission Control\", icon: LayoutDashboard },\n  { to: \"/inbox\", label: \"Inbox\", icon: Inbox },\n  { to: \"/inventory\", label: \"Inventory\", icon: Boxes },\n  { to: \"/needs-input\", label: \"Needs input\", icon: MessageCircleQuestion },\n  { to: \"/settings\", label: \"Settings\", icon: Settings },\n] as const;\n\ntype BackendState = \"checking\" | \"live\" | \"down\";\n",
+              "truncated": true,
+              "loaded": [],
+              "display": {
+                "type": "file",
+                "path": "C:\\Users\\Chidi Mathaias\\Desktop\\SwapDesk-1\\frontend\\src\\components\\AppShell.tsx",
+                "text": "\"use client\";\n\nimport Link from \"next/link\";\nimport { usePathname, useRouter } from \"next/navigation\";\nimport { useEffect, useState } from \"react\";\nimport { Inbox, Boxes, Settings, Ticket, ChevronRight, Zap, LayoutDashboard, PanelLeftClose, PanelLeftOpen, MessageCircleQuestion } from \"lucide-react\";\nimport type { ReactNode } from \"react\";\nimport { useSwapDesk } from \"@/store/swapdesk\";\nimport { API_BASE } from \"@/lib/api\";\n\nconst nav = [\n  { to: \"/\", label: \"Mission Control\", icon: LayoutDashboard },\n  { to: \"/inbox\", label: \"Inbox\", icon: Inbox },\n  { to: \"/inventory\", label: \"Inventory\", icon: Boxes },\n  { to: \"/needs-input\", label: \"Needs input\", icon: MessageCircleQuestion },\n  { to: \"/settings\", label: \"Settings\", icon: Settings },\n] as const;\n\ntype BackendState = \"checking\" | \"live\" | \"down\";\n\nfunction BackendStatus({ expanded }: { expanded: boolean }) {\n  const [state, setState] = useState<BackendState>(\"checking\");\n\n  useEffect(() => {\n    let cancelled = false;\n    const check = async () => {\n      try {\n        const res = await fetch(`${API_BASE}/v1/health`);\n        if (!cancelled) setState(res.ok ? \"live\" : \"down\");\n      } catch {\n        if (!cancelled) setState(\"down\");\n      }\n    };\n    void check();\n    const timer = window.setInterval(() => void check(), 30000);\n    return () => {\n      cancelled = true;\n      window.clearInterval(timer);\n    };\n  }, []);\n\n  const label = state === \"live\" ? \"Service live\" : state === \"down\" ? \"Service unreachable\" : \"Checking service\";\n  return (\n    <div\n      className={`grid h-10 place-items-center rounded-xl border border-hairline text-xs text-muted-foreground ${expanded ? \"w-full grid-cols-none px-3\" : \"w-10\"}`}\n      title={label}\n      role=\"status\"\n      aria-label={label}\n    >\n      <span className=\"flex items-center gap-2\">\n        <span\n          className={`h-2 w-2 rounded-full ${state === \"live\" ? \"bg-success pulse-dot\" : state === \"down\" ? \"bg-danger\" : \"bg-muted-foreground/50\"}`}\n        />\n        {expanded && <span className=\"truncate text-[11px]\">{label}</span>}\n        <span className=\"sr-only\">{label}</span>\n      </span>\n    </div>\n  );\n}\n\nexport function AppShell({ crumbs, children, metrics = true }: { crumbs: { label: string; to?: string }[]; children: ReactNode; metrics?: boolean }) {\n  const pathname = usePathname();\n  const router = useRouter();\n<<<<<<< HEAD\n  const { summary, total } = useSwapDesk();\n  const [expanded, setExpanded] = useState(false);\n=======\n  const { summary, total, health } = useSwapDesk();\n>>>>>>> d108b72 (Point frontend at deployed backend and add health and readiness status)\n\n  const isActive = (to: string) => pathname === to;\n\n  const statusTitle =\n    health === \"online\"\n      ? \"Backend online\"\n      : health === \"offline\"\n        ? \"Backend offline\"\n        : \"Checking backend…\";\n  const statusDot =\n    health === \"online\"",
+                "lineStart": 1,
+                "lineEnd": 80,
+                "totalLines": 250,
+                "truncated": true
+              }
+            },
+            "title": "frontend\\src\\components\\AppShell.tsx",
+            "time": {
+              "start": 1791750834654,
+              "end": 1791750840042
+            }
+          },
+          "id": "prt_12cac065b001LcpeTWQwTGV8Q8",
+          "sessionID": "ses_ed657b4edffeC1aP1exexqOF40",
+          "messageID": "msg_12cabdfc3001sn7u64JO4J7oOI"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "262e526a34bf50df15650f80e6a1d834b619f35f",
+          "type": "step-finish",
+          "tokens": {
+            "total": 40345,
+            "input": 550,
+            "output": 82,
+            "reasoning": 33,
+            "cache": {
+              "write": 0,
+              "read": 39680
+            }
+          },
+          "cost": 0,
+          "id": "prt_12cac2aa60018y30nocBKUUaPh",
+          "sessionID": "ses_ed657b4edffeC1aP1exexqOF40",
+          "messageID": "msg_12cabdfc3001sn7u64JO4J7oOI"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_12ca9f362001t5OArNwXD2HEK5",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "C:\\Users\\Chidi Mathaias\\Desktop\\SwapDesk-1",
+          "root": "C:\\Users\\Chidi Mathaias\\Desktop\\SwapDesk-1"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 41710,
+          "input": 1185,
+          "output": 98,
+          "reasoning": 235,
+          "cache": {
+            "write": 0,
+            "read": 40192
+          }
+        },
+        "modelID": "big-pickle",
+        "providerID": "opencode",
+        "time": {
+          "created": 1791750846675,
+          "completed": 1791750866157
+        },
+        "finish": "tool-calls",
+        "id": "msg_12cac38d3001AGyAymiXK2hVMx",
+        "sessionID": "ses_ed657b4edffeC1aP1exexqOF40"
+      },
+      "parts": [
+        {
+          "snapshot": "262e526a34bf50df15650f80e6a1d834b619f35f",
+          "type": "step-start",
+          "id": "prt_12cac5143001Jof8Pouh3syYgk",
+          "sessionID": "ses_ed657b4edffeC1aP1exexqOF40",
+          "messageID": "msg_12cac38d3001AGyAymiXK2hVMx"
+        },
+        {
+          "type": "reasoning",
+          "text": "The incoming commit (HEAD during rebase) has a redesigned AppShell with its own `BackendStatus` component that pings `/v1/health` every 30s, plus expanded sidebar state. My commit added health/ready via the store.\n\nThe incoming version already implements backend health checking independently. My addition of `health` from the store conflicts. I should integrate: keep the incoming redesign (BackendStatus component, expanded state) and merge my store-based health/ready where relevant.\n\nThe best resolution: Keep HEAD's version (the newer redesign) but ALSO keep the store's health/ready additions where they add value (readiness/queue depth). However, the incoming `BackendStatus` component handles health display already. My store `health`/`ready` might still be useful for mission-control's queue pill.\n\nLet me look at the full incoming AppShell to understand the redesign, then resolve.\n\nLet me read more of the file (the conflict region and beyond).\n\nActually the whole file merged with conflicts only in this one region? It says CONFLICT in AppShell.tsx. Let me read the rest to see markers.",
+          "time": {
+            "start": 1791750853173,
+            "end": 1791750854495
+          },
+          "id": "prt_12cac52350011Bc6v6xTr2I74I",
+          "sessionID": "ses_ed657b4edffeC1aP1exexqOF40",
+          "messageID": "msg_12cac38d3001AGyAymiXK2hVMx"
+        },
+        {
+          "type": "tool",
+          "tool": "read",
+          "callID": "call_00_0ya6f8yejxaerhr32arrwe03",
+          "state": {
+            "status": "completed",
+            "input": {
+              "filePath": "C:\\Users\\Chidi Mathaias\\Desktop\\SwapDesk-1\\frontend\\src\\components\\AppShell.tsx",
+              "offset": 80,
+              "limit": 180
+            },
+            "output": "<path>C:\\Users\\Chidi Mathaias\\Desktop\\SwapDesk-1\\frontend\\src\\components\\AppShell.tsx</path>\n<type>file</type>\n<content>\n80:     health === \"online\"\n81:       ? \"bg-success pulse-dot\"\n82:       : health === \"offline\"\n83:         ? \"bg-danger\"\n84:         : \"bg-muted-foreground\";\n85: \n86:   const arranged = summary?.outcome.arranged ?? 0;\n87:   const completionRate =\n88:     total > 0 ? `${Math.round((arranged / total) * 100)}%` : \"N/A\";\n89: \n90:   const handleSimulateTicket = () => {\n91:     router.push(\"/simulate\");\n92:   };\n93: \n94:   return (\n95:     <div className=\"flex min-h-screen w-full\">\n96:       {/* Desktop sidebar */}\n97:       <aside className={`glass fixed inset-y-0 left-0 z-40 hidden h-screen shrink-0 flex-col items-center gap-2 border-y-0 border-l-0 py-6 md:flex ${expanded ? \"w-56 items-stretch px-4\" : \"w-20\"}`}>\n98:         <Link href=\"/\" aria-label=\"SwapDesk Mission Control\" className={`mb-6 flex items-center ${expanded ? \"gap-3 px-2\" : \"justify-center\"}`}>\n99:           <span className=\"grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-primary/10 text-primary glow-success\">\n100:             <Ticket className=\"h-5 w-5\" />\n101:           </span>\n102:           {expanded && <span className=\"truncate text-sm font-semibold\">SwapDesk</span>}\n103:         </Link>\n104:         {nav.map(({ to, label, icon: Icon }) => (\n105:           <Link\n106:             key={label}\n107:             href={to}\n108:             aria-current={isActive(to) ? \"page\" : undefined}\n109:             title={label}\n110:             className={`group flex items-center rounded-xl px-3 py-2.5 text-sm transition-colors hover:bg-accent/60 hover:text-foreground ${isActive(to) ? \"bg-accent/80 text-foreground\" : \"text-muted-foreground\"} ${expanded ? \"w-full gap-3\" : \"w-12 justify-center\"}`}\n111:           >\n112:             <Icon className=\"h-[18px] w-[18px] shrink-0\" />\n113:             {expanded ? (\n114:               <span className=\"truncate\">{label}</span>\n115:             ) : (\n116:               <span className=\"sr-only\">{label}</span>\n117:             )}\n118:           </Link>\n119:         ))}\n120: <<<<<<< HEAD\n121:         <div className=\"mt-auto flex flex-col items-center gap-2\">\n122:           <BackendStatus expanded={expanded} />\n123:           <button\n124:             type=\"button\"\n125:             onClick={() => setExpanded((v) => !v)}\n126:             aria-expanded={expanded}\n127:             aria-label={expanded ? \"Collapse sidebar\" : \"Expand sidebar\"}\n128:             title={expanded ? \"Collapse sidebar\" : \"Expand sidebar\"}\n129:             className=\"grid h-10 w-10 place-items-center rounded-xl border border-hairline text-muted-foreground transition-colors hover:bg-accent/60 hover:text-foreground\"\n130:           >\n131:             {expanded ? <PanelLeftClose className=\"h-[18px] w-[18px]\" /> : <PanelLeftOpen className=\"h-[18px] w-[18px]\" />}\n132:           </button>\n133: =======\n134:         <div className=\"mt-auto grid h-10 w-10 place-items-center rounded-xl border border-hairline text-xs text-muted-foreground\" title={statusTitle}>\n135:           <span className={`h-2 w-2 rounded-full ${statusDot}`} />\n136:           <span className=\"sr-only\">{statusTitle}</span>\n137: >>>>>>> d108b72 (Point frontend at deployed backend and add health and readiness status)\n138:         </div>\n139:       </aside>\n140: \n141:       <div className={`flex min-w-0 flex-1 flex-col pb-[calc(5rem+env(safe-area-inset-bottom))] md:pb-0 ${expanded ? \"md:ml-56\" : \"md:ml-20\"}`}>\n142:         <header className=\"glass sticky top-0 z-30 border-x-0 border-t-0\">\n143:           <div className=\"flex flex-col gap-3 px-4 py-3 sm:px-6 lg:flex-row lg:items-center lg:justify-between lg:px-8 lg:py-4\">\n144:             <nav className=\"flex min-w-0 items-center gap-1.5 text-sm\">\n145:               {crumbs.map((c, i) => (\n146:                 <span key={c.label} className=\"flex min-w-0 items-center gap-1.5\">\n147:                   {i > 0 && <ChevronRight className=\"h-3.5 w-3.5 shrink-0 text-muted-foreground/60\" />}\n148:                   {c.to ? (\n149:                     <Link href={c.to} className=\"truncate text-muted-foreground hover:text-foreground\">\n150:                       {c.label}\n151:                     </Link>\n152:                   ) : (\n153:                     <span className=\"truncate font-mono text-foreground\">{c.label}</span>\n154:                   )}\n155:                 </span>\n156:               ))}\n157:             </nav>\n158:             <div className=\"flex flex-wrap items-center gap-2 sm:gap-3\">\n159:               <button\n160:                 type=\"button\"\n161:                 onClick={handleSimulateTicket}\n162:                 className=\"inline-flex shrink-0 items-center gap-2 rounded-lg border border-hairline bg-card/60 px-3 py-2 text-xs font-medium text-foreground transition-colors hover:bg-accent/60\"\n163:                 title=\"Submit a ticket to the agent backend\"\n164:               >\n165:                 <Zap className=\"h-3.5 w-3.5 text-success\" />\n166:                 New Ticket\n167:               </button>\n168:               {metrics && (\n169:                 <div className=\"grid grid-cols-2 gap-2 sm:flex sm:gap-3\">\n170:                   <Metric label=\"Completion Rate\" value={completionRate} tone=\"success\" />\n171:                 </div>\n172:               )}\n173:             </div>\n174:           </div>\n175:         </header>\n176:         <main className=\"mx-auto min-w-0 w-full max-w-[1600px] flex-1 px-4 py-6 sm:px-6 lg:px-8\">{children}</main>\n177:       </div>\n178: \n179:       {/* Mobile bottom nav */}\n180:       <nav\n181:         aria-label=\"Main navigation\"\n182:         className=\"fixed inset-x-0 bottom-0 z-40 grid grid-cols-6 border-t border-hairline bg-[#0b0b0d] px-3 pb-[calc(env(safe-area-inset-bottom)+0.6rem)] pt-2.5 shadow-[0_-16px_40px_-24px_rgba(0,0,0,0.95)] md:hidden\"\n183:       >\n184:         {nav.map(({ to, label, icon: Icon }) => {\n185:           const active = isActive(to);\n186:           return (\n187:             <Link\n188:               key={label}\n189:               href={to}\n190:               aria-current={active ? \"page\" : undefined}\n191:               className=\"group flex flex-col items-center gap-1 py-1 transition-transform duration-150 active:scale-90\"\n192:             >\n193:               <span\n194:                 className={`grid h-8 w-[4.25rem] place-items-center rounded-full transition-all duration-200 ${active\n195:                     ? \"bg-primary/[0.12] text-primary shadow-[inset_0_0_0_1px_rgba(91,255,159,0.22),0_0_18px_-4px_rgba(91,255,159,0.35)]\"\n196:                     : \"text-muted-foreground group-hover:text-foreground group-active:bg-white/[0.06]\"\n197:                   }`}\n198:               >\n199:                 <Icon className=\"h-5 w-5\" />\n200:               </span>\n201:               <span\n202:                 className={`truncate max-w-full text-[10px] font-medium transition-colors ${active ? \"text-primary\" : \"text-muted-foreground\"\n203:                   }`}\n204:               >\n205:                 {label.split(\" \")[0]}\n206:               </span>\n207:             </Link>\n208:           );\n209:         })}\n210:       </nav>\n211:     </div>\n212:   );\n213: }\n214: \n215: function Metric({ label, value, tone }: { label: string; value: string; tone?: \"success\" }) {\n216:   return (\n217:     <div className=\"flex min-w-0 items-center justify-between gap-3 rounded-xl border border-hairline bg-card/60 px-3 py-2 sm:justify-start\">\n218:       <span className=\"truncate text-xs text-muted-foreground\">{label}</span>\n219:       <span className={`num text-lg font-semibold ${tone === \"success\" ? \"text-success\" : \"text-foreground\"}`}>{value}</span>\n220:     </div>\n221:   );\n222: }\n223: \n224: export function PageTitle({ title, sub, right }: { title: string; sub?: string; right?: ReactNode }) {\n225:   return (\n226:     <div className=\"mb-6 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between\">\n227:       <div className=\"min-w-0\">\n228:         <h1 className=\"text-2xl font-semibold sm:text-3xl\">{title}</h1>\n229:         {sub && <p className=\"mt-1 text-sm text-muted-foreground\">{sub}</p>}\n230:       </div>\n231:       {right}\n232:     </div>\n233:   );\n234: }\n235: \n236: export function StatusPill({ status }: { status: \"success\" | \"warning\" | \"danger\" | \"idle\"; children?: ReactNode }) {\n237:   const map = {\n238:     success: \"bg-success/10 text-success border-success/25\",\n239:     warning: \"bg-warning/10 text-warning border-warning/25\",\n240:     danger: \"bg-danger/10 text-danger border-danger/25\",\n241:     idle: \"bg-muted text-muted-foreground border-hairline\",\n242:   } as const;\n243:   const label = { success: \"Resolved\", warning: \"Retrying\", danger: \"Failed\", idle: \"Queued\" }[status];\n244:   return (\n245:     <span className={`inline-flex shrink-0 items-center gap-1.5 rounded-full border px-2.5 py-0.5 text-xs font-medium ${map[status]}`}>\n246:       <span className=\"h-1.5 w-1.5 rounded-full bg-current\" />\n247:       {label}\n248:     </span>\n249:   );\n250: }\n\n(End of file - total 250 lines)\n</content>",
+            "metadata": {
+              "preview": "    health === \"online\"\n      ? \"bg-success pulse-dot\"\n      : health === \"offline\"\n        ? \"bg-danger\"\n        : \"bg-muted-foreground\";\n\n  const arranged = summary?.outcome.arranged ?? 0;\n  const completionRate =\n    total > 0 ? `${Math.round((arranged / total) * 100)}%` : \"N/A\";\n\n  const handleSimulateTicket = () => {\n    router.push(\"/simulate\");\n  };\n\n  return (\n    <div className=\"flex min-h-screen w-full\">\n      {/* Desktop sidebar */}\n      <aside className={`glass fixed inset-y-0 left-0 z-40 hidden h-screen shrink-0 flex-col items-center gap-2 border-y-0 border-l-0 py-6 md:flex ${expanded ? \"w-56 items-stretch px-4\" : \"w-20\"}`}>\n        <Link href=\"/\" aria-label=\"SwapDesk Mission Control\" className={`mb-6 flex items-center ${expanded ? \"gap-3 px-2\" : \"justify-center\"}`}>\n          <span className=\"grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-primary/10 text-primary glow-success\">",
+              "truncated": false,
+              "loaded": [],
+              "display": {
+                "type": "file",
+                "path": "C:\\Users\\Chidi Mathaias\\Desktop\\SwapDesk-1\\frontend\\src\\components\\AppShell.tsx",
+                "text": "    health === \"online\"\n      ? \"bg-success pulse-dot\"\n      : health === \"offline\"\n        ? \"bg-danger\"\n        : \"bg-muted-foreground\";\n\n  const arranged = summary?.outcome.arranged ?? 0;\n  const completionRate =\n    total > 0 ? `${Math.round((arranged / total) * 100)}%` : \"N/A\";\n\n  const handleSimulateTicket = () => {\n    router.push(\"/simulate\");\n  };\n\n  return (\n    <div className=\"flex min-h-screen w-full\">\n      {/* Desktop sidebar */}\n      <aside className={`glass fixed inset-y-0 left-0 z-40 hidden h-screen shrink-0 flex-col items-center gap-2 border-y-0 border-l-0 py-6 md:flex ${expanded ? \"w-56 items-stretch px-4\" : \"w-20\"}`}>\n        <Link href=\"/\" aria-label=\"SwapDesk Mission Control\" className={`mb-6 flex items-center ${expanded ? \"gap-3 px-2\" : \"justify-center\"}`}>\n          <span className=\"grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-primary/10 text-primary glow-success\">\n            <Ticket className=\"h-5 w-5\" />\n          </span>\n          {expanded && <span className=\"truncate text-sm font-semibold\">SwapDesk</span>}\n        </Link>\n        {nav.map(({ to, label, icon: Icon }) => (\n          <Link\n            key={label}\n            href={to}\n            aria-current={isActive(to) ? \"page\" : undefined}\n            title={label}\n            className={`group flex items-center rounded-xl px-3 py-2.5 text-sm transition-colors hover:bg-accent/60 hover:text-foreground ${isActive(to) ? \"bg-accent/80 text-foreground\" : \"text-muted-foreground\"} ${expanded ? \"w-full gap-3\" : \"w-12 justify-center\"}`}\n          >\n            <Icon className=\"h-[18px] w-[18px] shrink-0\" />\n            {expanded ? (\n              <span className=\"truncate\">{label}</span>\n            ) : (\n              <span className=\"sr-only\">{label}</span>\n            )}\n          </Link>\n        ))}\n<<<<<<< HEAD\n        <div className=\"mt-auto flex flex-col items-center gap-2\">\n          <BackendStatus expanded={expanded} />\n          <button\n            type=\"button\"\n            onClick={() => setExpanded((v) => !v)}\n            aria-expanded={expanded}\n            aria-label={expanded ? \"Collapse sidebar\" : \"Expand sidebar\"}\n            title={expanded ? \"Collapse sidebar\" : \"Expand sidebar\"}\n            className=\"grid h-10 w-10 place-items-center rounded-xl border border-hairline text-muted-foreground transition-colors hover:bg-accent/60 hover:text-foreground\"\n          >\n            {expanded ? <PanelLeftClose className=\"h-[18px] w-[18px]\" /> : <PanelLeftOpen className=\"h-[18px] w-[18px]\" />}\n          </button>\n=======\n        <div className=\"mt-auto grid h-10 w-10 place-items-center rounded-xl border border-hairline text-xs text-muted-foreground\" title={statusTitle}>\n          <span className={`h-2 w-2 rounded-full ${statusDot}`} />\n          <span className=\"sr-only\">{statusTitle}</span>\n>>>>>>> d108b72 (Point frontend at deployed backend and add health and readiness status)\n        </div>\n      </aside>\n\n      <div className={`flex min-w-0 flex-1 flex-col pb-[calc(5rem+env(safe-area-inset-bottom))] md:pb-0 ${expanded ? \"md:ml-56\" : \"md:ml-20\"}`}>\n        <header className=\"glass sticky top-0 z-30 border-x-0 border-t-0\">\n          <div className=\"flex flex-col gap-3 px-4 py-3 sm:px-6 lg:flex-row lg:items-center lg:justify-between lg:px-8 lg:py-4\">\n            <nav className=\"flex min-w-0 items-center gap-1.5 text-sm\">\n              {crumbs.map((c, i) => (\n                <span key={c.label} className=\"flex min-w-0 items-center gap-1.5\">\n                  {i > 0 && <ChevronRight className=\"h-3.5 w-3.5 shrink-0 text-muted-foreground/60\" />}\n                  {c.to ? (\n                    <Link href={c.to} className=\"truncate text-muted-foreground hover:text-foreground\">\n                      {c.label}\n                    </Link>\n                  ) : (\n                    <span className=\"truncate font-mono text-foreground\">{c.label}</span>\n                  )}\n                </span>\n              ))}\n            </nav>\n            <div className=\"flex flex-wrap items-center gap-2 sm:gap-3\">\n              <button\n                type=\"button\"\n                onClick={handleSimulateTicket}\n                className=\"inline-flex shrink-0 items-center gap-2 rounded-lg border border-hairline bg-card/60 px-3 py-2 text-xs font-medium text-foreground transition-colors hover:bg-accent/60\"\n                title=\"Submit a ticket to the agent backend\"\n              >\n                <Zap className=\"h-3.5 w-3.5 text-success\" />\n                New Ticket\n              </button>\n              {metrics && (\n                <div className=\"grid grid-cols-2 gap-2 sm:flex sm:gap-3\">\n                  <Metric label=\"Completion Rate\" value={completionRate} tone=\"success\" />\n                </div>\n              )}\n            </div>\n          </div>\n        </header>\n        <main className=\"mx-auto min-w-0 w-full max-w-[1600px] flex-1 px-4 py-6 sm:px-6 lg:px-8\">{children}</main>\n      </div>\n\n      {/* Mobile bottom nav */}\n      <nav\n        aria-label=\"Main navigation\"\n        className=\"fixed inset-x-0 bottom-0 z-40 grid grid-cols-6 border-t border-hairline bg-[#0b0b0d] px-3 pb-[calc(env(safe-area-inset-bottom)+0.6rem)] pt-2.5 shadow-[0_-16px_40px_-24px_rgba(0,0,0,0.95)] md:hidden\"\n      >\n        {nav.map(({ to, label, icon: Icon }) => {\n          const active = isActive(to);\n          return (\n            <Link\n              key={label}\n              href={to}\n              aria-current={active ? \"page\" : undefined}\n              className=\"group flex flex-col items-center gap-1 py-1 transition-transform duration-150 active:scale-90\"\n            >\n              <span\n                className={`grid h-8 w-[4.25rem] place-items-center rounded-full transition-all duration-200 ${active\n                    ? \"bg-primary/[0.12] text-primary shadow-[inset_0_0_0_1px_rgba(91,255,159,0.22),0_0_18px_-4px_rgba(91,255,159,0.35)]\"\n                    : \"text-muted-foreground group-hover:text-foreground group-active:bg-white/[0.06]\"\n                  }`}\n              >\n                <Icon className=\"h-5 w-5\" />\n              </span>\n              <span\n                className={`truncate max-w-full text-[10px] font-medium transition-colors ${active ? \"text-primary\" : \"text-muted-foreground\"\n                  }`}\n              >\n                {label.split(\" \")[0]}\n              </span>\n            </Link>\n          );\n        })}\n      </nav>\n    </div>\n  );\n}\n\nfunction Metric({ label, value, tone }: { label: string; value: string; tone?: \"success\" }) {\n  return (\n    <div className=\"flex min-w-0 items-center justify-between gap-3 rounded-xl border border-hairline bg-card/60 px-3 py-2 sm:justify-start\">\n      <span className=\"truncate text-xs text-muted-foreground\">{label}</span>\n      <span className={`num text-lg font-semibold ${tone === \"success\" ? \"text-success\" : \"text-foreground\"}`}>{value}</span>\n    </div>\n  );\n}\n\nexport function PageTitle({ title, sub, right }: { title: string; sub?: string; right?: ReactNode }) {\n  return (\n    <div className=\"mb-6 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between\">\n      <div className=\"min-w-0\">\n        <h1 className=\"text-2xl font-semibold sm:text-3xl\">{title}</h1>\n        {sub && <p className=\"mt-1 text-sm text-muted-foreground\">{sub}</p>}\n      </div>\n      {right}\n    </div>\n  );\n}\n\nexport function StatusPill({ status }: { status: \"success\" | \"warning\" | \"danger\" | \"idle\"; children?: ReactNode }) {\n  const map = {\n    success: \"bg-success/10 text-success border-success/25\",\n    warning: \"bg-warning/10 text-warning border-warning/25\",\n    danger: \"bg-danger/10 text-danger border-danger/25\",\n    idle: \"bg-muted text-muted-foreground border-hairline\",\n  } as const;\n  const label = { success: \"Resolved\", warning: \"Retrying\", danger: \"Failed\", idle: \"Queued\" }[status];\n  return (\n    <span className={`inline-flex shrink-0 items-center gap-1.5 rounded-full border px-2.5 py-0.5 text-xs font-medium ${map[status]}`}>\n      <span className=\"h-1.5 w-1.5 rounded-full bg-current\" />\n      {label}\n    </span>\n  );\n}",
+                "lineStart": 80,
+                "lineEnd": 250,
+                "totalLines": 250,
+                "truncated": false
+              }
+            },
+            "title": "frontend\\src\\components\\AppShell.tsx",
+            "time": {
+              "start": 1791750855006,
+              "end": 1791750858592
+            }
+          },
+          "id": "prt_12cac5765001wdCOZcZhjhLoZU",
+          "sessionID": "ses_ed657b4edffeC1aP1exexqOF40",
+          "messageID": "msg_12cac38d3001AGyAymiXK2hVMx"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "262e526a34bf50df15650f80e6a1d834b619f35f",
+          "type": "step-finish",
+          "tokens": {
+            "total": 41710,
+            "input": 1185,
+            "output": 98,
+            "reasoning": 235,
+            "cache": {
+              "write": 0,
+              "read": 40192
+            }
+          },
+          "cost": 0,
+          "id": "prt_12cac776a001ABT9lLhM78pFdx",
+          "sessionID": "ses_ed657b4edffeC1aP1exexqOF40",
+          "messageID": "msg_12cac38d3001AGyAymiXK2hVMx"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_12ca9f362001t5OArNwXD2HEK5",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "C:\\Users\\Chidi Mathaias\\Desktop\\SwapDesk-1",
+          "root": "C:\\Users\\Chidi Mathaias\\Desktop\\SwapDesk-1"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 46293,
+          "input": 3003,
+          "output": 357,
+          "reasoning": 1589,
+          "cache": {
+            "write": 0,
+            "read": 41344
+          }
+        },
+        "modelID": "big-pickle",
+        "providerID": "opencode",
+        "time": {
+          "created": 1791750866219,
+          "completed": 1791750894871
+        },
+        "finish": "tool-calls",
+        "id": "msg_12cac852b001FQ0lBcbjg2DRSY",
+        "sessionID": "ses_ed657b4edffeC1aP1exexqOF40"
+      },
+      "parts": [
+        {
+          "snapshot": "262e526a34bf50df15650f80e6a1d834b619f35f",
+          "type": "step-start",
+          "id": "prt_12caca6f7001PTmnlKbwfjjUhK",
+          "sessionID": "ses_ed657b4edffeC1aP1exexqOF40",
+          "messageID": "msg_12cac852b001FQ0lBcbjg2DRSY"
+        },
+        {
+          "type": "reasoning",
+          "text": "The incoming (HEAD/origin) design has:\n- `BackendStatus` component that polls `${API_BASE}/v1/health` every 30s.\n- `expanded` sidebar state.\n- nav redesigned (Mission Control, Inbox, Inventory, Needs input, Settings).\n- Metric only Completion Rate (removed \"Cost per execution\").\n\nMy commit added `health` from store + `statusTitle`/`statusDot` and used them in a static status div. The incoming replaced that static div with `<BackendStatus expanded={expanded} />`.\n\nResolution: take the incoming version (HEAD side) for the conflict regions. That means:\n- Keep `const { summary, total } = useSwapDesk();` + `const [expanded, setExpanded] = useState(false);` (HEAD side).\n- Remove my `health` destructure and `statusTitle`/`statusDot` block.\n- Keep the HEAD sidebar footer with BackendStatus + collapse button.\n\nSo I should resolve by choosing HEAD content for both conflict hunks, and remove my now-unused statusTitle/statusDot lines (lines 73-84) since they'd reference `health` which is no longer destructured.\n\nWait, lines 73-84 are outside conflict markers but reference `health`. If I choose HEAD's destructure (no health), lines 73-84 break. So I must remove those lines too.\n\nWhat about my store changes (health/ready/refreshStatus) and mission-control readiness pill? Those are separate files that auto-merged. The store changes are still valid: mission-control uses health/ready. That's fine — the store health and AppShell's own BackendStatus are two independent mechanisms. Slightly redundant but harmless. However, mission-control's pill uses `health`/`ready` from store, which still works. Good.\n\nBut wait — will `API_BASE` import and my store `health` conflict conceptually? No.\n\nActually, there's a concern: mission-control.tsx auto-merged but incoming also changed mission-control (14 lines). Let me check that mission-control merged cleanly and still references health/ready that I added. The auto-merge said \"Auto-merging frontend/app/mission-control.tsx\" without conflict. But incoming mission-control may have changed the header. Let me verify after resolving AppShell.\n\nAlso api.ts auto-merged — incoming added API_BASE export? The AppShell imports `API_BASE` from \"@/lib/api\". My api.ts has `export const API_BASE`. Good — it existed already in HEAD too. Incoming may have added more endpoints (fixtures). Fine.\n\nLet me resolve AppShell: choose HEAD side, remove my status block.\n\nEdit 1: the destructure conflict region (lines 64-69). Replace with HEAD version.\n\nCurrent:\n```\n<<<<<<< HEAD\n  const { summary, total } = useSwapDesk();\n  const [expanded, setExpanded] = useState(false);\n=======\n  const { summary, total, health } = useSwapDesk();\n>>>>>>> d108b72 (...)\n```\nReplace with:\n```\n  const { summary, total } = useSwapDesk();\n  const [expanded, setExpanded] = useState(false);\n```\n\nEdit 2: remove lines 73-84 (statusTitle/statusDot) — but keep blank line handling. Actually lines 70-84:\n```\n69: \n70: (blank)\n71:   const isActive = (to: string) => pathname === to;\n72: \n73:   const statusTitle =\n...\n84:         : \"bg-muted-foreground\";\n85: \n```\nWait line 70 is blank, 71 isActive. Let me remove 73-85 region (the statusTitle/statusDot block plus trailing blank).\n\nEdit 3: sidebar footer conflict (lines 120-138). Choose HEAD version.\n\nLet me do these edits. I'll do them by exact string replacement.\n\nFor edit 1: oldString includes conflict markers and both sides — exact.\n\nLet me view lines 60-90 again precisely. I have them. Let me craft.\n\noldString:\n```\n<<<<<<< HEAD\n  const { summary, total } = useSwapDesk();\n  const [expanded, setExpanded] = useState(false);\n=======\n  const { summary, total, health } = useSwapDesk();\n>>>>>>> d108b72 (Point frontend at deployed backend and add health and readiness status)\n\n  const isActive = (to: string) => pathname === to;\n\n  const statusTitle =\n    health === \"online\"\n      ? \"Backend online\"\n      : health === \"offline\"\n        ? \"Backend offline\"\n        : \"Checking backend…\";\n  const statusDot =\n    health === \"online\"\n      ? \"bg-success pulse-dot\"\n      : health === \"offline\"\n        ? \"bg-danger\"\n        : \"bg-muted-foreground\";\n\n  const arranged\n```\nnewString:\n```\n  const { summary, total } = useSwapDesk();\n  const [expanded, setExpanded] = useState(false);\n\n  const isActive = (to: string) => pathname === to;\n\n  const arranged\n```\n\nFor edit 2 (sidebar footer):\noldString:\n```\n<<<<<<< HEAD\n        <div className=\"mt-auto flex flex-col items-center gap-2\">\n          <BackendStatus expanded={expanded} />\n          <button\n            type=\"button\"\n            onClick={() => setExpanded((v) => !v)}\n            aria-expanded={expanded}\n            aria-label={expanded ? \"Collapse sidebar\" : \"Expand sidebar\"}\n            title={expanded ? \"Collapse sidebar\" : \"Expand sidebar\"}\n            className=\"grid h-10 w-10 place-items-center rounded-xl border border-hairline text-muted-foreground transition-colors hover:bg-accent/60 hover:text-foreground\"\n          >\n            {expanded ? <PanelLeftClose className=\"h-[18px] w-[18px]\" /> : <PanelLeftOpen className=\"h-[18px] w-[18px]\" />}\n          </button>\n=======\n        <div className=\"mt-auto grid h-10 w-10 place-items-center rounded-xl border border-hairline text-xs text-muted-foreground\" title={statusTitle}>\n          <span className={`h-2 w-2 rounded-full ${statusDot}`} />\n          <span className=\"sr-only\">{statusTitle}</span>\n>>>>>>> d108b72 (Point frontend at deployed backend and add health and readiness status)\n        </div>\n```\nnewString: HEAD version:\n```\n        <div className=\"mt-auto flex flex-col items-center gap-2\">\n          <BackendStatus expanded={expanded} />\n          <button\n            type=\"button\"\n            onClick={() => setExpanded((v) => !v)}\n            aria-expanded={expanded}\n            aria-label={expanded ? \"Collapse sidebar\" : \"Expand sidebar\"}\n            title={expanded ? \"Collapse sidebar\" : \"Expand sidebar\"}\n            className=\"grid h-10 w-10 place-items-center rounded-xl border border-hairline text-muted-foreground transition-colors hover:bg-accent/60 hover:text-foreground\"\n          >\n            {expanded ? <PanelLeftClose className=\"h-[18px] w-[18px]\" /> : <PanelLeftOpen className=\"h-[18px] w-[18px]\" />}\n          </button>\n        </div>\n```\n\nLet me apply both edits.",
+          "time": {
+            "start": 1791750875019,
+            "end": 1791750882335
+          },
+          "id": "prt_12caca78b001a3Oe8o4MdQl58F",
+          "sessionID": "ses_ed657b4edffeC1aP1exexqOF40",
+          "messageID": "msg_12cac852b001FQ0lBcbjg2DRSY"
+        },
+        {
+          "type": "text",
+          "text": "The incoming commit redesigned `AppShell` with its own `BackendStatus` health poller and collapsible sidebar. I'll take the incoming version and drop my now-duplicate status block:",
+          "time": {
+            "start": 1791750882339,
+            "end": 1791750883534
+          },
+          "id": "prt_12cacc423001gBc9gRbbWQE9BJ",
+          "sessionID": "ses_ed657b4edffeC1aP1exexqOF40",
+          "messageID": "msg_12cac852b001FQ0lBcbjg2DRSY"
+        },
+        {
+          "type": "tool",
+          "tool": "edit",
+          "callID": "call_00_uyrubf3ieexo4rbqahzpz8ss",
+          "state": {
+            "status": "completed",
+            "input": {
+              "filePath": "C:\\Users\\Chidi Mathaias\\Desktop\\SwapDesk-1\\frontend\\src\\components\\AppShell.tsx",
+              "newString": "  const { summary, total } = useSwapDesk();\n  const [expanded, setExpanded] = useState(false);\n\n  const isActive = (to: string) => pathname === to;\n\n  const arranged",
+              "oldString": "<<<<<<< HEAD\n  const { summary, total } = useSwapDesk();\n  const [expanded, setExpanded] = useState(false);\n=======\n  const { summary, total, health } = useSwapDesk();\n>>>>>>> d108b72 (Point frontend at deployed backend and add health and readiness status)\n\n  const isActive = (to: string) => pathname === to;\n\n  const statusTitle =\n    health === \"online\"\n      ? \"Backend online\"\n      : health === \"offline\"\n        ? \"Backend offline\"\n        : \"Checking backend…\";\n  const statusDot =\n    health === \"online\"\n      ? \"bg-success pulse-dot\"\n      : health === \"offline\"\n        ? \"bg-danger\"\n        : \"bg-muted-foreground\";\n\n  const arranged"
+            },
+            "output": "Edit applied successfully.",
+            "metadata": {
+              "diagnostics": {},
+              "diff": "Index: C:\\Users\\Chidi Mathaias\\Desktop\\SwapDesk-1\\frontend\\src\\components\\AppShell.tsx\n===================================================================\n--- C:\\Users\\Chidi Mathaias\\Desktop\\SwapDesk-1\\frontend\\src\\components\\AppShell.tsx\n+++ C:\\Users\\Chidi Mathaias\\Desktop\\SwapDesk-1\\frontend\\src\\components\\AppShell.tsx\n@@ -60,30 +60,13 @@\n \n export function AppShell({ crumbs, children, metrics = true }: { crumbs: { label: string; to?: string }[]; children: ReactNode; metrics?: boolean }) {\n   const pathname = usePathname();\n   const router = useRouter();\n-<<<<<<< HEAD\n   const { summary, total } = useSwapDesk();\n   const [expanded, setExpanded] = useState(false);\n-=======\n-  const { summary, total, health } = useSwapDesk();\n->>>>>>> d108b72 (Point frontend at deployed backend and add health and readiness status)\n \n   const isActive = (to: string) => pathname === to;\n \n-  const statusTitle =\n-    health === \"online\"\n-      ? \"Backend online\"\n-      : health === \"offline\"\n-        ? \"Backend offline\"\n-        : \"Checking backend…\";\n-  const statusDot =\n-    health === \"online\"\n-      ? \"bg-success pulse-dot\"\n-      : health === \"offline\"\n-        ? \"bg-danger\"\n-        : \"bg-muted-foreground\";\n-\n   const arranged = summary?.outcome.arranged ?? 0;\n   const completionRate =\n     total > 0 ? `${Math.round((arranged / total) * 100)}%` : \"N/A\";\n \n",
+              "filediff": {
+                "file": "C:\\Users\\Chidi Mathaias\\Desktop\\SwapDesk-1\\frontend\\src\\components\\AppShell.tsx",
+                "patch": "Index: C:\\Users\\Chidi Mathaias\\Desktop\\SwapDesk-1\\frontend\\src\\components\\AppShell.tsx\n===================================================================\n--- C:\\Users\\Chidi Mathaias\\Desktop\\SwapDesk-1\\frontend\\src\\components\\AppShell.tsx\n+++ C:\\Users\\Chidi Mathaias\\Desktop\\SwapDesk-1\\frontend\\src\\components\\AppShell.tsx\n@@ -60,30 +60,13 @@\n \n export function AppShell({ crumbs, children, metrics = true }: { crumbs: { label: string; to?: string }[]; children: ReactNode; metrics?: boolean }) {\n   const pathname = usePathname();\n   const router = useRouter();\n-<<<<<<< HEAD\n   const { summary, total } = useSwapDesk();\n   const [expanded, setExpanded] = useState(false);\n-=======\n-  const { summary, total, health } = useSwapDesk();\n->>>>>>> d108b72 (Point frontend at deployed backend and add health and readiness status)\n \n   const isActive = (to: string) => pathname === to;\n \n-  const statusTitle =\n-    health === \"online\"\n-      ? \"Backend online\"\n-      : health === \"offline\"\n-        ? \"Backend offline\"\n-        : \"Checking backend…\";\n-  const statusDot =\n-    health === \"online\"\n-      ? \"bg-success pulse-dot\"\n-      : health === \"offline\"\n-        ? \"bg-danger\"\n-        : \"bg-muted-foreground\";\n-\n   const arranged = summary?.outcome.arranged ?? 0;\n   const completionRate =\n     total > 0 ? `${Math.round((arranged / total) * 100)}%` : \"N/A\";\n \n",
+                "additions": 0,
+                "deletions": 17
+              },
+              "truncated": false
+            },
+            "title": "frontend\\src\\components\\AppShell.tsx",
+            "time": {
+              "start": 1791750883529,
+              "end": 1791750884332
+            }
+          },
+          "id": "prt_12cacc4b7001ksoxMJNwQwNp0q",
+          "sessionID": "ses_ed657b4edffeC1aP1exexqOF40",
+          "messageID": "msg_12cac852b001FQ0lBcbjg2DRSY"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "ff68574cb2adb0c108696702f61e5100d5d02a74",
+          "type": "step-finish",
+          "tokens": {
+            "total": 46293,
+            "input": 3003,
+            "output": 357,
+            "reasoning": 1589,
+            "cache": {
+              "write": 0,
+              "read": 41344
+            }
+          },
+          "cost": 0,
+          "id": "prt_12cace5a1001ZtxPu21rViVrAe",
+          "sessionID": "ses_ed657b4edffeC1aP1exexqOF40",
+          "messageID": "msg_12cac852b001FQ0lBcbjg2DRSY"
+        },
+        {
+          "type": "patch",
+          "hash": "262e526a34bf50df15650f80e6a1d834b619f35f",
+          "files": [
+            "C:/Users/Chidi Mathaias/Desktop/SwapDesk-1/frontend/src/components/AppShell.tsx"
+          ],
+          "id": "prt_12cacf514001NzmFEkxM01TFf9",
+          "sessionID": "ses_ed657b4edffeC1aP1exexqOF40",
+          "messageID": "msg_12cac852b001FQ0lBcbjg2DRSY"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_12ca9f362001t5OArNwXD2HEK5",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "C:\\Users\\Chidi Mathaias\\Desktop\\SwapDesk-1",
+          "root": "C:\\Users\\Chidi Mathaias\\Desktop\\SwapDesk-1"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 46870,
+          "input": 2020,
+          "output": 562,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 44288
+          }
+        },
+        "modelID": "big-pickle",
+        "providerID": "opencode",
+        "time": {
+          "created": 1791750894936,
+          "completed": 1791750914011
+        },
+        "finish": "tool-calls",
+        "id": "msg_12cacf558001sV520D7CThbnRf",
+        "sessionID": "ses_ed657b4edffeC1aP1exexqOF40"
+      },
+      "parts": [
+        {
+          "snapshot": "ff68574cb2adb0c108696702f61e5100d5d02a74",
+          "type": "step-start",
+          "id": "prt_12cad0e80001dN6Gd5BHVP5z3x",
+          "sessionID": "ses_ed657b4edffeC1aP1exexqOF40",
+          "messageID": "msg_12cacf558001sV520D7CThbnRf"
+        },
+        {
+          "type": "tool",
+          "tool": "edit",
+          "callID": "call_00_awlcrdry9rwyw91p5nrx2aon",
+          "state": {
+            "status": "completed",
+            "input": {
+              "filePath": "C:\\Users\\Chidi Mathaias\\Desktop\\SwapDesk-1\\frontend\\src\\components\\AppShell.tsx",
+              "newString": "        <div className=\"mt-auto flex flex-col items-center gap-2\">\n          <BackendStatus expanded={expanded} />\n          <button\n            type=\"button\"\n            onClick={() => setExpanded((v) => !v)}\n            aria-expanded={expanded}\n            aria-label={expanded ? \"Collapse sidebar\" : \"Expand sidebar\"}\n            title={expanded ? \"Collapse sidebar\" : \"Expand sidebar\"}\n            className=\"grid h-10 w-10 place-items-center rounded-xl border border-hairline text-muted-foreground transition-colors hover:bg-accent/60 hover:text-foreground\"\n          >\n            {expanded ? <PanelLeftClose className=\"h-[18px] w-[18px]\" /> : <PanelLeftOpen className=\"h-[18px] w-[18px]\" />}\n          </button>\n        </div>",
+              "oldString": "<<<<<<< HEAD\n        <div className=\"mt-auto flex flex-col items-center gap-2\">\n          <BackendStatus expanded={expanded} />\n          <button\n            type=\"button\"\n            onClick={() => setExpanded((v) => !v)}\n            aria-expanded={expanded}\n            aria-label={expanded ? \"Collapse sidebar\" : \"Expand sidebar\"}\n            title={expanded ? \"Collapse sidebar\" : \"Expand sidebar\"}\n            className=\"grid h-10 w-10 place-items-center rounded-xl border border-hairline text-muted-foreground transition-colors hover:bg-accent/60 hover:text-foreground\"\n          >\n            {expanded ? <PanelLeftClose className=\"h-[18px] w-[18px]\" /> : <PanelLeftOpen className=\"h-[18px] w-[18px]\" />}\n          </button>\n=======\n        <div className=\"mt-auto grid h-10 w-10 place-items-center rounded-xl border border-hairline text-xs text-muted-foreground\" title={statusTitle}>\n          <span className={`h-2 w-2 rounded-full ${statusDot}`} />\n          <span className=\"sr-only\">{statusTitle}</span>\n>>>>>>> d108b72 (Point frontend at deployed backend and add health and readiness status)\n        </div>"
+            },
+            "output": "Edit applied successfully.",
+            "metadata": {
+              "diagnostics": {},
+              "diff": "Index: C:\\Users\\Chidi Mathaias\\Desktop\\SwapDesk-1\\frontend\\src\\components\\AppShell.tsx\n===================================================================\n--- C:\\Users\\Chidi Mathaias\\Desktop\\SwapDesk-1\\frontend\\src\\components\\AppShell.tsx\n+++ C:\\Users\\Chidi Mathaias\\Desktop\\SwapDesk-1\\frontend\\src\\components\\AppShell.tsx\n@@ -99,9 +99,8 @@\n               <span className=\"sr-only\">{label}</span>\n             )}\n           </Link>\n         ))}\n-<<<<<<< HEAD\n         <div className=\"mt-auto flex flex-col items-center gap-2\">\n           <BackendStatus expanded={expanded} />\n           <button\n             type=\"button\"\n@@ -112,13 +111,8 @@\n             className=\"grid h-10 w-10 place-items-center rounded-xl border border-hairline text-muted-foreground transition-colors hover:bg-accent/60 hover:text-foreground\"\n           >\n             {expanded ? <PanelLeftClose className=\"h-[18px] w-[18px]\" /> : <PanelLeftOpen className=\"h-[18px] w-[18px]\" />}\n           </button>\n-=======\n-        <div className=\"mt-auto grid h-10 w-10 place-items-center rounded-xl border border-hairline text-xs text-muted-foreground\" title={statusTitle}>\n-          <span className={`h-2 w-2 rounded-full ${statusDot}`} />\n-          <span className=\"sr-only\">{statusTitle}</span>\n->>>>>>> d108b72 (Point frontend at deployed backend and add health and readiness status)\n         </div>\n       </aside>\n \n       <div className={`flex min-w-0 flex-1 flex-col pb-[calc(5rem+env(safe-area-inset-bottom))] md:pb-0 ${expanded ? \"md:ml-56\" : \"md:ml-20\"}`}>\n",
+              "filediff": {
+                "file": "C:\\Users\\Chidi Mathaias\\Desktop\\SwapDesk-1\\frontend\\src\\components\\AppShell.tsx",
+                "patch": "Index: C:\\Users\\Chidi Mathaias\\Desktop\\SwapDesk-1\\frontend\\src\\components\\AppShell.tsx\n===================================================================\n--- C:\\Users\\Chidi Mathaias\\Desktop\\SwapDesk-1\\frontend\\src\\components\\AppShell.tsx\n+++ C:\\Users\\Chidi Mathaias\\Desktop\\SwapDesk-1\\frontend\\src\\components\\AppShell.tsx\n@@ -99,9 +99,8 @@\n               <span className=\"sr-only\">{label}</span>\n             )}\n           </Link>\n         ))}\n-<<<<<<< HEAD\n         <div className=\"mt-auto flex flex-col items-center gap-2\">\n           <BackendStatus expanded={expanded} />\n           <button\n             type=\"button\"\n@@ -112,13 +111,8 @@\n             className=\"grid h-10 w-10 place-items-center rounded-xl border border-hairline text-muted-foreground transition-colors hover:bg-accent/60 hover:text-foreground\"\n           >\n             {expanded ? <PanelLeftClose className=\"h-[18px] w-[18px]\" /> : <PanelLeftOpen className=\"h-[18px] w-[18px]\" />}\n           </button>\n-=======\n-        <div className=\"mt-auto grid h-10 w-10 place-items-center rounded-xl border border-hairline text-xs text-muted-foreground\" title={statusTitle}>\n-          <span className={`h-2 w-2 rounded-full ${statusDot}`} />\n-          <span className=\"sr-only\">{statusTitle}</span>\n->>>>>>> d108b72 (Point frontend at deployed backend and add health and readiness status)\n         </div>\n       </aside>\n \n       <div className={`flex min-w-0 flex-1 flex-col pb-[calc(5rem+env(safe-area-inset-bottom))] md:pb-0 ${expanded ? \"md:ml-56\" : \"md:ml-20\"}`}>\n",
+                "additions": 0,
+                "deletions": 6
+              },
+              "truncated": false
+            },
+            "title": "frontend\\src\\components\\AppShell.tsx",
+            "time": {
+              "start": 1791750903337,
+              "end": 1791750904391
+            }
+          },
+          "id": "prt_12cad0fa5001Xk5gatEN5G61mq",
+          "sessionID": "ses_ed657b4edffeC1aP1exexqOF40",
+          "messageID": "msg_12cacf558001sV520D7CThbnRf"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "6dc65a1ca04fe0de3999bab0ce060d19dffe7b5a",
+          "type": "step-finish",
+          "tokens": {
+            "total": 46870,
+            "input": 2020,
+            "output": 562,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 44288
+            }
+          },
+          "cost": 0,
+          "id": "prt_12cad323a001Z9ocC52FWqQEo7",
+          "sessionID": "ses_ed657b4edffeC1aP1exexqOF40",
+          "messageID": "msg_12cacf558001sV520D7CThbnRf"
+        },
+        {
+          "type": "patch",
+          "hash": "ff68574cb2adb0c108696702f61e5100d5d02a74",
+          "files": [
+            "C:/Users/Chidi Mathaias/Desktop/SwapDesk-1/frontend/src/components/AppShell.tsx"
+          ],
+          "id": "prt_12cad3fd5001larHq7LB6V9KbS",
+          "sessionID": "ses_ed657b4edffeC1aP1exexqOF40",
+          "messageID": "msg_12cacf558001sV520D7CThbnRf"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_12ca9f362001t5OArNwXD2HEK5",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "C:\\Users\\Chidi Mathaias\\Desktop\\SwapDesk-1",
+          "root": "C:\\Users\\Chidi Mathaias\\Desktop\\SwapDesk-1"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 47010,
+          "input": 677,
+          "output": 105,
+          "reasoning": 20,
+          "cache": {
+            "write": 0,
+            "read": 46208
+          }
+        },
+        "modelID": "big-pickle",
+        "providerID": "opencode",
+        "time": {
+          "created": 1791750914083,
+          "completed": 1791750929469
+        },
+        "finish": "tool-calls",
+        "id": "msg_12cad40230010EYSqKOZ0FXxhP",
+        "sessionID": "ses_ed657b4edffeC1aP1exexqOF40"
+      },
+      "parts": [
+        {
+          "snapshot": "6dc65a1ca04fe0de3999bab0ce060d19dffe7b5a",
+          "type": "step-start",
+          "id": "prt_12cad5bdf001gWyjEPC3c6fOcO",
+          "sessionID": "ses_ed657b4edffeC1aP1exexqOF40",
+          "messageID": "msg_12cad40230010EYSqKOZ0FXxhP"
+        },
+        {
+          "type": "reasoning",
+          "text": "Now check for any remaining conflict markers in the repo and verify mission-control/api/store merged cleanly.",
+          "time": {
+            "start": 1791750921503,
+            "end": 1791750921511
+          },
+          "id": "prt_12cad5d1f001DEMuzgkJtvA81G",
+          "sessionID": "ses_ed657b4edffeC1aP1exexqOF40",
+          "messageID": "msg_12cad40230010EYSqKOZ0FXxhP"
+        },
+        {
+          "type": "tool",
+          "tool": "bash",
+          "callID": "call_00_0xv1s4766dmudjzrjqpfkdo9",
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "rg -n \"^(<<<<<<<|=======|>>>>>>>)\" frontend/src frontend/app 2>&1; echo \"exit: $LASTEXITCODE\"",
+              "workdir": "C:\\Users\\Chidi Mathaias\\Desktop\\SwapDesk-1"
+            },
+            "output": "rg : The term 'rg' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the \r\nexit: \r\nspelling of the name, or if a path was included, verify that the path is correct and try again.\r\nAt line:1 char:1\r\n+ rg -n \"^(<<<<<<<|=======|>>>>>>>)\" frontend/src frontend/app 2>&1; ec ...\r\n+ ~~\r\n    + CategoryInfo          : ObjectNotFound: (rg:String) [], CommandNotFoundException\r\n    + FullyQualifiedErrorId : CommandNotFoundException\r\n \r\n",
+            "metadata": {
+              "output": "rg : The term 'rg' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the \r\nexit: \r\nspelling of the name, or if a path was included, verify that the path is correct and try again.\r\nAt line:1 char:1\r\n+ rg -n \"^(<<<<<<<|=======|>>>>>>>)\" frontend/src frontend/app 2>&1; ec ...\r\n+ ~~\r\n    + CategoryInfo          : ObjectNotFound: (rg:String) [], CommandNotFoundException\r\n    + FullyQualifiedErrorId : CommandNotFoundException\r\n \r\n",
+              "exit": 0,
+              "truncated": false
+            },
+            "title": "rg -n \"^(<<<<<<<|=======|>>>>>>>)\" frontend/src frontend/app 2>&1; echo \"exit: $LASTEXITCODE\"",
+            "time": {
+              "start": 1791750921672,
+              "end": 1791750923370
+            }
+          },
+          "id": "prt_12cad5d2b001Lw45K8wUAl9UY3",
+          "sessionID": "ses_ed657b4edffeC1aP1exexqOF40",
+          "messageID": "msg_12cad40230010EYSqKOZ0FXxhP"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "6dc65a1ca04fe0de3999bab0ce060d19dffe7b5a",
+          "type": "step-finish",
+          "tokens": {
+            "total": 47010,
+            "input": 677,
+            "output": 105,
+            "reasoning": 20,
+            "cache": {
+              "write": 0,
+              "read": 46208
+            }
+          },
+          "cost": 0,
+          "id": "prt_12cad718d001g4LqTiPL9UtRk2",
+          "sessionID": "ses_ed657b4edffeC1aP1exexqOF40",
+          "messageID": "msg_12cad40230010EYSqKOZ0FXxhP"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_12ca9f362001t5OArNwXD2HEK5",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "C:\\Users\\Chidi Mathaias\\Desktop\\SwapDesk-1",
+          "root": "C:\\Users\\Chidi Mathaias\\Desktop\\SwapDesk-1"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 47243,
+          "input": 313,
+          "output": 82,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 46848
+          }
+        },
+        "modelID": "big-pickle",
+        "providerID": "opencode",
+        "time": {
+          "created": 1791750929527,
+          "completed": 1791750945981
+        },
+        "finish": "tool-calls",
+        "id": "msg_12cad7c77001ZS0zjTtKhwseO8",
+        "sessionID": "ses_ed657b4edffeC1aP1exexqOF40"
+      },
+      "parts": [
+        {
+          "snapshot": "6dc65a1ca04fe0de3999bab0ce060d19dffe7b5a",
+          "type": "step-start",
+          "id": "prt_12cad9e43001aoPBwSmbHGnogm",
+          "sessionID": "ses_ed657b4edffeC1aP1exexqOF40",
+          "messageID": "msg_12cad7c77001ZS0zjTtKhwseO8"
+        },
+        {
+          "type": "tool",
+          "tool": "grep",
+          "callID": "call_00_4prjyvidutx39btbl2jlsgso",
+          "state": {
+            "status": "completed",
+            "input": {
+              "pattern": "^(<<<<<<<|=======|>>>>>>>)",
+              "path": "C:\\Users\\Chidi Mathaias\\Desktop\\SwapDesk-1\\frontend"
+            },
+            "output": "No files found",
+            "metadata": {
+              "matches": 0,
+              "truncated": false
+            },
+            "title": "^(<<<<<<<|=======|>>>>>>>)",
+            "time": {
+              "start": 1791750938623,
+              "end": 1791750939701
+            }
+          },
+          "id": "prt_12cad9e55001EINVtRtVK84o3p",
+          "sessionID": "ses_ed657b4edffeC1aP1exexqOF40",
+          "messageID": "msg_12cad7c77001ZS0zjTtKhwseO8"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "6dc65a1ca04fe0de3999bab0ce060d19dffe7b5a",
+          "type": "step-finish",
+          "tokens": {
+            "total": 47243,
+            "input": 313,
+            "output": 82,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 46848
+            }
+          },
+          "cost": 0,
+          "id": "prt_12cadae12001zM6ERvk0Tc0I8R",
+          "sessionID": "ses_ed657b4edffeC1aP1exexqOF40",
+          "messageID": "msg_12cad7c77001ZS0zjTtKhwseO8"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_12ca9f362001t5OArNwXD2HEK5",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "C:\\Users\\Chidi Mathaias\\Desktop\\SwapDesk-1",
+          "root": "C:\\Users\\Chidi Mathaias\\Desktop\\SwapDesk-1"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 47405,
+          "input": 154,
+          "output": 94,
+          "reasoning": 53,
+          "cache": {
+            "write": 0,
+            "read": 47104
+          }
+        },
+        "modelID": "big-pickle",
+        "providerID": "opencode",
+        "time": {
+          "created": 1791750946047,
+          "completed": 1791750962728
+        },
+        "finish": "tool-calls",
+        "id": "msg_12cadbcff001nUUo9jz2eD2koo",
+        "sessionID": "ses_ed657b4edffeC1aP1exexqOF40"
+      },
+      "parts": [
+        {
+          "snapshot": "6dc65a1ca04fe0de3999bab0ce060d19dffe7b5a",
+          "type": "step-start",
+          "id": "prt_12caddcb3001ghVkhZOOvB0vpD",
+          "sessionID": "ses_ed657b4edffeC1aP1exexqOF40",
+          "messageID": "msg_12cadbcff001nUUo9jz2eD2koo"
+        },
+        {
+          "type": "reasoning",
+          "text": "No conflict markers remain. Now let me check mission-control.tsx merged content — incoming may have changed it and my pill references health/ready. Let me read the merged mission-control header region.\n\nAlso check git status during rebase. Let me read mission-control.",
+          "time": {
+            "start": 1791750954341,
+            "end": 1791750954744
+          },
+          "id": "prt_12caddd65001FeKQ8d4fGJ2lzs",
+          "sessionID": "ses_ed657b4edffeC1aP1exexqOF40",
+          "messageID": "msg_12cadbcff001nUUo9jz2eD2koo"
+        },
+        {
+          "type": "text",
+          "text": "No markers remain. Let me verify `mission-control.tsx` merged correctly and still matches my store additions:",
+          "time": {
+            "start": 1791750954747,
+            "end": 1791750955118
+          },
+          "id": "prt_12caddefb001uBkos8Fyyl6D9o",
+          "sessionID": "ses_ed657b4edffeC1aP1exexqOF40",
+          "messageID": "msg_12cadbcff001nUUo9jz2eD2koo"
+        },
+        {
+          "type": "tool",
+          "tool": "bash",
+          "callID": "call_00_kbof5cmvben24yclzif1myom",
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "git status --short",
+              "workdir": "C:\\Users\\Chidi Mathaias\\Desktop\\SwapDesk-1"
+            },
+            "output": "M  frontend/app/mission-control.tsx\nUU frontend/src/components/AppShell.tsx\nM  frontend/src/lib/api.ts\nM  frontend/src/store/swapdesk.tsx\n",
+            "metadata": {
+              "output": "M  frontend/app/mission-control.tsx\nUU frontend/src/components/AppShell.tsx\nM  frontend/src/lib/api.ts\nM  frontend/src/store/swapdesk.tsx\n",
+              "exit": 0,
+              "truncated": false
+            },
+            "title": "git status --short",
+            "time": {
+              "start": 1791750955079,
+              "end": 1791750956341
+            }
+          },
+          "id": "prt_12caddf05001otqXqzGWfDIQwC",
+          "sessionID": "ses_ed657b4edffeC1aP1exexqOF40",
+          "messageID": "msg_12cadbcff001nUUo9jz2eD2koo"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "6dc65a1ca04fe0de3999bab0ce060d19dffe7b5a",
+          "type": "step-finish",
+          "tokens": {
+            "total": 47405,
+            "input": 154,
+            "output": 94,
+            "reasoning": 53,
+            "cache": {
+              "write": 0,
+              "read": 47104
+            }
+          },
+          "cost": 0,
+          "id": "prt_12cadf305001r81F7FcHY0gU0Z",
+          "sessionID": "ses_ed657b4edffeC1aP1exexqOF40",
+          "messageID": "msg_12cadbcff001nUUo9jz2eD2koo"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_12ca9f362001t5OArNwXD2HEK5",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "C:\\Users\\Chidi Mathaias\\Desktop\\SwapDesk-1",
+          "root": "C:\\Users\\Chidi Mathaias\\Desktop\\SwapDesk-1"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 47557,
+          "input": 229,
+          "output": 96,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 47232
+          }
+        },
+        "modelID": "big-pickle",
+        "providerID": "opencode",
+        "time": {
+          "created": 1791750962778,
+          "completed": 1791750980109
+        },
+        "finish": "tool-calls",
+        "id": "msg_12cadfe5a001DCb4YzwKJr1zbn",
+        "sessionID": "ses_ed657b4edffeC1aP1exexqOF40"
+      },
+      "parts": [
+        {
+          "snapshot": "6dc65a1ca04fe0de3999bab0ce060d19dffe7b5a",
+          "type": "step-start",
+          "id": "prt_12cae1b64001iwZgoKZsWMdBkv",
+          "sessionID": "ses_ed657b4edffeC1aP1exexqOF40",
+          "messageID": "msg_12cadfe5a001DCb4YzwKJr1zbn"
+        },
+        {
+          "type": "tool",
+          "tool": "read",
+          "callID": "call_00_ydcy7m0haixo3kpndl0s23yj",
+          "state": {
+            "status": "completed",
+            "input": {
+              "filePath": "C:\\Users\\Chidi Mathaias\\Desktop\\SwapDesk-1\\frontend\\app\\mission-control.tsx",
+              "limit": 60,
+              "offset": 33
+            },
+            "output": "<path>C:\\Users\\Chidi Mathaias\\Desktop\\SwapDesk-1\\frontend\\app\\mission-control.tsx</path>\n<type>file</type>\n<content>\n33: \n34: export function MissionControl() {\n35:   const {\n36:     cases,\n37:     summary,\n38:     total,\n39:     loading,\n40:     error,\n41:     health,\n42:     ready,\n43:     refreshStatus,\n44:     executionFilter,\n45:     setExecutionFilter,\n46:     hasMore,\n47:     loadMore,\n48:     refresh,\n49:   } = useSwapDesk();\n50:   const [filter, setFilter] = useState<Filter>(\"all\");\n51:   const visibleTickets = cases.filter((ticket) => matchesFilter(ticket, filter));\n52: \n53:   const queuedDepth = ready?.queued_depth ?? 0;\n54:   const backendLabel =\n55:     health === \"online\" ? \"Backend online\" : health === \"offline\" ? \"Backend offline\" : \"Checking…\";\n56: \n57:   const execCounts = summary?.execution_status ?? {};\n58:   const outcomeCounts = summary?.outcome ?? {};\n59:   const arrangedCount = outcomeCounts.arranged ?? 0;\n60:   const failedCount = execCounts.failed ?? 0;\n61:   const activeCount =\n62:     (execCounts.queued ?? 0) + (execCounts.running ?? 0) + (execCounts.waiting_input ?? 0);\n63:   const completionRate = total > 0 ? `${Math.round((arrangedCount / total) * 100)}%` : \"N/A\";\n64: \n65:   const kpis = [\n66:     { label: \"Total cases\", value: `${total}`, detail: \"Saved in this view\", icon: Check },\n67:     { label: \"Arranged rate\", value: completionRate, detail: `${arrangedCount} arranged`, icon: Check },\n68:     { label: \"Active\", value: `${activeCount}`, detail: \"Queued, running, or waiting\", icon: Clock3 },\n69:     { label: \"Failed\", value: `${failedCount}`, detail: \"Ended in error\", icon: ShieldAlert },\n70:   ];\n71: \n72:   const outcomeRows: Array<{ label: string; count: number; tone: string }> = [\n73:     { label: \"Arranged\", count: outcomeCounts.arranged ?? 0, tone: \"bg-success\" },\n74:     { label: \"Clarification\", count: outcomeCounts.clarification ?? 0, tone: \"bg-primary\" },\n75:     { label: \"Denial\", count: outcomeCounts.denial ?? 0, tone: \"bg-warning\" },\n76:     { label: \"Escalation\", count: outcomeCounts.escalation ?? 0, tone: \"bg-warning\" },\n77:     { label: \"Pending\", count: outcomeCounts.pending ?? 0, tone: \"bg-muted-foreground/40\" },\n78:   ];\n79:   const outcomeMax = Math.max(1, ...outcomeRows.map((r) => r.count));\n80: \n81:   const execRows: Array<{ label: string; count: number }> = [\n82:     { label: \"Queued\", count: execCounts.queued ?? 0 },\n83:     { label: \"Running\", count: execCounts.running ?? 0 },\n84:     { label: \"Waiting input\", count: execCounts.waiting_input ?? 0 },\n85:     { label: \"Completed\", count: execCounts.completed ?? 0 },\n86:     { label: \"Failed\", count: execCounts.failed ?? 0 },\n87:   ];\n88:   const execMax = Math.max(1, ...execRows.map((r) => r.count));\n89: \n90:   return (\n91:     <AppShell crumbs={[{ label: \"SwapDesk\", to: \"/\" }, { label: \"Mission Control\" }]} metrics={false}>\n92:       <div className=\"space-y-6 pb-8\">\n\n(Showing lines 33-92 of 321. Use offset=93 to continue.)\n</content>",
+            "metadata": {
+              "preview": "\nexport function MissionControl() {\n  const {\n    cases,\n    summary,\n    total,\n    loading,\n    error,\n    health,\n    ready,\n    refreshStatus,\n    executionFilter,\n    setExecutionFilter,\n    hasMore,\n    loadMore,\n    refresh,\n  } = useSwapDesk();\n  const [filter, setFilter] = useState<Filter>(\"all\");\n  const visibleTickets = cases.filter((ticket) => matchesFilter(ticket, filter));\n",
+              "truncated": true,
+              "loaded": [],
+              "display": {
+                "type": "file",
+                "path": "C:\\Users\\Chidi Mathaias\\Desktop\\SwapDesk-1\\frontend\\app\\mission-control.tsx",
+                "text": "\nexport function MissionControl() {\n  const {\n    cases,\n    summary,\n    total,\n    loading,\n    error,\n    health,\n    ready,\n    refreshStatus,\n    executionFilter,\n    setExecutionFilter,\n    hasMore,\n    loadMore,\n    refresh,\n  } = useSwapDesk();\n  const [filter, setFilter] = useState<Filter>(\"all\");\n  const visibleTickets = cases.filter((ticket) => matchesFilter(ticket, filter));\n\n  const queuedDepth = ready?.queued_depth ?? 0;\n  const backendLabel =\n    health === \"online\" ? \"Backend online\" : health === \"offline\" ? \"Backend offline\" : \"Checking…\";\n\n  const execCounts = summary?.execution_status ?? {};\n  const outcomeCounts = summary?.outcome ?? {};\n  const arrangedCount = outcomeCounts.arranged ?? 0;\n  const failedCount = execCounts.failed ?? 0;\n  const activeCount =\n    (execCounts.queued ?? 0) + (execCounts.running ?? 0) + (execCounts.waiting_input ?? 0);\n  const completionRate = total > 0 ? `${Math.round((arrangedCount / total) * 100)}%` : \"N/A\";\n\n  const kpis = [\n    { label: \"Total cases\", value: `${total}`, detail: \"Saved in this view\", icon: Check },\n    { label: \"Arranged rate\", value: completionRate, detail: `${arrangedCount} arranged`, icon: Check },\n    { label: \"Active\", value: `${activeCount}`, detail: \"Queued, running, or waiting\", icon: Clock3 },\n    { label: \"Failed\", value: `${failedCount}`, detail: \"Ended in error\", icon: ShieldAlert },\n  ];\n\n  const outcomeRows: Array<{ label: string; count: number; tone: string }> = [\n    { label: \"Arranged\", count: outcomeCounts.arranged ?? 0, tone: \"bg-success\" },\n    { label: \"Clarification\", count: outcomeCounts.clarification ?? 0, tone: \"bg-primary\" },\n    { label: \"Denial\", count: outcomeCounts.denial ?? 0, tone: \"bg-warning\" },\n    { label: \"Escalation\", count: outcomeCounts.escalation ?? 0, tone: \"bg-warning\" },\n    { label: \"Pending\", count: outcomeCounts.pending ?? 0, tone: \"bg-muted-foreground/40\" },\n  ];\n  const outcomeMax = Math.max(1, ...outcomeRows.map((r) => r.count));\n\n  const execRows: Array<{ label: string; count: number }> = [\n    { label: \"Queued\", count: execCounts.queued ?? 0 },\n    { label: \"Running\", count: execCounts.running ?? 0 },\n    { label: \"Waiting input\", count: execCounts.waiting_input ?? 0 },\n    { label: \"Completed\", count: execCounts.completed ?? 0 },\n    { label: \"Failed\", count: execCounts.failed ?? 0 },\n  ];\n  const execMax = Math.max(1, ...execRows.map((r) => r.count));\n\n  return (\n    <AppShell crumbs={[{ label: \"SwapDesk\", to: \"/\" }, { label: \"Mission Control\" }]} metrics={false}>\n      <div className=\"space-y-6 pb-8\">",
+                "lineStart": 33,
+                "lineEnd": 92,
+                "totalLines": 321,
+                "truncated": true
+              }
+            },
+            "title": "frontend\\app\\mission-control.tsx",
+            "time": {
+              "start": 1791750970661,
+              "end": 1791750974687
+            }
+          },
+          "id": "prt_12cae1bbe001NCq3GoPDSnNFJ9",
+          "sessionID": "ses_ed657b4edffeC1aP1exexqOF40",
+          "messageID": "msg_12cadfe5a001DCb4YzwKJr1zbn"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "6dc65a1ca04fe0de3999bab0ce060d19dffe7b5a",
+          "type": "step-finish",
+          "tokens": {
+            "total": 47557,
+            "input": 229,
+            "output": 96,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 47232
+            }
+          },
+          "cost": 0,
+          "id": "prt_12cae38fe0018EfJosnvT1aMFy",
+          "sessionID": "ses_ed657b4edffeC1aP1exexqOF40",
+          "messageID": "msg_12cadfe5a001DCb4YzwKJr1zbn"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_12ca9f362001t5OArNwXD2HEK5",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "C:\\Users\\Chidi Mathaias\\Desktop\\SwapDesk-1",
+          "root": "C:\\Users\\Chidi Mathaias\\Desktop\\SwapDesk-1"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 48749,
+          "input": 1161,
+          "output": 129,
+          "reasoning": 99,
+          "cache": {
+            "write": 0,
+            "read": 47360
+          }
+        },
+        "modelID": "big-pickle",
+        "providerID": "opencode",
+        "time": {
+          "created": 1791750980160,
+          "completed": 1791750997912
+        },
+        "finish": "tool-calls",
+        "id": "msg_12cae4240001Bw12p1y02DGm9g",
+        "sessionID": "ses_ed657b4edffeC1aP1exexqOF40"
+      },
+      "parts": [
+        {
+          "snapshot": "6dc65a1ca04fe0de3999bab0ce060d19dffe7b5a",
+          "type": "step-start",
+          "id": "prt_12cae62bc001Of5TLd8pP3qxBG",
+          "sessionID": "ses_ed657b4edffeC1aP1exexqOF40",
+          "messageID": "msg_12cae4240001Bw12p1y02DGm9g"
+        },
+        {
+          "type": "reasoning",
+          "text": "The incoming mission-control was substantially redesigned (KPIs, outcome rows, exec rows). My additions (health, ready, refreshStatus, queuedDepth, backendLabel) survived the auto-merge at the top. I need to check that my readiness pill usage (which referenced `queuedDepth`, `backendLabel`, `health`, `refreshStatus`, the Refresh button onClick) still exists and is consistent with the new layout. Let me search mission-control for the pill and refresh button.",
+          "time": {
+            "start": 1791750988495,
+            "end": 1791750988834
+          },
+          "id": "prt_12cae62cf001oEVL6LMi0H9dpH",
+          "sessionID": "ses_ed657b4edffeC1aP1exexqOF40",
+          "messageID": "msg_12cae4240001Bw12p1y02DGm9g"
+        },
+        {
+          "type": "tool",
+          "tool": "bash",
+          "callID": "call_00_sgsv93gvfa8neq0zcay52408",
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "Select-String -Path \"frontend\\app\\mission-control.tsx\" -Pattern \"queuedDepth|backendLabel|refreshStatus|refresh\\(\\)|Backend online|Queue\" | ForEach-Object { \"$($_.LineNumber): $($_.Line.Trim())\" }",
+              "workdir": "C:\\Users\\Chidi Mathaias\\Desktop\\SwapDesk-1"
+            },
+            "output": "15: return ticket.execution_status === \"queued\" || ticket.execution_status === \"running\";\r\n43: refreshStatus,\r\n53: const queuedDepth = ready?.queued_depth ?? 0;\r\n54: const backendLabel =\r\n55: health === \"online\" ? \"Backend online\" : health === \"offline\" ? \"Backend offline\" : \"Checking.\";\r\n62: (execCounts.queued ?? 0) + (execCounts.running ?? 0) + (execCounts.waiting_input ?? 0);\r\n68: { label: \"Active\", value: `${activeCount}`, detail: \"Queued, running, or waiting\", icon: Clock3 },\r\n82: { label: \"Queued\", count: execCounts.queued ?? 0 },\r\n110: title={ready?.note ?? backendLabel}\r\n121: {backendLabel}\r\n124: Queue {queuedDepth}\r\n135: <option value=\"queued\">Queued</option>\r\n144: void refresh();\r\n145: void refreshStatus();\r\n",
+            "metadata": {
+              "output": "15: return ticket.execution_status === \"queued\" || ticket.execution_status === \"running\";\r\n43: refreshStatus,\r\n53: const queuedDepth = ready?.queued_depth ?? 0;\r\n54: const backendLabel =\r\n55: health === \"online\" ? \"Backend online\" : health === \"offline\" ? \"Backend offline\" : \"Checking.\";\r\n62: (execCounts.queued ?? 0) + (execCounts.running ?? 0) + (execCounts.waiting_input ?? 0);\r\n68: { label: \"Active\", value: `${activeCount}`, detail: \"Queued, running, or waiting\", icon: Clock3 },\r\n82: { label: \"Queued\", count: execCounts.queued ?? 0 },\r\n110: title={ready?.note ?? backendLabel}\r\n121: {backendLabel}\r\n124: Queue {queuedDepth}\r\n135: <option value=\"queued\">Queued</option>\r\n144: void refresh();\r\n145: void refreshStatus();\r\n",
+              "exit": 0,
+              "truncated": false
+            },
+            "title": "Select-String -Path \"frontend\\app\\mission-control.tsx\" -Pattern \"queuedDepth|backendLabel|refreshStatus|refresh\\(\\)|Backend online|Queue\" | ForEach-Object { \"$($_.LineNumber): $($_.Line.Trim())\" }",
+            "time": {
+              "start": 1791750989344,
+              "end": 1791750990696
+            }
+          },
+          "id": "prt_12cae6426001EfaOzcxaRphobp",
+          "sessionID": "ses_ed657b4edffeC1aP1exexqOF40",
+          "messageID": "msg_12cae4240001Bw12p1y02DGm9g"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "6dc65a1ca04fe0de3999bab0ce060d19dffe7b5a",
+          "type": "step-finish",
+          "tokens": {
+            "total": 48749,
+            "input": 1161,
+            "output": 129,
+            "reasoning": 99,
+            "cache": {
+              "write": 0,
+              "read": 47360
+            }
+          },
+          "cost": 0,
+          "id": "prt_12cae7be40012h90A7ulT08kPi",
+          "sessionID": "ses_ed657b4edffeC1aP1exexqOF40",
+          "messageID": "msg_12cae4240001Bw12p1y02DGm9g"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_12ca9f362001t5OArNwXD2HEK5",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "C:\\Users\\Chidi Mathaias\\Desktop\\SwapDesk-1",
+          "root": "C:\\Users\\Chidi Mathaias\\Desktop\\SwapDesk-1"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 49324,
+          "input": 494,
+          "output": 115,
+          "reasoning": 203,
+          "cache": {
+            "write": 0,
+            "read": 48512
+          }
+        },
+        "modelID": "big-pickle",
+        "providerID": "opencode",
+        "time": {
+          "created": 1791750997989,
+          "completed": 1791751025177
+        },
+        "finish": "tool-calls",
+        "id": "msg_12cae87e5001rqd6k4X8B7n5Aa",
+        "sessionID": "ses_ed657b4edffeC1aP1exexqOF40"
+      },
+      "parts": [
+        {
+          "snapshot": "6dc65a1ca04fe0de3999bab0ce060d19dffe7b5a",
+          "type": "step-start",
+          "id": "prt_12caea8640014fRuc7bivtGDmr",
+          "sessionID": "ses_ed657b4edffeC1aP1exexqOF40",
+          "messageID": "msg_12cae87e5001rqd6k4X8B7n5Aa"
+        },
+        {
+          "type": "reasoning",
+          "text": "Good — my pill (lines ~100-127) and refresh handler (144-145) survived, and the incoming KPI redesign is present. So mission-control merged fine and uses both.\n\nNow, `refreshStatus` and `health`/`ready` come from store — I added them. Good.\n\nNow continue the rebase: `git add` the resolved AppShell, then `git rebase --continue`. Then run lint+build to verify, then push.\n\nLet me stage AppShell and continue rebase. Set GIT_EDITOR to true to avoid editor prompt for commit message.\n\nActually `git rebase --continue` will open editor for the commit message; set core.editor to true or use `--no-edit`? For rebase continue, there's no --no-edit in older git? Actually `git rebase --continue` respects GIT_EDITOR. Set `$env:GIT_EDITOR=\"true\"`.\n\nLet me do it.",
+          "time": {
+            "start": 1791751006310,
+            "end": 1791751007118
+          },
+          "id": "prt_12caea866001nH5uxONykggEkk",
+          "sessionID": "ses_ed657b4edffeC1aP1exexqOF40",
+          "messageID": "msg_12cae87e5001rqd6k4X8B7n5Aa"
+        },
+        {
+          "type": "text",
+          "text": "Resolved cleanly and incoming + my additions coexist. Continuing the rebase:",
+          "time": {
+            "start": 1791751007122,
+            "end": 1791751007676
+          },
+          "id": "prt_12caeab9200156pc8qC0pXQxEb",
+          "sessionID": "ses_ed657b4edffeC1aP1exexqOF40",
+          "messageID": "msg_12cae87e5001rqd6k4X8B7n5Aa"
+        },
+        {
+          "type": "tool",
+          "tool": "bash",
+          "callID": "call_00_t6bane38matp6ewawcq5dm35",
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "git add frontend/src/components/AppShell.tsx; $env:GIT_EDITOR=\"true\"; git rebase --continue 2>&1",
+              "workdir": "C:\\Users\\Chidi Mathaias\\Desktop\\SwapDesk-1"
+            },
+            "output": "[detached HEAD 17d0d49] Point frontend at deployed backend and add health and readiness status\n 3 files changed, 89 insertions(+), 7 deletions(-)\ngit : Successfully rebased and updated refs/heads/main.\r\nAt line:1 char:71\r\n+ ... ents/AppShell.tsx; $env:GIT_EDITOR=\"true\"; git rebase --continue 2>&1\r\n+                                                ~~~~~~~~~~~~~~~~~~~~~~~~~~\r\n    + CategoryInfo          : NotSpecified: (Successfully re...efs/heads/main.:String) [], RemoteException\r\n    + FullyQualifiedErrorId : NativeCommandError\r\n \r\n",
+            "metadata": {
+              "output": "[detached HEAD 17d0d49] Point frontend at deployed backend and add health and readiness status\n 3 files changed, 89 insertions(+), 7 deletions(-)\ngit : Successfully rebased and updated refs/heads/main.\r\nAt line:1 char:71\r\n+ ... ents/AppShell.tsx; $env:GIT_EDITOR=\"true\"; git rebase --continue 2>&1\r\n+                                                ~~~~~~~~~~~~~~~~~~~~~~~~~~\r\n    + CategoryInfo          : NotSpecified: (Successfully re...efs/heads/main.:String) [], RemoteException\r\n    + FullyQualifiedErrorId : NativeCommandError\r\n \r\n",
+              "exit": 1,
+              "truncated": false
+            },
+            "title": "git add frontend/src/components/AppShell.tsx; $env:GIT_EDITOR=\"true\"; git rebase --continue 2>&1",
+            "time": {
+              "start": 1791751007666,
+              "end": 1791751018300
+            }
+          },
+          "id": "prt_12caead47001pNaSOmuBPMS7La",
+          "sessionID": "ses_ed657b4edffeC1aP1exexqOF40",
+          "messageID": "msg_12cae87e5001rqd6k4X8B7n5Aa"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "6dc65a1ca04fe0de3999bab0ce060d19dffe7b5a",
+          "type": "step-finish",
+          "tokens": {
+            "total": 49324,
+            "input": 494,
+            "output": 115,
+            "reasoning": 203,
+            "cache": {
+              "write": 0,
+              "read": 48512
+            }
+          },
+          "cost": 0,
+          "id": "prt_12caee81b001uArV2O5yy1G646",
+          "sessionID": "ses_ed657b4edffeC1aP1exexqOF40",
+          "messageID": "msg_12cae87e5001rqd6k4X8B7n5Aa"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_12ca9f362001t5OArNwXD2HEK5",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "C:\\Users\\Chidi Mathaias\\Desktop\\SwapDesk-1",
+          "root": "C:\\Users\\Chidi Mathaias\\Desktop\\SwapDesk-1"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 49635,
+          "input": 586,
+          "output": 117,
+          "reasoning": 36,
+          "cache": {
+            "write": 0,
+            "read": 48896
+          }
+        },
+        "modelID": "big-pickle",
+        "providerID": "opencode",
+        "time": {
+          "created": 1791751025271,
+          "completed": 1791751056742
+        },
+        "finish": "tool-calls",
+        "id": "msg_12caef277001TaCYI4bdRVJ40r",
+        "sessionID": "ses_ed657b4edffeC1aP1exexqOF40"
+      },
+      "parts": [
+        {
+          "snapshot": "6dc65a1ca04fe0de3999bab0ce060d19dffe7b5a",
+          "type": "step-start",
+          "id": "prt_12caf0c01001qrRxnu0rrH8WSs",
+          "sessionID": "ses_ed657b4edffeC1aP1exexqOF40",
+          "messageID": "msg_12caef277001TaCYI4bdRVJ40r"
+        },
+        {
+          "type": "reasoning",
+          "text": "Rebase succeeded. Now main is 17d0d49 on top of 1e5476b. Now run lint + build to verify the merged result before pushing.",
+          "time": {
+            "start": 1791751032021,
+            "end": 1791751032071
+          },
+          "id": "prt_12caf0cd5001WQnjMtKzvcxkud",
+          "sessionID": "ses_ed657b4edffeC1aP1exexqOF40",
+          "messageID": "msg_12caef277001TaCYI4bdRVJ40r"
+        },
+        {
+          "type": "text",
+          "text": "Rebase succeeded. Now verify the merged result builds before pushing:",
+          "time": {
+            "start": 1791751032078,
+            "end": 1791751032508
+          },
+          "id": "prt_12caf0d0e001eQi9SLC85K0iV2",
+          "sessionID": "ses_ed657b4edffeC1aP1exexqOF40",
+          "messageID": "msg_12caef277001TaCYI4bdRVJ40r"
+        },
+        {
+          "type": "tool",
+          "tool": "bash",
+          "callID": "call_00_y15im5u5m4qc3cprdrjm6pdj",
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "npm run lint 2>&1 | Select-Object -Last 20",
+              "timeout": 300000,
+              "workdir": "C:\\Users\\Chidi Mathaias\\Desktop\\SwapDesk-1\\frontend"
+            },
+            "output": "\r\n> swapdesk@0.1.0 lint\r\n> eslint\r\n\r\n",
+            "metadata": {
+              "output": "\r\n> swapdesk@0.1.0 lint\r\n> eslint\r\n\r\n",
+              "exit": 0,
+              "truncated": false
+            },
+            "title": "npm run lint 2>&1 | Select-Object -Last 20",
+            "time": {
+              "start": 1791751032496,
+              "end": 1791751050274
+            }
+          },
+          "id": "prt_12caf0d1600160XTB0avESb7Vd",
+          "sessionID": "ses_ed657b4edffeC1aP1exexqOF40",
+          "messageID": "msg_12caef277001TaCYI4bdRVJ40r"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "6dc65a1ca04fe0de3999bab0ce060d19dffe7b5a",
+          "type": "step-finish",
+          "tokens": {
+            "total": 49635,
+            "input": 586,
+            "output": 117,
+            "reasoning": 36,
+            "cache": {
+              "write": 0,
+              "read": 48896
+            }
+          },
+          "cost": 0,
+          "id": "prt_12caf6070001HbOIRkkiyjXh66",
+          "sessionID": "ses_ed657b4edffeC1aP1exexqOF40",
+          "messageID": "msg_12caef277001TaCYI4bdRVJ40r"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_12ca9f362001t5OArNwXD2HEK5",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "C:\\Users\\Chidi Mathaias\\Desktop\\SwapDesk-1",
+          "root": "C:\\Users\\Chidi Mathaias\\Desktop\\SwapDesk-1"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 49773,
+          "input": 260,
+          "output": 105,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 49408
+          }
+        },
+        "modelID": "big-pickle",
+        "providerID": "opencode",
+        "time": {
+          "created": 1791751056824,
+          "completed": 1791751104555
+        },
+        "finish": "tool-calls",
+        "id": "msg_12caf6db70013Gbbd6TIflPQii",
+        "sessionID": "ses_ed657b4edffeC1aP1exexqOF40"
+      },
+      "parts": [
+        {
+          "snapshot": "6dc65a1ca04fe0de3999bab0ce060d19dffe7b5a",
+          "type": "step-start",
+          "id": "prt_12caf8ea6001gRP7wlC5dCGEuw",
+          "sessionID": "ses_ed657b4edffeC1aP1exexqOF40",
+          "messageID": "msg_12caf6db70013Gbbd6TIflPQii"
+        },
+        {
+          "type": "tool",
+          "tool": "bash",
+          "callID": "call_00_g1h3dlbvrs18a99fhg8ref6c",
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "npm run build 2>&1 | Select-Object -Last 30",
+              "timeout": 600000,
+              "workdir": "C:\\Users\\Chidi Mathaias\\Desktop\\SwapDesk-1\\frontend"
+            },
+            "output": "  Running TypeScript ...\r\n  Finished TypeScript in 15.8s ...\r\n  Collecting page data using 3 workers ...\r\n  Generating static pages using 3 workers (0/14) ...\r\n  Generating static pages using 3 workers (3/14) \r\n  Generating static pages using 3 workers (6/14) \r\n  Generating static pages using 3 workers (10/14) \r\n✓ Generating static pages using 3 workers (14/14) in 2.3s\r\n  Finalizing page optimization ...\r\n\r\nRoute (app)\r\n┌ ○ /\r\n├ ○ /_not-found\r\n├ ○ /inbox\r\n├ ○ /inventory\r\n├ ○ /needs-input\r\n├ ○ /opengraph-image\r\n├ ○ /robots.txt\r\n├ ○ /settings\r\n├ ○ /simulate\r\n├ ƒ /sitemap.xml\r\n├   /ticket/[id]\r\n│ └ ◐ /ticket/[id]\r\n└ ○ /twitter-image\r\n\r\n\r\n○  (Static)             prerendered as static content\r\n◐  (Partial Prerender)  prerendered as static HTML with dynamic server-streamed content\r\nƒ  (Dynamic)            server-rendered on demand\r\n\r\n",
+            "metadata": {
+              "output": "  Running TypeScript ...\r\n  Finished TypeScript in 15.8s ...\r\n  Collecting page data using 3 workers ...\r\n  Generating static pages using 3 workers (0/14) ...\r\n  Generating static pages using 3 workers (3/14) \r\n  Generating static pages using 3 workers (6/14) \r\n  Generating static pages using 3 workers (10/14) \r\n✓ Generating static pages using 3 workers (14/14) in 2.3s\r\n  Finalizing page optimization ...\r\n\r\nRoute (app)\r\n┌ ○ /\r\n├ ○ /_not-found\r\n├ ○ /inbox\r\n├ ○ /inventory\r\n├ ○ /needs-input\r\n├ ○ /opengraph-image\r\n├ ○ /robots.txt\r\n├ ○ /settings\r\n├ ○ /simulate\r\n├ ƒ /sitemap.xml\r\n├   /ticket/[id]\r\n│ └ ◐ /ticket/[id]\r\n└ ○ /twitter-image\r\n\r\n\r\n○  (Static)             prerendered as static content\r\n◐  (Partial Prerender)  prerendered as static HTML with dynamic server-streamed content\r\nƒ  (Dynamic)            server-rendered on demand\r\n\r\n",
+              "exit": 0,
+              "truncated": false
+            },
+            "title": "npm run build 2>&1 | Select-Object -Last 30",
+            "time": {
+              "start": 1791751065647,
+              "end": 1791751098650
+            }
+          },
+          "id": "prt_12caf8eaa001v0LPLmtsiBJop9",
+          "sessionID": "ses_ed657b4edffeC1aP1exexqOF40",
+          "messageID": "msg_12caf6db70013Gbbd6TIflPQii"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "6dc65a1ca04fe0de3999bab0ce060d19dffe7b5a",
+          "type": "step-finish",
+          "tokens": {
+            "total": 49773,
+            "input": 260,
+            "output": 105,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 49408
+            }
+          },
+          "cost": 0,
+          "id": "prt_12cb01d4e001TMBnR53mrlleWj",
+          "sessionID": "ses_ed657b4edffeC1aP1exexqOF40",
+          "messageID": "msg_12caf6db70013Gbbd6TIflPQii"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_12ca9f362001t5OArNwXD2HEK5",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "C:\\Users\\Chidi Mathaias\\Desktop\\SwapDesk-1",
+          "root": "C:\\Users\\Chidi Mathaias\\Desktop\\SwapDesk-1"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 50198,
+          "input": 417,
+          "output": 104,
+          "reasoning": 13,
+          "cache": {
+            "write": 0,
+            "read": 49664
+          }
+        },
+        "modelID": "big-pickle",
+        "providerID": "opencode",
+        "time": {
+          "created": 1791751104609,
+          "completed": 1791751132634
+        },
+        "finish": "tool-calls",
+        "id": "msg_12cb028610012CPCTTfjWhZQHI",
+        "sessionID": "ses_ed657b4edffeC1aP1exexqOF40"
+      },
+      "parts": [
+        {
+          "snapshot": "6dc65a1ca04fe0de3999bab0ce060d19dffe7b5a",
+          "type": "step-start",
+          "id": "prt_12cb04bde001xsypyFhIgMEIAB",
+          "sessionID": "ses_ed657b4edffeC1aP1exexqOF40",
+          "messageID": "msg_12cb028610012CPCTTfjWhZQHI"
+        },
+        {
+          "type": "reasoning",
+          "text": "Build passes. Now push to origin/main.\n\nLet me push.",
+          "time": {
+            "start": 1791751113757,
+            "end": 1791751113763
+          },
+          "id": "prt_12cb04c1d001BPYfYJ7c5tJPxI",
+          "sessionID": "ses_ed657b4edffeC1aP1exexqOF40",
+          "messageID": "msg_12cb028610012CPCTTfjWhZQHI"
+        },
+        {
+          "type": "text",
+          "text": "Lint clean, build passes. Pushing:",
+          "time": {
+            "start": 1791751113768,
+            "end": 1791751114135
+          },
+          "id": "prt_12cb04c28001SAXTNYTSv61g1w",
+          "sessionID": "ses_ed657b4edffeC1aP1exexqOF40",
+          "messageID": "msg_12cb028610012CPCTTfjWhZQHI"
+        },
+        {
+          "type": "tool",
+          "tool": "bash",
+          "callID": "call_00_98f2c7k0ijwou1d5is9j6hmy",
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "git push origin main 2>&1",
+              "timeout": 180000,
+              "workdir": "C:\\Users\\Chidi Mathaias\\Desktop\\SwapDesk-1"
+            },
+            "output": "git : [entire] Pushing 1 checkpoint ref(s) to origin........ done\r\nAt line:1 char:1\r\n+ git push origin main 2>&1\r\n+ ~~~~~~~~~~~~~~~~~~~~~~~~~\r\n    + CategoryInfo          : NotSpecified: ([entire] Pushin...in........ done:String) [], RemoteException\r\n    + FullyQualifiedErrorId : NativeCommandError\r\n \r\nTo https://github.com/adr1en360/SwapDesk.git\r\n   1e5476b..17d0d49  main -> main\r\n",
+            "metadata": {
+              "output": "git : [entire] Pushing 1 checkpoint ref(s) to origin........ done\r\nAt line:1 char:1\r\n+ git push origin main 2>&1\r\n+ ~~~~~~~~~~~~~~~~~~~~~~~~~\r\n    + CategoryInfo          : NotSpecified: ([entire] Pushin...in........ done:String) [], RemoteException\r\n    + FullyQualifiedErrorId : NativeCommandError\r\n \r\nTo https://github.com/adr1en360/SwapDesk.git\r\n   1e5476b..17d0d49  main -> main\r\n",
+              "exit": 1,
+              "truncated": false
+            },
+            "title": "git push origin main 2>&1",
+            "time": {
+              "start": 1791751114125,
+              "end": 1791751125917
+            }
+          },
+          "id": "prt_12cb04c2f0013afH1CRFKmPbqT",
+          "sessionID": "ses_ed657b4edffeC1aP1exexqOF40",
+          "messageID": "msg_12cb028610012CPCTTfjWhZQHI"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "6dc65a1ca04fe0de3999bab0ce060d19dffe7b5a",
+          "type": "step-finish",
+          "tokens": {
+            "total": 50198,
+            "input": 417,
+            "output": 104,
+            "reasoning": 13,
+            "cache": {
+              "write": 0,
+              "read": 49664
+            }
+          },
+          "cost": 0,
+          "id": "prt_12cb08798001skxPbvU724HJqK",
+          "sessionID": "ses_ed657b4edffeC1aP1exexqOF40",
+          "messageID": "msg_12cb028610012CPCTTfjWhZQHI"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_12ca9f362001t5OArNwXD2HEK5",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "C:\\Users\\Chidi Mathaias\\Desktop\\SwapDesk-1",
+          "root": "C:\\Users\\Chidi Mathaias\\Desktop\\SwapDesk-1"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 50499,
+          "input": 287,
+          "output": 104,
+          "reasoning": 60,
+          "cache": {
+            "write": 0,
+            "read": 50048
+          }
+        },
+        "modelID": "big-pickle",
+        "providerID": "opencode",
+        "time": {
+          "created": 1791751132703,
+          "completed": 1791751149626
+        },
+        "finish": "tool-calls",
+        "id": "msg_12cb0961f001w3T2RVbimFAstl",
+        "sessionID": "ses_ed657b4edffeC1aP1exexqOF40"
+      },
+      "parts": [
+        {
+          "snapshot": "6dc65a1ca04fe0de3999bab0ce060d19dffe7b5a",
+          "type": "step-start",
+          "id": "prt_12cb0b7f7001wIx0HL47oHReHF",
+          "sessionID": "ses_ed657b4edffeC1aP1exexqOF40",
+          "messageID": "msg_12cb0961f001w3T2RVbimFAstl"
+        },
+        {
+          "type": "reasoning",
+          "text": "Push succeeded: `1e5476b..17d0d49 main -> main`. The \"[entire] Pushing checkpoint refs\" is a git hook (entire) — informational, and the push succeeded.\n\nLet me verify git status is clean and branch is up to date.",
+          "time": {
+            "start": 1791751141520,
+            "end": 1791751141818
+          },
+          "id": "prt_12cb0b890001mE4Ewiy9Abx5aK",
+          "sessionID": "ses_ed657b4edffeC1aP1exexqOF40",
+          "messageID": "msg_12cb0961f001w3T2RVbimFAstl"
+        },
+        {
+          "type": "text",
+          "text": "Pushed successfully (`1e5476b..17d0d49 main -> main`).",
+          "time": {
+            "start": 1791751141823,
+            "end": 1791751142510
+          },
+          "id": "prt_12cb0b9bd001od070N2SD21Zn3",
+          "sessionID": "ses_ed657b4edffeC1aP1exexqOF40",
+          "messageID": "msg_12cb0961f001w3T2RVbimFAstl"
+        },
+        {
+          "type": "tool",
+          "tool": "bash",
+          "callID": "call_00_li7nlyu4iezbf57298yl80uu",
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "git status -sb; echo \"---\"; git log --oneline -3",
+              "workdir": "C:\\Users\\Chidi Mathaias\\Desktop\\SwapDesk-1"
+            },
+            "output": "## main...origin/main\n---\r\n17d0d49 Point frontend at deployed backend and add health and readiness status\n1e5476b Impeccable pass: live backend status, needs-input worklist, honest metrics\n26cfedc Connect frontend to agent backend contract\n",
+            "metadata": {
+              "output": "## main...origin/main\n---\r\n17d0d49 Point frontend at deployed backend and add health and readiness status\n1e5476b Impeccable pass: live backend status, needs-input worklist, honest metrics\n26cfedc Connect frontend to agent backend contract\n",
+              "exit": 0,
+              "truncated": false
+            },
+            "title": "git status -sb; echo \"---\"; git log --oneline -3",
+            "time": {
+              "start": 1791751142474,
+              "end": 1791751143905
+            }
+          },
+          "id": "prt_12cb0ba640012OEoqIG6ylKyZH",
+          "sessionID": "ses_ed657b4edffeC1aP1exexqOF40",
+          "messageID": "msg_12cb0961f001w3T2RVbimFAstl"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "6dc65a1ca04fe0de3999bab0ce060d19dffe7b5a",
+          "type": "step-finish",
+          "tokens": {
+            "total": 50499,
+            "input": 287,
+            "output": 104,
+            "reasoning": 60,
+            "cache": {
+              "write": 0,
+              "read": 50048
+            }
+          },
+          "cost": 0,
+          "id": "prt_12cb0cf17001OZoS8hUjroav5Z",
+          "sessionID": "ses_ed657b4edffeC1aP1exexqOF40",
+          "messageID": "msg_12cb0961f001w3T2RVbimFAstl"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_12ca9f362001t5OArNwXD2HEK5",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "C:\\Users\\Chidi Mathaias\\Desktop\\SwapDesk-1",
+          "root": "C:\\Users\\Chidi Mathaias\\Desktop\\SwapDesk-1"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 50734,
+          "input": 269,
+          "output": 161,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 50304
+          }
+        },
+        "modelID": "big-pickle",
+        "providerID": "opencode",
+        "time": {
+          "created": 1791751149679,
+          "completed": 1791751163383
+        },
+        "finish": "stop",
+        "id": "msg_12cb0d86f001WLU2mqZ5ggIXwW",
+        "sessionID": "ses_ed657b4edffeC1aP1exexqOF40"
+      },
+      "parts": [
+        {
+          "snapshot": "6dc65a1ca04fe0de3999bab0ce060d19dffe7b5a",
+          "type": "step-start",
+          "id": "prt_12cb0f5bb001m0a4vA9GKTUx4N",
+          "sessionID": "ses_ed657b4edffeC1aP1exexqOF40",
+          "messageID": "msg_12cb0d86f001WLU2mqZ5ggIXwW"
+        },
+        {
+          "type": "text",
+          "text": "Done. Pushed to GitHub.\n\n- Rebasing my commit over the incoming `1e5476b \"Impeccable pass...\"` required resolving one conflict in `AppShell.tsx` — I kept the incoming collapsible sidebar + `BackendStatus` health poller and dropped my duplicate static status dot.\n- `mission-control.tsx` auto-merged: the incoming KPI redesign now coexists with my `health`/`ready` queue pill.\n- Verified `npm run lint` (clean) and `npm run build` (✓).\n- Pushed `7b...` → `main` at `17d0d49`; branch is in sync with `origin/main`.\n- `stash@{0}` still untouched, as you asked.",
+          "time": {
+            "start": 1791751157205,
+            "end": 1791751157949
+          },
+          "id": "prt_12cb0f5d4001C6ft3xN8m14EdT",
+          "sessionID": "ses_ed657b4edffeC1aP1exexqOF40",
+          "messageID": "msg_12cb0d86f001WLU2mqZ5ggIXwW"
+        },
+        {
+          "reason": "stop",
+          "snapshot": "6dc65a1ca04fe0de3999bab0ce060d19dffe7b5a",
+          "type": "step-finish",
+          "tokens": {
+            "total": 50734,
+            "input": 269,
+            "output": 161,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 50304
+            }
+          },
+          "cost": 0,
+          "id": "prt_12cb10486001NOrb7aF79YfOH8",
+          "sessionID": "ses_ed657b4edffeC1aP1exexqOF40",
+          "messageID": "msg_12cb0d86f001WLU2mqZ5ggIXwW"
         }
       ]
     }
