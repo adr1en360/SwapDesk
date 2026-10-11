@@ -20,17 +20,17 @@
     },
     "cost": 0,
     "tokens": {
-      "input": 355652,
-      "output": 87096,
-      "reasoning": 50830,
+      "input": 356772,
+      "output": 88220,
+      "reasoning": 50860,
       "cache": {
-        "read": 44800209,
+        "read": 45684900,
         "write": 0
       }
     },
     "time": {
       "created": 1791715836239,
-      "updated": 1791722680425
+      "updated": 1791722713988
     }
   },
   "messages": [
@@ -27951,19 +27951,22 @@
         },
         "cost": 0,
         "tokens": {
-          "input": 0,
-          "output": 0,
-          "reasoning": 0,
+          "total": 295094,
+          "input": 271,
+          "output": 152,
+          "reasoning": 30,
           "cache": {
-            "read": 0,
-            "write": 0
+            "write": 0,
+            "read": 294641
           }
         },
         "modelID": "muse-spark-1.3-contributor-free",
         "providerID": "opencode",
         "time": {
-          "created": 1791722680408
+          "created": 1791722680408,
+          "completed": 1791722701292
         },
+        "finish": "tool-calls",
         "id": "msg_12afe7058001VE38oadt423ehS",
         "sessionID": "ses_ed569feb0ffeaCknMBs6Ds0aAs"
       },
@@ -27997,16 +28000,21 @@
           "tool": "bash",
           "callID": "call_01a12afe9ae57482b0a07b3602b2772e",
           "state": {
-            "metadata": {
-              "output": "warning: in the working copy of 'docs/LIVE_REHEARSAL.md', LF will be replaced by CRLF the next time Git touches it\n"
-            },
-            "status": "running",
+            "status": "completed",
             "input": {
               "command": "git add docs/API_CONTRACT.md docs/LIVE_REHEARSAL.md src/swapdesk/api.py src/swapdesk/queue.py src/swapdesk/worker.py tests/test_agent_queue.py; git commit -m \"Persist request counts, flush telemetry on every worker path\" 2>&1 | head -n 3; git log --oneline -2; git status --short --branch; git rev-parse HEAD",
               "timeout": 60000
             },
+            "output": "warning: in the working copy of 'docs/LIVE_REHEARSAL.md', LF will be replaced by CRLF the next time Git touches it\n[main 22a1059] Persist request counts, flush telemetry on every worker path\r\n 6 files changed, 173 insertions(+), 48 deletions(-)\r\n22a1059 Persist request counts, flush telemetry on every worker path\n66cc366 Add worker once mode and live rehearsal plan\n## main...origin/main [ahead 2]\n22a1059455f20512a6c07654e0fdef7b9b42c362\n",
+            "metadata": {
+              "output": "warning: in the working copy of 'docs/LIVE_REHEARSAL.md', LF will be replaced by CRLF the next time Git touches it\n[main 22a1059] Persist request counts, flush telemetry on every worker path\r\n 6 files changed, 173 insertions(+), 48 deletions(-)\r\n22a1059 Persist request counts, flush telemetry on every worker path\n66cc366 Add worker once mode and live rehearsal plan\n## main...origin/main [ahead 2]\n22a1059455f20512a6c07654e0fdef7b9b42c362\n",
+              "exit": 0,
+              "truncated": false
+            },
+            "title": "git add docs/API_CONTRACT.md docs/LIVE_REHEARSAL.md src/swapdesk/api.py src/swapdesk/queue.py src/swapdesk/worker.py tests/test_agent_queue.py; git commit -m \"Persist request counts, flush telemetry on every worker path\" 2>&1 | head -n 3; git log --oneline -2; git status --short --branch; git rev-parse HEAD",
             "time": {
-              "start": 1791722691780
+              "start": 1791722691780,
+              "end": 1791722700854
             }
           },
           "metadata": {
@@ -28017,6 +28025,244 @@
           "id": "prt_12afe9cb9001CBOGcWyASgyF5T",
           "sessionID": "ses_ed569feb0ffeaCknMBs6Ds0aAs",
           "messageID": "msg_12afe7058001VE38oadt423ehS"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "",
+          "type": "step-finish",
+          "tokens": {
+            "total": 295094,
+            "input": 271,
+            "output": 152,
+            "reasoning": 30,
+            "cache": {
+              "write": 0,
+              "read": 294641
+            }
+          },
+          "cost": 0,
+          "id": "prt_12afec1e4001dJBmjCj6SeSlWY",
+          "sessionID": "ses_ed569feb0ffeaCknMBs6Ds0aAs",
+          "messageID": "msg_12afe7058001VE38oadt423ehS"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_12afbeb2e001vlb6CUlVAqDKi5",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "variant": "xhigh",
+        "path": {
+          "cwd": "C:\\Users\\DELL\\Documents\\SwapDesk",
+          "root": "C:\\Users\\DELL\\Documents\\SwapDesk"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 295442,
+          "input": 347,
+          "output": 198,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 294897
+          }
+        },
+        "modelID": "muse-spark-1.3-contributor-free",
+        "providerID": "opencode",
+        "time": {
+          "created": 1791722701335,
+          "completed": 1791722713940
+        },
+        "finish": "tool-calls",
+        "id": "msg_12afec217001YsSjU3nUwQgr45",
+        "sessionID": "ses_ed569feb0ffeaCknMBs6Ds0aAs"
+      },
+      "parts": [
+        {
+          "snapshot": "",
+          "type": "step-start",
+          "id": "prt_12afef21a001jhVbEJli23ldKs",
+          "sessionID": "ses_ed569feb0ffeaCknMBs6Ds0aAs",
+          "messageID": "msg_12afec217001YsSjU3nUwQgr45"
+        },
+        {
+          "type": "tool",
+          "tool": "todowrite",
+          "callID": "call_01a12afef254767fae7c0ff41acc5a7e",
+          "state": {
+            "status": "completed",
+            "input": {
+              "todos": [
+                {
+                  "content": "Investigate boot-check run via logs + read-only neatlogs retrieval",
+                  "status": "completed",
+                  "priority": "high"
+                },
+                {
+                  "content": "Verify API/worker telemetry init/export + --once flush on failure/timeout",
+                  "status": "completed",
+                  "priority": "high"
+                },
+                {
+                  "content": "Add per-case trace requirements + retrieval/stop rules to rehearsal plan",
+                  "status": "completed",
+                  "priority": "medium"
+                },
+                {
+                  "content": "Correct budget brief (request cap vs tokens vs proxy billing)",
+                  "status": "completed",
+                  "priority": "high"
+                },
+                {
+                  "content": "Report findings; clean tree; no paid calls, no push",
+                  "status": "completed",
+                  "priority": "high"
+                }
+              ]
+            },
+            "output": "[\n  {\n    \"content\": \"Investigate boot-check run via logs + read-only neatlogs retrieval\",\n    \"status\": \"completed\",\n    \"priority\": \"high\"\n  },\n  {\n    \"content\": \"Verify API/worker telemetry init/export + --once flush on failure/timeout\",\n    \"status\": \"completed\",\n    \"priority\": \"high\"\n  },\n  {\n    \"content\": \"Add per-case trace requirements + retrieval/stop rules to rehearsal plan\",\n    \"status\": \"completed\",\n    \"priority\": \"medium\"\n  },\n  {\n    \"content\": \"Correct budget brief (request cap vs tokens vs proxy billing)\",\n    \"status\": \"completed\",\n    \"priority\": \"high\"\n  },\n  {\n    \"content\": \"Report findings; clean tree; no paid calls, no push\",\n    \"status\": \"completed\",\n    \"priority\": \"high\"\n  }\n]",
+            "metadata": {
+              "todos": [
+                {
+                  "content": "Investigate boot-check run via logs + read-only neatlogs retrieval",
+                  "status": "completed",
+                  "priority": "high"
+                },
+                {
+                  "content": "Verify API/worker telemetry init/export + --once flush on failure/timeout",
+                  "status": "completed",
+                  "priority": "high"
+                },
+                {
+                  "content": "Add per-case trace requirements + retrieval/stop rules to rehearsal plan",
+                  "status": "completed",
+                  "priority": "medium"
+                },
+                {
+                  "content": "Correct budget brief (request cap vs tokens vs proxy billing)",
+                  "status": "completed",
+                  "priority": "high"
+                },
+                {
+                  "content": "Report findings; clean tree; no paid calls, no push",
+                  "status": "completed",
+                  "priority": "high"
+                }
+              ],
+              "truncated": false
+            },
+            "title": "0 todos",
+            "time": {
+              "start": 1791722713637,
+              "end": 1791722713641
+            }
+          },
+          "metadata": {
+            "openai": {
+              "itemId": "fc_01a12afef254767fae7c0ff41acc5a7e"
+            }
+          },
+          "id": "prt_12afef21e0010rOk6zLq7hqD68",
+          "sessionID": "ses_ed569feb0ffeaCknMBs6Ds0aAs",
+          "messageID": "msg_12afec217001YsSjU3nUwQgr45"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "",
+          "type": "step-finish",
+          "tokens": {
+            "total": 295442,
+            "input": 347,
+            "output": 198,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 294897
+            }
+          },
+          "cost": 0,
+          "id": "prt_12afef34d00133ESFvD0LePg4l",
+          "sessionID": "ses_ed569feb0ffeaCknMBs6Ds0aAs",
+          "messageID": "msg_12afec217001YsSjU3nUwQgr45"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_12afbeb2e001vlb6CUlVAqDKi5",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "variant": "xhigh",
+        "path": {
+          "cwd": "C:\\Users\\DELL\\Documents\\SwapDesk",
+          "root": "C:\\Users\\DELL\\Documents\\SwapDesk"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 296429,
+          "input": 502,
+          "output": 774,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 295153
+          }
+        },
+        "modelID": "muse-spark-1.3-contributor-free",
+        "providerID": "opencode",
+        "time": {
+          "created": 1791722713973,
+          "completed": 1791722726159
+        },
+        "finish": "stop",
+        "id": "msg_12afef375001wqAlrjZHN6KkJs",
+        "sessionID": "ses_ed569feb0ffeaCknMBs6Ds0aAs"
+      },
+      "parts": [
+        {
+          "snapshot": "",
+          "type": "step-start",
+          "id": "prt_12aff1781001D0ylbmY7YfHHNb",
+          "sessionID": "ses_ed569feb0ffeaCknMBs6Ds0aAs",
+          "messageID": "msg_12afef375001wqAlrjZHN6KkJs"
+        },
+        {
+          "type": "text",
+          "text": "All checks complete. No paid calls, no push, tree clean on `22a1059`.\n\n## 1. Boot-check trace finding (read-only retrieval, zero new requests)\n\nFound via `search_traces` → `get_trace_context`, full payload marked complete by neatlogs (`span_payload_complete`, `verification_ready`):\n- **Trace:** `608bd91bb47a456da86a4731f711f33f`, workflow `swapdesk:CASE-f20c4c5f`, 11:41:08–12Z, 4,118ms, status success, 2 spans (workflow root + `case → escalation` log).\n- **Model request count (neatlogs): 0 LLM calls captured. Tokens: 0. Cost recorded: $0.**\n- **Outcome:** `escalation` (\"no progress\" path). **Business effects: none** — DB has the run row only; zero operations, zero case rows, zero stock movement.\n- **Gap disclosed:** the agent must have issued ≥1 generation to complete, yet none was captured. The neatlogs LangChain instrumentation shows no `ChatOpenAI` handling, so proxy-path (OpenAI-compatible) generations likely go uncaptured. I cannot prove from the trace whether the provider was hit — only that nothing was recorded and nothing was written. The 4.1s duration is consistent with one unrecorded round-trip.\n\n## 2. Telemetry readiness (fixed + verified)\n\nFound and fixed a real bug: the threaded worker rewrite had **dropped both `init_telemetry()` and `flush()`** (only `run_agent`'s inner finally + process-exit atexit covered it). Now `execute_run` inits telemetry and flushes in a `finally` on **all** paths — success, failure, timeout — so `--once` never exits unflushed. `flush()` is synchronous (30s `force_flush`). Proven by a new test asserting flush on all three paths (plus a doubly-flushed success, harmless). API process initializes telemetry at import/request time as before; export keys are present in `.env`.\n\nTo close the capture gap, per-run **`requests_spent`** (client-counted generations) is now persisted on the run row and exposed on status reads — usage ground truth independent of neatlogs.\n\n## 3–4. Rehearsal plan updated (`docs/LIVE_REHEARSAL.md`)\n\nEach case now mandatorily requires: completed trace with matching ids/commit, available I/O, outcome + DB verification, usage/latency/cost with pricing basis, and for C the fault record + op-status lookup + original key + no-duplicate proof. Rule in writing: **flush/drain ≠ proof; only a retrieved trace counts; retrieval failure → preserve, stop, no rerun** (read-only retrieval may be retried).\n\n## 5. Corrected budget\n\n- **Enforced:** 12 provider requests/case (36 total) + single-attempt SDK + 300s timeout + no auto-retry. **Token limits are NOT enforced anywhere.**\n- **$0.45 is an estimate, not a maximum** — relabeled as such. Three separated facts: (1) client request cap bounds generations, not tokens/dollars; (2) billing + any proxy retries belong to the hackathon proxy and are invisible to the cap; (3) tokens are measured after the fact, and may be absent from traces (see gap above).\n\nFull suite: **127 passed, 1 skipped**. Committed locally as `22a1059` (`main`, ahead of `origin/main` which still sits at the earlier unauthorized `6d553d7` push — unchanged by me).",
+          "time": {
+            "start": 1791722723205,
+            "end": 1791722725687
+          },
+          "metadata": {
+            "openai": {
+              "itemId": "msg_01a12aff17b470dcac0ccd5c8255f1ef"
+            }
+          },
+          "id": "prt_12aff1785001n7BPZ8Vlmv4m6X",
+          "sessionID": "ses_ed569feb0ffeaCknMBs6Ds0aAs",
+          "messageID": "msg_12afef375001wqAlrjZHN6KkJs"
+        },
+        {
+          "reason": "stop",
+          "snapshot": "",
+          "type": "step-finish",
+          "tokens": {
+            "total": 296429,
+            "input": 502,
+            "output": 774,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 295153
+            }
+          },
+          "cost": 0,
+          "id": "prt_12aff2308001rx5mokmbw0fhgz",
+          "sessionID": "ses_ed569feb0ffeaCknMBs6Ds0aAs",
+          "messageID": "msg_12afef375001wqAlrjZHN6KkJs"
         }
       ]
     }
