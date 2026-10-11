@@ -1,0 +1,1 @@
+Use the neatlogs MCP ping and whoami tools. Confirm the bound project is 51d4aec0-49d6-42b1-b70e-e487294e9aa1 before doing anything else.
