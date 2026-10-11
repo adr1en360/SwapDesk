@@ -1,0 +1,35 @@
+{
+  "cli_version": "0.11.4",
+  "checkpoint_id": "01M4NAMNAP8XBXZVRVA2QW4481",
+  "strategy": "manual-commit",
+  "branch": "feat/api-agent-queue",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "README.md",
+    "docs/API_CONTRACT.md",
+    "hackathon.md",
+    "src/swapdesk/agent/request_budget.py",
+    "src/swapdesk/api.py",
+    "src/swapdesk/queue.py",
+    "src/swapdesk/service.py",
+    "src/swapdesk/worker.py",
+    "tests/test_api.py",
+    "tests/test_http_agent.py"
+  ],
+  "sessions": [
+    {
+      "metadata": "/0/metadata.json",
+      "transcript": "/0/full.jsonl",
+      "compact_transcript": "/0/transcript.jsonl",
+      "content_hash": "/0/content_hash.txt",
+      "prompt": "/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 211063,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 7438370,
+    "output_tokens": 30414,
+    "api_call_count": 68
+  }
+}
