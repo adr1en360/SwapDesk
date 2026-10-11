@@ -1,0 +1,34 @@
+{
+  "cli_version": "0.11.4",
+  "checkpoint_id": "01M4NWBDFS5QZJVN8K074KTF8C",
+  "strategy": "manual-commit",
+  "branch": "main",
+  "checkpoints_count": 9,
+  "files_touched": [
+    ".dockerignore",
+    ".gitignore",
+    "Dockerfile",
+    "docker-entrypoint.sh",
+    "docs/API_CONTRACT.md",
+    "hackathon.md",
+    "src/swapdesk/api.py",
+    "src/swapdesk/queue.py",
+    "tests/test_agent_reads.py"
+  ],
+  "sessions": [
+    {
+      "metadata": "/0/metadata.json",
+      "transcript": "/0/full.jsonl",
+      "compact_transcript": "/0/transcript.jsonl",
+      "content_hash": "/0/content_hash.txt",
+      "prompt": "/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 48103,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 23667610,
+    "output_tokens": 23046,
+    "api_call_count": 59
+  }
+}
