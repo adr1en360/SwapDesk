@@ -19,17 +19,17 @@
     },
     "cost": 0,
     "tokens": {
-      "input": 988262,
-      "output": 119869,
+      "input": 989126,
+      "output": 120069,
       "reasoning": 51324,
       "cache": {
-        "read": 24394112,
+        "read": 24750080,
         "write": 0
       }
     },
     "time": {
       "created": 1791700257555,
-      "updated": 1791757522415
+      "updated": 1791757599564
     }
   },
   "messages": [
@@ -36538,19 +36538,22 @@
         },
         "cost": 0,
         "tokens": {
-          "input": 0,
-          "output": 0,
+          "total": 118847,
+          "input": 360,
+          "output": 87,
           "reasoning": 0,
           "cache": {
-            "read": 0,
-            "write": 0
+            "write": 0,
+            "read": 118400
           }
         },
         "modelID": "big-pickle",
         "providerID": "opencode",
         "time": {
-          "created": 1791757522396
+          "created": 1791757522396,
+          "completed": 1791757574671
         },
+        "finish": "tool-calls",
         "id": "msg_12d1215dc001iHnAs1Pmn1VzYX",
         "sessionID": "ses_ed657b4edffeC1aP1exexqOF40"
       },
@@ -36567,21 +36570,214 @@
           "tool": "bash",
           "callID": "call_00_y8xqaq9ql3a2bjf93egysoza",
           "state": {
-            "metadata": {
-              "output": ""
-            },
-            "status": "running",
+            "status": "completed",
             "input": {
               "command": "git commit -m \"Add loading states and simplify backend status labels\" 2>&1",
               "workdir": "C:\\Users\\Chidi Mathaias\\Desktop\\SwapDesk-1"
             },
+            "output": "[main deb7af2] Add loading states and simplify backend status labels\n 9 files changed, 163 insertions(+), 47 deletions(-)\n create mode 100644 frontend/src/components/ui/loading.tsx\n create mode 100644 frontend/src/components/ui/spinner.tsx\n",
+            "metadata": {
+              "output": "[main deb7af2] Add loading states and simplify backend status labels\n 9 files changed, 163 insertions(+), 47 deletions(-)\n create mode 100644 frontend/src/components/ui/loading.tsx\n create mode 100644 frontend/src/components/ui/spinner.tsx\n",
+              "exit": 0,
+              "truncated": false
+            },
+            "title": "git commit -m \"Add loading states and simplify backend status labels\" 2>&1",
             "time": {
-              "start": 1791757530748
+              "start": 1791757530748,
+              "end": 1791757572584
             }
           },
           "id": "prt_12d12352c001jQG7am6RVyqn22",
           "sessionID": "ses_ed657b4edffeC1aP1exexqOF40",
           "messageID": "msg_12d1215dc001iHnAs1Pmn1VzYX"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "10b6ef78c8c1b2ef70736495b45d30a531e8f54f",
+          "type": "step-finish",
+          "tokens": {
+            "total": 118847,
+            "input": 360,
+            "output": 87,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 118400
+            }
+          },
+          "cost": 0,
+          "id": "prt_12d12dc88001WiQFAyItiqA3Pu",
+          "sessionID": "ses_ed657b4edffeC1aP1exexqOF40",
+          "messageID": "msg_12d1215dc001iHnAs1Pmn1VzYX"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_12d11a0b7001lA17xe1dZz9ujG",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "C:\\Users\\Chidi Mathaias\\Desktop\\SwapDesk-1",
+          "root": "C:\\Users\\Chidi Mathaias\\Desktop\\SwapDesk-1"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 119017,
+          "input": 264,
+          "output": 97,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 118656
+          }
+        },
+        "modelID": "big-pickle",
+        "providerID": "opencode",
+        "time": {
+          "created": 1791757574888,
+          "completed": 1791757599401
+        },
+        "finish": "tool-calls",
+        "id": "msg_12d12e2e8001rgfK7Obg6q8h9x",
+        "sessionID": "ses_ed657b4edffeC1aP1exexqOF40"
+      },
+      "parts": [
+        {
+          "snapshot": "10b6ef78c8c1b2ef70736495b45d30a531e8f54f",
+          "type": "step-start",
+          "id": "prt_12d12fdde001PiDgwAeRl4R7LW",
+          "sessionID": "ses_ed657b4edffeC1aP1exexqOF40",
+          "messageID": "msg_12d12e2e8001rgfK7Obg6q8h9x"
+        },
+        {
+          "type": "text",
+          "text": "</think>",
+          "time": {
+            "start": 1791757581888,
+            "end": 1791757582600
+          },
+          "id": "prt_12d12fe40001YtpM7ZbBzFDkqq",
+          "sessionID": "ses_ed657b4edffeC1aP1exexqOF40",
+          "messageID": "msg_12d12e2e8001rgfK7Obg6q8h9x"
+        },
+        {
+          "type": "tool",
+          "tool": "bash",
+          "callID": "call_00_tiebums98nndx8xz0hxh3m8j",
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "git push origin main 2>&1",
+              "timeout": 180000,
+              "workdir": "C:\\Users\\Chidi Mathaias\\Desktop\\SwapDesk-1"
+            },
+            "output": "git : [entire] Pushing 2 checkpoint ref(s) to origin.......... done\r\nAt line:1 char:1\r\n+ git push origin main 2>&1\r\n+ ~~~~~~~~~~~~~~~~~~~~~~~~~\r\n    + CategoryInfo          : NotSpecified: ([entire] Pushin............. done:String) [], RemoteException\r\n    + FullyQualifiedErrorId : NativeCommandError\r\n \r\nTo https://github.com/adr1en360/SwapDesk.git\r\n   0b21d45..deb7af2  main -> main\r\n",
+            "metadata": {
+              "output": "git : [entire] Pushing 2 checkpoint ref(s) to origin.......... done\r\nAt line:1 char:1\r\n+ git push origin main 2>&1\r\n+ ~~~~~~~~~~~~~~~~~~~~~~~~~\r\n    + CategoryInfo          : NotSpecified: ([entire] Pushin............. done:String) [], RemoteException\r\n    + FullyQualifiedErrorId : NativeCommandError\r\n \r\nTo https://github.com/adr1en360/SwapDesk.git\r\n   0b21d45..deb7af2  main -> main\r\n",
+              "exit": 1,
+              "truncated": false
+            },
+            "title": "git push origin main 2>&1",
+            "time": {
+              "start": 1791757582532,
+              "end": 1791757596746
+            }
+          },
+          "id": "prt_12d12fe52001E2IjdDa2yUV5Wg",
+          "sessionID": "ses_ed657b4edffeC1aP1exexqOF40",
+          "messageID": "msg_12d12e2e8001rgfK7Obg6q8h9x"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "10b6ef78c8c1b2ef70736495b45d30a531e8f54f",
+          "type": "step-finish",
+          "tokens": {
+            "total": 119017,
+            "input": 264,
+            "output": 97,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 118656
+            }
+          },
+          "cost": 0,
+          "id": "prt_12d133e38001e6lIIrCo7gvoFg",
+          "sessionID": "ses_ed657b4edffeC1aP1exexqOF40",
+          "messageID": "msg_12d12e2e8001rgfK7Obg6q8h9x"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_12d11a0b7001lA17xe1dZz9ujG",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "C:\\Users\\Chidi Mathaias\\Desktop\\SwapDesk-1",
+          "root": "C:\\Users\\Chidi Mathaias\\Desktop\\SwapDesk-1"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 119168,
+          "input": 240,
+          "output": 16,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 118912
+          }
+        },
+        "modelID": "big-pickle",
+        "providerID": "opencode",
+        "time": {
+          "created": 1791757599554,
+          "completed": 1791757606788
+        },
+        "finish": "stop",
+        "id": "msg_12d134342001FPj2LNpaAv8olD",
+        "sessionID": "ses_ed657b4edffeC1aP1exexqOF40"
+      },
+      "parts": [
+        {
+          "snapshot": "10b6ef78c8c1b2ef70736495b45d30a531e8f54f",
+          "type": "step-start",
+          "id": "prt_12d1356c70012Qd7Q5jiP3fZ2J",
+          "sessionID": "ses_ed657b4edffeC1aP1exexqOF40",
+          "messageID": "msg_12d134342001FPj2LNpaAv8olD"
+        },
+        {
+          "type": "text",
+          "text": "Pushed (`0b21d45..deb7af2`).",
+          "time": {
+            "start": 1791757604564,
+            "end": 1791757604574
+          },
+          "id": "prt_12d1356d4001SE1bO2X48Q8Xcn",
+          "sessionID": "ses_ed657b4edffeC1aP1exexqOF40",
+          "messageID": "msg_12d134342001FPj2LNpaAv8olD"
+        },
+        {
+          "reason": "stop",
+          "snapshot": "10b6ef78c8c1b2ef70736495b45d30a531e8f54f",
+          "type": "step-finish",
+          "tokens": {
+            "total": 119168,
+            "input": 240,
+            "output": 16,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 118912
+            }
+          },
+          "cost": 0,
+          "id": "prt_12d135b30001to0q16ZEoVWVdU",
+          "sessionID": "ses_ed657b4edffeC1aP1exexqOF40",
+          "messageID": "msg_12d134342001FPj2LNpaAv8olD"
         }
       ]
     }
