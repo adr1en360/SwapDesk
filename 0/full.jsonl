@@ -20,17 +20,17 @@
     },
     "cost": 0,
     "tokens": {
-      "input": 285879,
-      "output": 64170,
-      "reasoning": 34038,
+      "input": 288120,
+      "output": 65411,
+      "reasoning": 34218,
       "cache": {
-        "read": 21145608,
+        "read": 22066636,
         "write": 0
       }
     },
     "time": {
       "created": 1791715836239,
-      "updated": 1791718313612
+      "updated": 1791718356014
     }
   },
   "messages": [
@@ -17578,19 +17578,22 @@
         },
         "cost": 0,
         "tokens": {
-          "input": 0,
-          "output": 0,
-          "reasoning": 0,
+          "total": 230374,
+          "input": 584,
+          "output": 195,
+          "reasoning": 106,
           "cache": {
-            "read": 0,
-            "write": 0
+            "write": 0,
+            "read": 229489
           }
         },
         "modelID": "muse-spark-1.3-contributor-free",
         "providerID": "opencode",
         "time": {
-          "created": 1791718313593
+          "created": 1791718313593,
+          "completed": 1791718334212
         },
+        "finish": "tool-calls",
         "id": "msg_12abbce79001bjq392xhEfKHc1",
         "sessionID": "ses_ed569feb0ffeaCknMBs6Ds0aAs"
       },
@@ -17641,16 +17644,21 @@
           "tool": "bash",
           "callID": "call_01a12abbf15271738bc10c860e7b935d",
           "state": {
-            "metadata": {
-              "output": "warning: in the working copy of 'docs/API_CONTRACT.md', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'src/swapdesk/queue.py', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'src/swapdesk/worker.py', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'tests/test_agent_queue.py', LF will be replaced by CRLF the next time Git touches it\nM  README.md\nA  docs/API_CONTRACT.md\nM  hackathon.md\nM  src/swapdesk/agent/graph.py\nA  src/swapdesk/agent/request_budget.py\nM  src/swapdesk/agent/tools.py\nM  src/swapdesk/api.py\nA  src/swapdesk/queue.py\nM  src/swapdesk/service.py\nA  src/swapdesk/worker.py\nA  tests/test_agent_queue.py\nM  tests/test_api.py\n"
-            },
-            "status": "running",
+            "status": "completed",
             "input": {
               "command": "git add README.md hackathon.md docs/API_CONTRACT.md src/swapdesk/agent/graph.py src/swapdesk/agent/request_budget.py src/swapdesk/agent/tools.py src/swapdesk/api.py src/swapdesk/queue.py src/swapdesk/service.py src/swapdesk/worker.py tests/test_api.py tests/test_agent_queue.py; git status --short; git commit -m \"Reconcile async agent queue onto existing agent service path\" 2>&1 | head -n 5",
               "timeout": 60000
             },
+            "output": "warning: in the working copy of 'docs/API_CONTRACT.md', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'src/swapdesk/queue.py', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'src/swapdesk/worker.py', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'tests/test_agent_queue.py', LF will be replaced by CRLF the next time Git touches it\nM  README.md\nA  docs/API_CONTRACT.md\nM  hackathon.md\nM  src/swapdesk/agent/graph.py\nA  src/swapdesk/agent/request_budget.py\nM  src/swapdesk/agent/tools.py\nM  src/swapdesk/api.py\nA  src/swapdesk/queue.py\nM  src/swapdesk/service.py\nA  src/swapdesk/worker.py\nA  tests/test_agent_queue.py\nM  tests/test_api.py\n[feat/agent-queue-reconciled 7e946f8] Reconcile async agent queue onto existing agent service path\r\n 12 files changed, 1638 insertions(+), 106 deletions(-)\r\n create mode 100644 docs/API_CONTRACT.md\r\n create mode 100644 src/swapdesk/agent/request_budget.py\r\n create mode 100644 src/swapdesk/queue.py\r\n",
+            "metadata": {
+              "output": "warning: in the working copy of 'docs/API_CONTRACT.md', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'src/swapdesk/queue.py', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'src/swapdesk/worker.py', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'tests/test_agent_queue.py', LF will be replaced by CRLF the next time Git touches it\nM  README.md\nA  docs/API_CONTRACT.md\nM  hackathon.md\nM  src/swapdesk/agent/graph.py\nA  src/swapdesk/agent/request_budget.py\nM  src/swapdesk/agent/tools.py\nM  src/swapdesk/api.py\nA  src/swapdesk/queue.py\nM  src/swapdesk/service.py\nA  src/swapdesk/worker.py\nA  tests/test_agent_queue.py\nM  tests/test_api.py\n[feat/agent-queue-reconciled 7e946f8] Reconcile async agent queue onto existing agent service path\r\n 12 files changed, 1638 insertions(+), 106 deletions(-)\r\n create mode 100644 docs/API_CONTRACT.md\r\n create mode 100644 src/swapdesk/agent/request_budget.py\r\n create mode 100644 src/swapdesk/queue.py\r\n",
+              "exit": 0,
+              "truncated": false
+            },
+            "title": "git add README.md hackathon.md docs/API_CONTRACT.md src/swapdesk/agent/graph.py src/swapdesk/agent/request_budget.py src/swapdesk/agent/tools.py src/swapdesk/api.py src/swapdesk/queue.py src/swapdesk/service.py src/swapdesk/worker.py tests/test_api.py tests/test_agent_queue.py; git status --short; git commit -m \"Reconcile async agent queue onto existing agent service path\" 2>&1 | head -n 5",
             "time": {
-              "start": 1791718322407
+              "start": 1791718322407,
+              "end": 1791718333847
             }
           },
           "metadata": {
@@ -17661,6 +17669,372 @@
           "id": "prt_12abbf0cc001ogpc4OWs728BNR",
           "sessionID": "ses_ed569feb0ffeaCknMBs6Ds0aAs",
           "messageID": "msg_12abbce79001bjq392xhEfKHc1"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "",
+          "type": "step-finish",
+          "tokens": {
+            "total": 230374,
+            "input": 584,
+            "output": 195,
+            "reasoning": 106,
+            "cache": {
+              "write": 0,
+              "read": 229489
+            }
+          },
+          "cost": 0,
+          "id": "prt_12abc1efa0011nJCPjdWW56J9y",
+          "sessionID": "ses_ed569feb0ffeaCknMBs6Ds0aAs",
+          "messageID": "msg_12abbce79001bjq392xhEfKHc1"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_12aaf45fd001zLqMYLfbVl0BVD",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "variant": "xhigh",
+        "path": {
+          "cwd": "C:\\Users\\DELL\\Documents\\SwapDesk",
+          "root": "C:\\Users\\DELL\\Documents\\SwapDesk"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 230775,
+          "input": 696,
+          "output": 78,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 230001
+          }
+        },
+        "modelID": "muse-spark-1.3-contributor-free",
+        "providerID": "opencode",
+        "time": {
+          "created": 1791718334244,
+          "completed": 1791718346386
+        },
+        "finish": "tool-calls",
+        "id": "msg_12abc1f24001OAGrseUjas3BRD",
+        "sessionID": "ses_ed569feb0ffeaCknMBs6Ds0aAs"
+      },
+      "parts": [
+        {
+          "snapshot": "",
+          "type": "step-start",
+          "id": "prt_12abc3ddd001rE2kAWslOs9fG0",
+          "sessionID": "ses_ed569feb0ffeaCknMBs6Ds0aAs",
+          "messageID": "msg_12abc1f24001OAGrseUjas3BRD"
+        },
+        {
+          "type": "tool",
+          "tool": "bash",
+          "callID": "call_01a12abc3dbf7762831835f221e35af3",
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "git status --short --branch; echo ===; git log --oneline -2; echo ===; entire checkpoint list 2>&1 | head -n 8"
+            },
+            "output": "## feat/agent-queue-reconciled\n===\r\n7e946f8 Reconcile async agent queue onto existing agent service path\n50189a2 chore: regenerate Entire opencode plugin to official v2 format\n===\r\n  branch       feat/agent-queue-reconciled\r\n  checkpoints  1\r\n\r\n??? 01M4NBQX7XYF8E2TST047YQ18W  \"What you need to do now is, Emmanuel, just push to `main`...\"\r\n  10-11 12:32 (7e946f8) Reconcile async agent queue onto existing agent service path\r\n\r\n",
+            "metadata": {
+              "output": "## feat/agent-queue-reconciled\n===\r\n7e946f8 Reconcile async agent queue onto existing agent service path\n50189a2 chore: regenerate Entire opencode plugin to official v2 format\n===\r\n  branch       feat/agent-queue-reconciled\r\n  checkpoints  1\r\n\r\n??? 01M4NBQX7XYF8E2TST047YQ18W  \"What you need to do now is, Emmanuel, just push to `main`...\"\r\n  10-11 12:32 (7e946f8) Reconcile async agent queue onto existing agent service path\r\n\r\n",
+              "exit": 0,
+              "truncated": false
+            },
+            "title": "git status --short --branch; echo ===; git log --oneline -2; echo ===; entire checkpoint list 2>&1 | head -n 8",
+            "time": {
+              "start": 1791718342122,
+              "end": 1791718346112
+            }
+          },
+          "metadata": {
+            "openai": {
+              "itemId": "fc_01a12abc3dbf7762831835f221e35af3"
+            }
+          },
+          "id": "prt_12abc3de10018kNaZd0u1Br9Ew",
+          "sessionID": "ses_ed569feb0ffeaCknMBs6Ds0aAs",
+          "messageID": "msg_12abc1f24001OAGrseUjas3BRD"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "",
+          "type": "step-finish",
+          "tokens": {
+            "total": 230775,
+            "input": 696,
+            "output": 78,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 230001
+            }
+          },
+          "cost": 0,
+          "id": "prt_12abc4e8b0014sQ7kwYGCz9a7h",
+          "sessionID": "ses_ed569feb0ffeaCknMBs6Ds0aAs",
+          "messageID": "msg_12abc1f24001OAGrseUjas3BRD"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_12aaf45fd001zLqMYLfbVl0BVD",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "variant": "xhigh",
+        "path": {
+          "cwd": "C:\\Users\\DELL\\Documents\\SwapDesk",
+          "root": "C:\\Users\\DELL\\Documents\\SwapDesk"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 231275,
+          "input": 290,
+          "output": 270,
+          "reasoning": 74,
+          "cache": {
+            "write": 0,
+            "read": 230641
+          }
+        },
+        "modelID": "muse-spark-1.3-contributor-free",
+        "providerID": "opencode",
+        "time": {
+          "created": 1791718346414,
+          "completed": 1791718355961
+        },
+        "finish": "tool-calls",
+        "id": "msg_12abc4eae0019yrUkJfsdTZsHx",
+        "sessionID": "ses_ed569feb0ffeaCknMBs6Ds0aAs"
+      },
+      "parts": [
+        {
+          "snapshot": "",
+          "type": "step-start",
+          "id": "prt_12abc72e1001IaFBGIUdisptMc",
+          "sessionID": "ses_ed569feb0ffeaCknMBs6Ds0aAs",
+          "messageID": "msg_12abc4eae0019yrUkJfsdTZsHx"
+        },
+        {
+          "type": "reasoning",
+          "text": "",
+          "time": {
+            "start": 1791718355685,
+            "end": 1791718355688
+          },
+          "metadata": {
+            "openai": {
+              "itemId": "rs_6acb73d3fb62ceba3ae94eef:rs_01a12abc70ae7275b47401202a429d13",
+              "reasoningEncryptedContent": "REDACTED"
+            }
+          },
+          "id": "prt_12abc72e50012y7eDV3daU9NQv",
+          "sessionID": "ses_ed569feb0ffeaCknMBs6Ds0aAs",
+          "messageID": "msg_12abc4eae0019yrUkJfsdTZsHx"
+        },
+        {
+          "type": "tool",
+          "tool": "todowrite",
+          "callID": "call_01a12abc71bb7547a73da21809ca215e",
+          "state": {
+            "status": "completed",
+            "input": {
+              "todos": [
+                {
+                  "content": "Fast-forward main to origin/main, inspect Emmanuel's agent path",
+                  "status": "completed",
+                  "priority": "high"
+                },
+                {
+                  "content": "Cut reconcile branch; port queue/submissions/runs + idempotency + atomic claim",
+                  "status": "completed",
+                  "priority": "high"
+                },
+                {
+                  "content": "Worker invokes submit_agent_ticket; execution timeout + no-retry docs",
+                  "status": "completed",
+                  "priority": "high"
+                },
+                {
+                  "content": "Wire RequestBudget into agent path; narrow clarification guard; gate faults",
+                  "status": "completed",
+                  "priority": "high"
+                },
+                {
+                  "content": "Async /v1/agent/tickets contract (202) + legacy /v1/tickets; publish examples",
+                  "status": "completed",
+                  "priority": "high"
+                },
+                {
+                  "content": "Offline tests through reconciled path + full deterministic suite",
+                  "status": "completed",
+                  "priority": "high"
+                },
+                {
+                  "content": "Report + Entire-linked commit, clean tree, no push",
+                  "status": "completed",
+                  "priority": "high"
+                }
+              ]
+            },
+            "output": "[\n  {\n    \"content\": \"Fast-forward main to origin/main, inspect Emmanuel's agent path\",\n    \"status\": \"completed\",\n    \"priority\": \"high\"\n  },\n  {\n    \"content\": \"Cut reconcile branch; port queue/submissions/runs + idempotency + atomic claim\",\n    \"status\": \"completed\",\n    \"priority\": \"high\"\n  },\n  {\n    \"content\": \"Worker invokes submit_agent_ticket; execution timeout + no-retry docs\",\n    \"status\": \"completed\",\n    \"priority\": \"high\"\n  },\n  {\n    \"content\": \"Wire RequestBudget into agent path; narrow clarification guard; gate faults\",\n    \"status\": \"completed\",\n    \"priority\": \"high\"\n  },\n  {\n    \"content\": \"Async /v1/agent/tickets contract (202) + legacy /v1/tickets; publish examples\",\n    \"status\": \"completed\",\n    \"priority\": \"high\"\n  },\n  {\n    \"content\": \"Offline tests through reconciled path + full deterministic suite\",\n    \"status\": \"completed\",\n    \"priority\": \"high\"\n  },\n  {\n    \"content\": \"Report + Entire-linked commit, clean tree, no push\",\n    \"status\": \"completed\",\n    \"priority\": \"high\"\n  }\n]",
+            "metadata": {
+              "todos": [
+                {
+                  "content": "Fast-forward main to origin/main, inspect Emmanuel's agent path",
+                  "status": "completed",
+                  "priority": "high"
+                },
+                {
+                  "content": "Cut reconcile branch; port queue/submissions/runs + idempotency + atomic claim",
+                  "status": "completed",
+                  "priority": "high"
+                },
+                {
+                  "content": "Worker invokes submit_agent_ticket; execution timeout + no-retry docs",
+                  "status": "completed",
+                  "priority": "high"
+                },
+                {
+                  "content": "Wire RequestBudget into agent path; narrow clarification guard; gate faults",
+                  "status": "completed",
+                  "priority": "high"
+                },
+                {
+                  "content": "Async /v1/agent/tickets contract (202) + legacy /v1/tickets; publish examples",
+                  "status": "completed",
+                  "priority": "high"
+                },
+                {
+                  "content": "Offline tests through reconciled path + full deterministic suite",
+                  "status": "completed",
+                  "priority": "high"
+                },
+                {
+                  "content": "Report + Entire-linked commit, clean tree, no push",
+                  "status": "completed",
+                  "priority": "high"
+                }
+              ],
+              "truncated": false
+            },
+            "title": "0 todos",
+            "time": {
+              "start": 1791718355699,
+              "end": 1791718355705
+            }
+          },
+          "metadata": {
+            "openai": {
+              "itemId": "fc_01a12abc71bb7547a73da21809ca215e"
+            }
+          },
+          "id": "prt_12abc72ec001orpi6PcTip8kAA",
+          "sessionID": "ses_ed569feb0ffeaCknMBs6Ds0aAs",
+          "messageID": "msg_12abc4eae0019yrUkJfsdTZsHx"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "",
+          "type": "step-finish",
+          "tokens": {
+            "total": 231275,
+            "input": 290,
+            "output": 270,
+            "reasoning": 74,
+            "cache": {
+              "write": 0,
+              "read": 230641
+            }
+          },
+          "cost": 0,
+          "id": "prt_12abc73f2001nPf9c4uzMEfnw6",
+          "sessionID": "ses_ed569feb0ffeaCknMBs6Ds0aAs",
+          "messageID": "msg_12abc4eae0019yrUkJfsdTZsHx"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_12aaf45fd001zLqMYLfbVl0BVD",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "variant": "xhigh",
+        "path": {
+          "cwd": "C:\\Users\\DELL\\Documents\\SwapDesk",
+          "root": "C:\\Users\\DELL\\Documents\\SwapDesk"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 232266,
+          "input": 671,
+          "output": 698,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 230897
+          }
+        },
+        "modelID": "muse-spark-1.3-contributor-free",
+        "providerID": "opencode",
+        "time": {
+          "created": 1791718355992,
+          "completed": 1791718365466
+        },
+        "finish": "stop",
+        "id": "msg_12abc7418001ZwB7IinAPGNbnd",
+        "sessionID": "ses_ed569feb0ffeaCknMBs6Ds0aAs"
+      },
+      "parts": [
+        {
+          "snapshot": "",
+          "type": "step-start",
+          "id": "prt_12abc91ea001QKc3hxImWMVA1m",
+          "sessionID": "ses_ed569feb0ffeaCknMBs6Ds0aAs",
+          "messageID": "msg_12abc7418001ZwB7IinAPGNbnd"
+        },
+        {
+          "type": "text",
+          "text": "Reconciliation complete. All local, nothing pushed.\n\n## What was done\n\n**Kept from Emmanuel (no second execution implementation):** `submit_agent_ticket()`, structured `AgentContext` fields, case-specific checkpoint threads (`case_id:run_id`), DB-derived verification. His functions gained only additive passthrough (`run_id`/`model`/`middleware` on the service call, `middleware` on `run_agent`) — defaults unchanged, his tests adapted, none deleted.\n\n**Ported from our branch:** durable `submissions`/`runs` tables, idempotency (same key+payload → existing case; different payload → 409), atomic single-worker claiming, interrupted-runs-marked-failed with no replay. The worker calls his service path per claimed run with the run's saved request.\n\n**Also in:** `RequestBudget` caps actual provider requests every run (`SWAPDESK_AGENT_BUDGET`, default 12); wall-clock timeout (`SWAPDESK_RUN_TIMEOUT_S`, default 300) with documented cancellation limits (in-flight calls can't be cancelled, late commits are idempotent, no retry ever queued); narrowed stock guard (rejects only questions asserting unavailability — his regression test still passes); fault endpoints 403 by default; dev CORS for `localhost:3000`/`127.0.0.1:3000`.\n\n## Frontend contract (`docs/API_CONTRACT.md`, ready for Joshua/Chidi)\n\n- `POST /v1/agent/tickets` → **202** `{case_id, run_id, execution_status, status_url}` (was 201-completed — change is called out in the doc).\n- `GET /v1/agent/cases/{id}` → execution status + outcome/reply/exchange_id/`trace_id`/`error` when available, nulls while queued/running.\n- Timeline with run ids; continue → 202 new `RUN-n` or 200 saved terminal result with **no model call**.\n- `/v1/tickets` + `/v1/cases/*` unchanged legacy deterministic path; frontend must not use it.\n\nStartup: `uv run uvicorn swapdesk.api:app --port 8000` + `uv run python -m swapdesk.worker` (boot verified).\n\n## Verification (locked `uv` env, no paid calls, scripted doubles only)\n\n- `uv run pytest tests/test_agent_queue.py -q` → **13 passed** (arranged, denial, clarification→consent continuation, duplicates, concurrent claim, terminal-without-model-call, config failure, label-timeout single-label recovery, budget exhaustion, timeout, no-replay, guard narrowing, validation).\n- `uv run pytest tests/test_api.py tests/test_agent.py tests/test_provider.py -q` → **33 passed**.\n- Full `uv run pytest -q` → **125 passed, 1 skipped**. No environment blockers.\n- Commit `7e946f8` on `feat/agent-queue-reconciled`, Entire checkpoint `01M4NBQX…`, tree clean, **not pushed**. The earlier `feat/api-agent-queue` branch (`6fc6f01`) is preserved untouched.\n\n## Remaining limitations\n\n- No paid live-model run through the queue yet; production path proven with injected doubles.\n- Frontend still on mock store; integration pending.\n- Single local worker, no auth, no retry beyond explicit continue.",
+          "time": {
+            "start": 1791718363629,
+            "end": 1791718365089
+          },
+          "metadata": {
+            "openai": {
+              "itemId": "msg_01a12abc91bf7066a55a2dad99691fd6"
+            }
+          },
+          "id": "prt_12abc91ed001sWrbz7gPhgyTW5",
+          "sessionID": "ses_ed569feb0ffeaCknMBs6Ds0aAs",
+          "messageID": "msg_12abc7418001ZwB7IinAPGNbnd"
+        },
+        {
+          "reason": "stop",
+          "snapshot": "",
+          "type": "step-finish",
+          "tokens": {
+            "total": 232266,
+            "input": 671,
+            "output": 698,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 230897
+            }
+          },
+          "cost": 0,
+          "id": "prt_12abc9914001gDhnR0pkjZFe25",
+          "sessionID": "ses_ed569feb0ffeaCknMBs6Ds0aAs",
+          "messageID": "msg_12abc7418001ZwB7IinAPGNbnd"
         }
       ]
     }
