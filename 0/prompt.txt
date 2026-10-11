@@ -1,1 +1,94 @@
-what your plan to fix the bug
+Finish the current shoe-shop backend for frontend integration.
+Do not change hard-coded policy or generalize the business.
+
+Reviewed baseline: 0d8c55a.
+Inspect current HEAD/local changes and preserve teammate work.
+Agree API response examples with frontend before implementation.
+
+1. ADD GET /v1/agent/cases
+
+- List durable agent-path cases, including runs without business state.
+- Reuse existing authoritative status resolution.
+- Preserve the 0d8c55a fallback to the saved run outcome/reply.
+- Return case ID, original complaint, supplied order/item/size/quantity,
+  execution status, outcome, current run, timestamps and saved reply.
+- Unknown attributes remain null.
+- Support validated execution/outcome filters.
+- Bounded pagination: default 25, maximum 100.
+- Stable ordering with a unique tie-breaker.
+- Return items, next_cursor, total and summary counts.
+- Define total/summary over the full filtered population, not one page.
+- No model execution or business mutations on reads.
+
+2. ADD GET /v1/inventory
+
+- Read actual stock keyed by SKU and size.
+- Return sku, size, on_hand, held, available and read timestamp.
+- available = on_hand - held.
+- Bound result size; document filters/pagination.
+- Invent no warehouse/product fields.
+- No seeding/reset/reserve/release/cleanup on GET.
+- Preserve correct finalize behavior: stock consumed, hold released.
+
+3. PRESERVE THE EXISTING CUSTOMER CONTRACT
+
+- Intake returns 202 accepted.
+- Existing detail/timeline/continue remain compatible.
+- Terminal continuation returns saved results without a model call.
+- No automatic paid retries.
+- Consent remains explicit.
+- Completed escalation may have no exchange or timeline events.
+- Failed/timed-out runs can have late effects; do not claim zero effects.
+- trace_id remains a local checkpoint thread, not a remote trace URL.
+
+4. CHECK DEPLOYMENT BASICS
+
+- API, worker and checkpoints share the intended persistent directory.
+- Empty-volume startup succeeds without resetting existing data.
+- Restart preserves data and marks interrupted runs failed without replay.
+- Keep one worker/service for this SQLite deployment.
+
+Fix/test entrypoint supervision:
+- Either child exiting terminates and reaps the other.
+- TERM/INT reaches both.
+- Cleanup is bounded and exit status meaningful.
+Use fake child processes; no paid execution.
+
+Pin the uv image/version rather than latest.
+Exclude secret-file variants from the build context.
+Check the .langraph_api ignore entry.
+Build/test Docker if available; otherwise state unverified.
+
+5. RESTRICT ACCESS BEFORE PUBLIC PAID INTAKE
+
+CORS is not authentication.
+Per-run limits do not cap aggregate spending.
+
+Use a verified platform access gate or minimal server-side protection.
+Keep secrets out of the browser and add bounded admission controls.
+Keep demo faults disabled.
+Do not claim /v1/health proves worker readiness.
+Do not deploy or change access in this task.
+
+6. NETWORK-FREE ACCEPTANCE
+
+Test:
+- Case lists, filters, pagination and summary counts.
+- List/detail agreement.
+- Completed escalation with no business state.
+- Inventory before reservation, during hold and after finalize.
+- Repeated reads cause no business mutations/model calls.
+- Existing clarification/continuation behavior.
+- Sanitization and access protection.
+- Container lifecycle/persistence where supported.
+
+Run focused tests and the full deterministic backend suite.
+Update API_CONTRACT.md with exact examples.
+Append actual commands/results to hackathon.md.
+
+DEFER
+No detailed evidence endpoint, remote trace-link plumbing, policy editor,
+multi-store architecture, new integrations or agent-reasoning changes.
+
+No paid runs, deployment or push without separate instruction.
+Report files, checks and unresolved blockers.

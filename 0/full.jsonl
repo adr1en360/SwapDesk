@@ -20,17 +20,17 @@
     },
     "cost": 0,
     "tokens": {
-      "input": 871500,
-      "output": 148369,
+      "input": 873523,
+      "output": 149279,
       "reasoning": 90235,
       "cache": {
-        "read": 117284091,
+        "read": 118573646,
         "write": 0
       }
     },
     "time": {
       "created": 1791715836239,
-      "updated": 1791735721712
+      "updated": 1791735800431
     }
   },
   "messages": [
@@ -51342,19 +51342,22 @@
         },
         "cost": 0,
         "tokens": {
-          "input": 0,
-          "output": 0,
+          "total": 430247,
+          "input": 1050,
+          "output": 156,
           "reasoning": 0,
           "cache": {
-            "read": 0,
-            "write": 0
+            "write": 0,
+            "read": 429041
           }
         },
         "modelID": "muse-spark-1.3-contributor-free",
         "providerID": "opencode",
         "time": {
-          "created": 1791735721675
+          "created": 1791735721675,
+          "completed": 1791735770913
         },
+        "finish": "tool-calls",
         "id": "msg_12bc56ecb001z5qbKwWtVRhOZJ",
         "sessionID": "ses_ed569feb0ffeaCknMBs6Ds0aAs"
       },
@@ -51371,16 +51374,21 @@
           "tool": "bash",
           "callID": "call_01a12bc5ada371de83d862499c21d4b7",
           "state": {
-            "metadata": {
-              "output": "warning: in the working copy of 'docker-entrypoint.sh', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'tests/test_agent_reads.py', LF will be replaced by CRLF the next time Git touches it\nM  .dockerignore\nM  .gitignore\nM  Dockerfile\nM  docker-entrypoint.sh\nM  docs/API_CONTRACT.md\nM  hackathon.md\nM  src/swapdesk/api.py\nM  src/swapdesk/queue.py\nA  tests/test_agent_reads.py\n"
-            },
-            "status": "running",
+            "status": "completed",
             "input": {
               "command": "git add src/swapdesk/queue.py src/swapdesk/api.py docker-entrypoint.sh Dockerfile .dockerignore .gitignore tests/test_agent_reads.py docs/API_CONTRACT.md hackathon.md; git status --short; git commit -m \"Add agent case list, inventory and readiness reads plus deployment hardening\" 2>&1 | head -n 3; git log --oneline -1; git status --short --branch; echo CLEAN-IF-EMPTY",
               "timeout": 60000
             },
+            "output": "warning: in the working copy of 'docker-entrypoint.sh', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'tests/test_agent_reads.py', LF will be replaced by CRLF the next time Git touches it\nM  .dockerignore\nM  .gitignore\nM  Dockerfile\nM  docker-entrypoint.sh\nM  docs/API_CONTRACT.md\nM  hackathon.md\nM  src/swapdesk/api.py\nM  src/swapdesk/queue.py\nA  tests/test_agent_reads.py\n[main 5eef73b] Add agent case list, inventory and readiness reads plus deployment hardening\r\n 9 files changed, 799 insertions(+), 8 deletions(-)\r\n create mode 100644 tests/test_agent_reads.py\r\n5eef73b Add agent case list, inventory and readiness reads plus deployment hardening\n## main...origin/main [ahead 1]\nCLEAN-IF-EMPTY\r\n",
+            "metadata": {
+              "output": "warning: in the working copy of 'docker-entrypoint.sh', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'tests/test_agent_reads.py', LF will be replaced by CRLF the next time Git touches it\nM  .dockerignore\nM  .gitignore\nM  Dockerfile\nM  docker-entrypoint.sh\nM  docs/API_CONTRACT.md\nM  hackathon.md\nM  src/swapdesk/api.py\nM  src/swapdesk/queue.py\nA  tests/test_agent_reads.py\n[main 5eef73b] Add agent case list, inventory and readiness reads plus deployment hardening\r\n 9 files changed, 799 insertions(+), 8 deletions(-)\r\n create mode 100644 tests/test_agent_reads.py\r\n5eef73b Add agent case list, inventory and readiness reads plus deployment hardening\n## main...origin/main [ahead 1]\nCLEAN-IF-EMPTY\r\n",
+              "exit": 0,
+              "truncated": false
+            },
+            "title": "git add src/swapdesk/queue.py src/swapdesk/api.py docker-entrypoint.sh Dockerfile .dockerignore .gitignore tests/test_agent_reads.py docs/API_CONTRACT.md hackathon.md; git status --short; git commit -m \"Add agent case list, inventory and readiness reads plus deployment hardening\" 2>&1 | head -n 3; git log --oneline -1; git status --short --branch; echo CLEAN-IF-EMPTY",
             "time": {
-              "start": 1791735737997
+              "start": 1791735737997,
+              "end": 1791735770444
             }
           },
           "metadata": {
@@ -51391,6 +51399,264 @@
           "id": "prt_12bc5ae81001ilQuBvTm3H5daK",
           "sessionID": "ses_ed569feb0ffeaCknMBs6Ds0aAs",
           "messageID": "msg_12bc56ecb001z5qbKwWtVRhOZJ"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "",
+          "type": "step-finish",
+          "tokens": {
+            "total": 430247,
+            "input": 1050,
+            "output": 156,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 429041
+            }
+          },
+          "cost": 0,
+          "id": "prt_12bc62f16001UsScrny5Co2mF3",
+          "sessionID": "ses_ed569feb0ffeaCknMBs6Ds0aAs",
+          "messageID": "msg_12bc56ecb001z5qbKwWtVRhOZJ"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_12bb46a4e001rN6HhonJ27JAEF",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "variant": "xhigh",
+        "path": {
+          "cwd": "C:\\Users\\DELL\\Documents\\SwapDesk",
+          "root": "C:\\Users\\DELL\\Documents\\SwapDesk"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 430729,
+          "input": 409,
+          "output": 255,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 430065
+          }
+        },
+        "modelID": "muse-spark-1.3-contributor-free",
+        "providerID": "opencode",
+        "time": {
+          "created": 1791735771031,
+          "completed": 1791735800271
+        },
+        "finish": "tool-calls",
+        "id": "msg_12bc62f97001ZRmCb3iNKa2Y6U",
+        "sessionID": "ses_ed569feb0ffeaCknMBs6Ds0aAs"
+      },
+      "parts": [
+        {
+          "snapshot": "",
+          "type": "step-start",
+          "id": "prt_12bc69e7f001PQUilV61ksuPoT",
+          "sessionID": "ses_ed569feb0ffeaCknMBs6Ds0aAs",
+          "messageID": "msg_12bc62f97001ZRmCb3iNKa2Y6U"
+        },
+        {
+          "type": "tool",
+          "tool": "todowrite",
+          "callID": "call_01a12bc6985873fd87ac85e110b9da9f",
+          "state": {
+            "status": "completed",
+            "input": {
+              "todos": [
+                {
+                  "content": "Inspect HEAD/local changes, preserve teammate work",
+                  "status": "completed",
+                  "priority": "high"
+                },
+                {
+                  "content": "ADD GET /v1/agent/cases (list, filters, pagination, summary)",
+                  "status": "completed",
+                  "priority": "high"
+                },
+                {
+                  "content": "ADD GET /v1/inventory (real stock, bounded, read-only)",
+                  "status": "completed",
+                  "priority": "high"
+                },
+                {
+                  "content": "Deployment basics: shared dir, restart semantics, entrypoint supervision, Docker checks",
+                  "status": "completed",
+                  "priority": "high"
+                },
+                {
+                  "content": "Access-restriction analysis (no access changes in task)",
+                  "status": "completed",
+                  "priority": "medium"
+                },
+                {
+                  "content": "Network-free acceptance tests + full suite",
+                  "status": "completed",
+                  "priority": "high"
+                },
+                {
+                  "content": "Update API_CONTRACT.md + hackathon.md; report; no push/paid/deploy",
+                  "status": "completed",
+                  "priority": "high"
+                }
+              ]
+            },
+            "output": "[\n  {\n    \"content\": \"Inspect HEAD/local changes, preserve teammate work\",\n    \"status\": \"completed\",\n    \"priority\": \"high\"\n  },\n  {\n    \"content\": \"ADD GET /v1/agent/cases (list, filters, pagination, summary)\",\n    \"status\": \"completed\",\n    \"priority\": \"high\"\n  },\n  {\n    \"content\": \"ADD GET /v1/inventory (real stock, bounded, read-only)\",\n    \"status\": \"completed\",\n    \"priority\": \"high\"\n  },\n  {\n    \"content\": \"Deployment basics: shared dir, restart semantics, entrypoint supervision, Docker checks\",\n    \"status\": \"completed\",\n    \"priority\": \"high\"\n  },\n  {\n    \"content\": \"Access-restriction analysis (no access changes in task)\",\n    \"status\": \"completed\",\n    \"priority\": \"medium\"\n  },\n  {\n    \"content\": \"Network-free acceptance tests + full suite\",\n    \"status\": \"completed\",\n    \"priority\": \"high\"\n  },\n  {\n    \"content\": \"Update API_CONTRACT.md + hackathon.md; report; no push/paid/deploy\",\n    \"status\": \"completed\",\n    \"priority\": \"high\"\n  }\n]",
+            "metadata": {
+              "todos": [
+                {
+                  "content": "Inspect HEAD/local changes, preserve teammate work",
+                  "status": "completed",
+                  "priority": "high"
+                },
+                {
+                  "content": "ADD GET /v1/agent/cases (list, filters, pagination, summary)",
+                  "status": "completed",
+                  "priority": "high"
+                },
+                {
+                  "content": "ADD GET /v1/inventory (real stock, bounded, read-only)",
+                  "status": "completed",
+                  "priority": "high"
+                },
+                {
+                  "content": "Deployment basics: shared dir, restart semantics, entrypoint supervision, Docker checks",
+                  "status": "completed",
+                  "priority": "high"
+                },
+                {
+                  "content": "Access-restriction analysis (no access changes in task)",
+                  "status": "completed",
+                  "priority": "medium"
+                },
+                {
+                  "content": "Network-free acceptance tests + full suite",
+                  "status": "completed",
+                  "priority": "high"
+                },
+                {
+                  "content": "Update API_CONTRACT.md + hackathon.md; report; no push/paid/deploy",
+                  "status": "completed",
+                  "priority": "high"
+                }
+              ],
+              "truncated": false
+            },
+            "title": "0 todos",
+            "time": {
+              "start": 1791735799462,
+              "end": 1791735799479
+            }
+          },
+          "metadata": {
+            "openai": {
+              "itemId": "fc_01a12bc6985873fd87ac85e110b9da9f"
+            }
+          },
+          "id": "prt_12bc69e89001SbOk34f5s11GFD",
+          "sessionID": "ses_ed569feb0ffeaCknMBs6Ds0aAs",
+          "messageID": "msg_12bc62f97001ZRmCb3iNKa2Y6U"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "",
+          "type": "step-finish",
+          "tokens": {
+            "total": 430729,
+            "input": 409,
+            "output": 255,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 430065
+            }
+          },
+          "cost": 0,
+          "id": "prt_12bc6a1b900188mxQJi0CKitH2",
+          "sessionID": "ses_ed569feb0ffeaCknMBs6Ds0aAs",
+          "messageID": "msg_12bc62f97001ZRmCb3iNKa2Y6U"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_12bb46a4e001rN6HhonJ27JAEF",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "variant": "xhigh",
+        "path": {
+          "cwd": "C:\\Users\\DELL\\Documents\\SwapDesk",
+          "root": "C:\\Users\\DELL\\Documents\\SwapDesk"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 431512,
+          "input": 564,
+          "output": 499,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 430449
+          }
+        },
+        "modelID": "muse-spark-1.3-contributor-free",
+        "providerID": "opencode",
+        "time": {
+          "created": 1791735800421,
+          "completed": 1791735822274
+        },
+        "finish": "stop",
+        "id": "msg_12bc6a265001bRictM26WMYR6s",
+        "sessionID": "ses_ed569feb0ffeaCknMBs6Ds0aAs"
+      },
+      "parts": [
+        {
+          "snapshot": "",
+          "type": "step-start",
+          "id": "prt_12bc6e1c4001ftMzkGvXyxRN5I",
+          "sessionID": "ses_ed569feb0ffeaCknMBs6Ds0aAs",
+          "messageID": "msg_12bc6a265001bRictM26WMYR6s"
+        },
+        {
+          "type": "text",
+          "text": "Done. Committed locally as `5eef73b` (ahead of origin by 1, **not pushed**), tree clean, zero paid calls, nothing deployed.\n\n## Files\n- `src/swapdesk/queue.py` — `list_agent_cases` (filters, keyset cursor, population totals/summary, scrubbed messages) + `read_inventory` (pure SELECT, missing tables read as empty).\n- `src/swapdesk/api.py` — `GET /v1/agent/cases`, `GET /v1/inventory`, `GET /v1/ready` (queue-state signal, documented as not worker proof). Legacy routes byte-identical.\n- `docker-entrypoint.sh` — supervision rewrite (either child exits → reap other + propagate status; TERM/INT to both; 10s KILL escalation; test overrides). `Dockerfile` — uv pinned `0.10.8`. `.dockerignore`/`.gitignore` — secret variants excluded, `.env.example` still tracked.\n- `tests/test_agent_reads.py` — 8 acceptance tests. `docs/API_CONTRACT.md` — exact examples for all three endpoints + access analysis. `hackathon.md` — commands/results entry.\n\n## Checks\n- New reads file: **8 passed** (lists/filters/pagination/summary, list/detail agreement, escalation-without-state, inventory before/during/after finalize with hold semantics intact, read-only repeats incl. zero model calls, sanitization, readiness + 403/CORS basics, OpenAPI coverage, entrypoint exit-code propagation under Git bash).\n- Full suite: **144 passed, 1 skipped**, locked env.\n- Two real bugs caught by the new tests and fixed same session: broken page cursors, and the WSL `bash` stub.\n\n## Unresolved blockers / explicitly unverified\n1. **`docker build` unverified** — CLI present (29.6.2) but daemon not running. Dockerfile/entrypoint changes are untested in a real image.\n2. **TERM/INT path untested here** — POSIX-only; skipped on win32 by platform check. Exit-code propagation *is* proven.\n3. **Access is analysis-only** — no auth/rate-limiting implemented; public paid intake must still wait for the platform gate decision.\n4. Contract examples are published for frontend sign-off but Joshua/Chidi haven't confirmed them yet.",
+          "time": {
+            "start": 1791735816650,
+            "end": 1791735821669
+          },
+          "metadata": {
+            "openai": {
+              "itemId": "msg_01a12bc6ddf37101a45c72f078855af4"
+            }
+          },
+          "id": "prt_12bc6e1ca001nKHNUmWT5isy4A",
+          "sessionID": "ses_ed569feb0ffeaCknMBs6Ds0aAs",
+          "messageID": "msg_12bc6a265001bRictM26WMYR6s"
+        },
+        {
+          "reason": "stop",
+          "snapshot": "",
+          "type": "step-finish",
+          "tokens": {
+            "total": 431512,
+            "input": 564,
+            "output": 499,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 430449
+            }
+          },
+          "cost": 0,
+          "id": "prt_12bc6f7b5001igXpBEbKzjkvAW",
+          "sessionID": "ses_ed569feb0ffeaCknMBs6Ds0aAs",
+          "messageID": "msg_12bc6a265001bRictM26WMYR6s"
         }
       ]
     }
