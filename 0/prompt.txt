@@ -1,1 +1,22 @@
-Continue
+Close only the LiteLLM/ChatOpenAI telemetry gap. No queue redesign,
+prompt tuning, paid calls or full benchmark.
+
+1. Inspect the locked neatlogs SDK’s documented support for the actual
+   ChatOpenAI/OpenAI-compatible client used by SwapDesk.
+
+2. Instrument that provider path using supported SDK APIs. If automatic
+   capture is unsupported, use documented explicit model spans around
+   each generation, recording sanitized input/output, model, latency,
+   returned usage and errors.
+
+   Count each generation once. Missing usage/cost is unknown, never zero.
+   requests_spent remains a separate client-side request count.
+
+3. Verify offline with a fake provider response through the same adapter.
+   Confirm model evidence is emitted, usage is preserved when supplied,
+   errors are recorded, and secrets are excluded.
+   Keep the worker init/finally-flush fix.
+
+4. Return the focused diff, test result and exact command/budget for ONE
+   live eligible-exchange smoke test. Stop before paid execution.
+   No push unless explicitly instructed.

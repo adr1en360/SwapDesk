@@ -20,17 +20,17 @@
     },
     "cost": 0,
     "tokens": {
-      "input": 387151,
-      "output": 99204,
-      "reasoning": 58973,
+      "input": 389127,
+      "output": 100426,
+      "reasoning": 59035,
       "cache": {
-        "read": 56507031,
+        "read": 57804763,
         "write": 0
       }
     },
     "time": {
       "created": 1791715836239,
-      "updated": 1791723650781
+      "updated": 1791723703804
     }
   },
   "messages": [
@@ -32289,19 +32289,22 @@
         },
         "cost": 0,
         "tokens": {
-          "input": 0,
-          "output": 0,
+          "total": 324484,
+          "input": 634,
+          "output": 153,
           "reasoning": 0,
           "cache": {
-            "read": 0,
-            "write": 0
+            "write": 0,
+            "read": 323697
           }
         },
         "modelID": "muse-spark-1.3-contributor-free",
         "providerID": "opencode",
         "time": {
-          "created": 1791723650777
+          "created": 1791723650777,
+          "completed": 1791723677043
         },
+        "finish": "tool-calls",
         "id": "msg_12b0d3ed9001LfaDpQcBg0FLU6",
         "sessionID": "ses_ed569feb0ffeaCknMBs6Ds0aAs"
       },
@@ -32318,16 +32321,21 @@
           "tool": "bash",
           "callID": "call_01a12b0d663a7378aa1f8f8de1f1244e",
           "state": {
-            "metadata": {
-              "output": "warning: in the working copy of 'docs/LIVE_REHEARSAL.md', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'src/swapdesk/telemetry.py', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'src/swapdesk/agent/model_spans.py', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'tests/test_model_spans.py', LF will be replaced by CRLF the next time Git touches it\nM  docs/LIVE_REHEARSAL.md\nM  hackathon.md\nM  src/swapdesk/agent/graph.py\nA  src/swapdesk/agent/model_spans.py\nM  src/swapdesk/telemetry.py\nA  tests/test_model_spans.py\n"
-            },
-            "status": "running",
+            "status": "completed",
             "input": {
               "command": "git add src/swapdesk/agent/model_spans.py src/swapdesk/agent/graph.py src/swapdesk/telemetry.py tests/test_model_spans.py docs/LIVE_REHEARSAL.md hackathon.md; git status --short; git commit -m \"Emit explicit model spans on LiteLLM proxy path\" 2>&1 | head -n 3; git log --oneline -2; git status --short --branch; git rev-parse HEAD",
               "timeout": 60000
             },
+            "output": "warning: in the working copy of 'docs/LIVE_REHEARSAL.md', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'src/swapdesk/telemetry.py', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'src/swapdesk/agent/model_spans.py', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'tests/test_model_spans.py', LF will be replaced by CRLF the next time Git touches it\nM  docs/LIVE_REHEARSAL.md\nM  hackathon.md\nM  src/swapdesk/agent/graph.py\nA  src/swapdesk/agent/model_spans.py\nM  src/swapdesk/telemetry.py\nA  tests/test_model_spans.py\n[main d2518e9] Emit explicit model spans on LiteLLM proxy path\r\n 6 files changed, 422 insertions(+), 4 deletions(-)\r\n create mode 100644 src/swapdesk/agent/model_spans.py\r\nd2518e9 Emit explicit model spans on LiteLLM proxy path\n22a1059 Persist request counts, flush telemetry on every worker path\n## main...origin/main [ahead 1]\nd2518e959f647129cd089bdb2a581269c423081c\n",
+            "metadata": {
+              "output": "warning: in the working copy of 'docs/LIVE_REHEARSAL.md', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'src/swapdesk/telemetry.py', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'src/swapdesk/agent/model_spans.py', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'tests/test_model_spans.py', LF will be replaced by CRLF the next time Git touches it\nM  docs/LIVE_REHEARSAL.md\nM  hackathon.md\nM  src/swapdesk/agent/graph.py\nA  src/swapdesk/agent/model_spans.py\nM  src/swapdesk/telemetry.py\nA  tests/test_model_spans.py\n[main d2518e9] Emit explicit model spans on LiteLLM proxy path\r\n 6 files changed, 422 insertions(+), 4 deletions(-)\r\n create mode 100644 src/swapdesk/agent/model_spans.py\r\nd2518e9 Emit explicit model spans on LiteLLM proxy path\n22a1059 Persist request counts, flush telemetry on every worker path\n## main...origin/main [ahead 1]\nd2518e959f647129cd089bdb2a581269c423081c\n",
+              "exit": 0,
+              "truncated": false
+            },
+            "title": "git add src/swapdesk/agent/model_spans.py src/swapdesk/agent/graph.py src/swapdesk/telemetry.py tests/test_model_spans.py docs/LIVE_REHEARSAL.md hackathon.md; git status --short; git commit -m \"Emit explicit model spans on LiteLLM proxy path\" 2>&1 | head -n 3; git log --oneline -2; git status --short --branch; git rev-parse HEAD",
             "time": {
-              "start": 1791723661235
+              "start": 1791723661235,
+              "end": 1791723676660
             }
           },
           "metadata": {
@@ -32338,6 +32346,343 @@
           "id": "prt_12b0d67ab001E9OzhfkrUmMiiK",
           "sessionID": "ses_ed569feb0ffeaCknMBs6Ds0aAs",
           "messageID": "msg_12b0d3ed9001LfaDpQcBg0FLU6"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "",
+          "type": "step-finish",
+          "tokens": {
+            "total": 324484,
+            "input": 634,
+            "output": 153,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 323697
+            }
+          },
+          "cost": 0,
+          "id": "prt_12b0da56b001eL14mURXorvkGp",
+          "sessionID": "ses_ed569feb0ffeaCknMBs6Ds0aAs",
+          "messageID": "msg_12b0d3ed9001LfaDpQcBg0FLU6"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_12b047e7d001kA6pskLbT1SX9l",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "variant": "xhigh",
+        "path": {
+          "cwd": "C:\\Users\\DELL\\Documents\\SwapDesk",
+          "root": "C:\\Users\\DELL\\Documents\\SwapDesk"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 324956,
+          "input": 588,
+          "output": 97,
+          "reasoning": 62,
+          "cache": {
+            "write": 0,
+            "read": 324209
+          }
+        },
+        "modelID": "muse-spark-1.3-contributor-free",
+        "providerID": "opencode",
+        "time": {
+          "created": 1791723677092,
+          "completed": 1791723692449
+        },
+        "finish": "tool-calls",
+        "id": "msg_12b0da5a4001o9Njgk8orDqccz",
+        "sessionID": "ses_ed569feb0ffeaCknMBs6Ds0aAs"
+      },
+      "parts": [
+        {
+          "snapshot": "",
+          "type": "step-start",
+          "id": "prt_12b0dd110001rYC78Q7dTc7mlO",
+          "sessionID": "ses_ed569feb0ffeaCknMBs6Ds0aAs",
+          "messageID": "msg_12b0da5a4001o9Njgk8orDqccz"
+        },
+        {
+          "type": "reasoning",
+          "text": "",
+          "time": {
+            "start": 1791723688211,
+            "end": 1791723688215
+          },
+          "metadata": {
+            "openai": {
+              "itemId": "rs_6acb88a8267a8c45b2774054:rs_01a12b0dd1647425ad9f5bae0875a148",
+              "reasoningEncryptedContent": "REDACTED"
+            }
+          },
+          "id": "prt_12b0dd113001JJdcWn3iy77m5r",
+          "sessionID": "ses_ed569feb0ffeaCknMBs6Ds0aAs",
+          "messageID": "msg_12b0da5a4001o9Njgk8orDqccz"
+        },
+        {
+          "type": "tool",
+          "tool": "bash",
+          "callID": "call_01a12b0dd261737fbb92d83ff0d94dd2",
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "entire checkpoint list --session ses_ed569feb0ffeaCknMBs6Ds0aAs 2>&1 | head -n 10",
+              "timeout": 60000
+            },
+            "output": "  branch       main\r\n  session      ses_ed569feb0ffeaCknMBs6Ds0aAs\r\n  checkpoints  4\r\n\r\n??? 01M4NGTTZCBH7HS10VZY6ARHW4  \"Continue\"\r\n  10-11 14:01 (d2518e9) Emit explicit model spans on LiteLLM proxy path\r\n\r\n??? 01M4NFX83K4F9NVNFFX6WX24Z6  \"Continue\"\r\n  10-11 13:44 (22a1059) Persist request counts, flush telemetry on every worker path\r\n\r\n",
+            "metadata": {
+              "output": "  branch       main\r\n  session      ses_ed569feb0ffeaCknMBs6Ds0aAs\r\n  checkpoints  4\r\n\r\n??? 01M4NGTTZCBH7HS10VZY6ARHW4  \"Continue\"\r\n  10-11 14:01 (d2518e9) Emit explicit model spans on LiteLLM proxy path\r\n\r\n??? 01M4NFX83K4F9NVNFFX6WX24Z6  \"Continue\"\r\n  10-11 13:44 (22a1059) Persist request counts, flush telemetry on every worker path\r\n\r\n",
+              "exit": 0,
+              "truncated": false
+            },
+            "title": "entire checkpoint list --session ses_ed569feb0ffeaCknMBs6Ds0aAs 2>&1 | head -n 10",
+            "time": {
+              "start": 1791723688232,
+              "end": 1791723692192
+            }
+          },
+          "metadata": {
+            "openai": {
+              "itemId": "fc_01a12b0dd261737fbb92d83ff0d94dd2"
+            }
+          },
+          "id": "prt_12b0dd11d001MZcW8C1vo65fkD",
+          "sessionID": "ses_ed569feb0ffeaCknMBs6Ds0aAs",
+          "messageID": "msg_12b0da5a4001o9Njgk8orDqccz"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "",
+          "type": "step-finish",
+          "tokens": {
+            "total": 324956,
+            "input": 588,
+            "output": 97,
+            "reasoning": 62,
+            "cache": {
+              "write": 0,
+              "read": 324209
+            }
+          },
+          "cost": 0,
+          "id": "prt_12b0de19b001nXAv3FIePCYOJ9",
+          "sessionID": "ses_ed569feb0ffeaCknMBs6Ds0aAs",
+          "messageID": "msg_12b0da5a4001o9Njgk8orDqccz"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_12b047e7d001kA6pskLbT1SX9l",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "variant": "xhigh",
+        "path": {
+          "cwd": "C:\\Users\\DELL\\Documents\\SwapDesk",
+          "root": "C:\\Users\\DELL\\Documents\\SwapDesk"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 325286,
+          "input": 393,
+          "output": 172,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 324721
+          }
+        },
+        "modelID": "muse-spark-1.3-contributor-free",
+        "providerID": "opencode",
+        "time": {
+          "created": 1791723692480,
+          "completed": 1791723703754
+        },
+        "finish": "tool-calls",
+        "id": "msg_12b0de1c0001Gs4ETHGytzW5rE",
+        "sessionID": "ses_ed569feb0ffeaCknMBs6Ds0aAs"
+      },
+      "parts": [
+        {
+          "snapshot": "",
+          "type": "step-start",
+          "id": "prt_12b0e0c05001BbdBcMB7xDgyuD",
+          "sessionID": "ses_ed569feb0ffeaCknMBs6Ds0aAs",
+          "messageID": "msg_12b0de1c0001Gs4ETHGytzW5rE"
+        },
+        {
+          "type": "tool",
+          "tool": "todowrite",
+          "callID": "call_01a12b0e0d8472ddbf32c291376aeb22",
+          "state": {
+            "status": "completed",
+            "input": {
+              "todos": [
+                {
+                  "content": "Inspect locked SDK support for ChatOpenAI/OpenAI-compatible path",
+                  "status": "completed",
+                  "priority": "high"
+                },
+                {
+                  "content": "Instrument provider path (auto or explicit spans, once-counted, unknown-not-zero)",
+                  "status": "completed",
+                  "priority": "high"
+                },
+                {
+                  "content": "Verify offline with fake provider response through same adapter",
+                  "status": "completed",
+                  "priority": "high"
+                },
+                {
+                  "content": "Return diff, tests, one-case live smoke command/budget; no push, no paid calls",
+                  "status": "completed",
+                  "priority": "high"
+                }
+              ]
+            },
+            "output": "[\n  {\n    \"content\": \"Inspect locked SDK support for ChatOpenAI/OpenAI-compatible path\",\n    \"status\": \"completed\",\n    \"priority\": \"high\"\n  },\n  {\n    \"content\": \"Instrument provider path (auto or explicit spans, once-counted, unknown-not-zero)\",\n    \"status\": \"completed\",\n    \"priority\": \"high\"\n  },\n  {\n    \"content\": \"Verify offline with fake provider response through same adapter\",\n    \"status\": \"completed\",\n    \"priority\": \"high\"\n  },\n  {\n    \"content\": \"Return diff, tests, one-case live smoke command/budget; no push, no paid calls\",\n    \"status\": \"completed\",\n    \"priority\": \"high\"\n  }\n]",
+            "metadata": {
+              "todos": [
+                {
+                  "content": "Inspect locked SDK support for ChatOpenAI/OpenAI-compatible path",
+                  "status": "completed",
+                  "priority": "high"
+                },
+                {
+                  "content": "Instrument provider path (auto or explicit spans, once-counted, unknown-not-zero)",
+                  "status": "completed",
+                  "priority": "high"
+                },
+                {
+                  "content": "Verify offline with fake provider response through same adapter",
+                  "status": "completed",
+                  "priority": "high"
+                },
+                {
+                  "content": "Return diff, tests, one-case live smoke command/budget; no push, no paid calls",
+                  "status": "completed",
+                  "priority": "high"
+                }
+              ],
+              "truncated": false
+            },
+            "title": "0 todos",
+            "time": {
+              "start": 1791723703412,
+              "end": 1791723703417
+            }
+          },
+          "metadata": {
+            "openai": {
+              "itemId": "fc_01a12b0e0d8472ddbf32c291376aeb22"
+            }
+          },
+          "id": "prt_12b0e0c07001nvRrGCDAoqqVr6",
+          "sessionID": "ses_ed569feb0ffeaCknMBs6Ds0aAs",
+          "messageID": "msg_12b0de1c0001Gs4ETHGytzW5rE"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "",
+          "type": "step-finish",
+          "tokens": {
+            "total": 325286,
+            "input": 393,
+            "output": 172,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 324721
+            }
+          },
+          "cost": 0,
+          "id": "prt_12b0e0dc4001qVvQ6L0yjIJQ1u",
+          "sessionID": "ses_ed569feb0ffeaCknMBs6Ds0aAs",
+          "messageID": "msg_12b0de1c0001Gs4ETHGytzW5rE"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_12b047e7d001kA6pskLbT1SX9l",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "variant": "xhigh",
+        "path": {
+          "cwd": "C:\\Users\\DELL\\Documents\\SwapDesk",
+          "root": "C:\\Users\\DELL\\Documents\\SwapDesk"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 326266,
+          "input": 361,
+          "output": 800,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 325105
+          }
+        },
+        "modelID": "muse-spark-1.3-contributor-free",
+        "providerID": "opencode",
+        "time": {
+          "created": 1791723703784,
+          "completed": 1791723715566
+        },
+        "finish": "stop",
+        "id": "msg_12b0e0de80016b86OgL2t31X7W",
+        "sessionID": "ses_ed569feb0ffeaCknMBs6Ds0aAs"
+      },
+      "parts": [
+        {
+          "snapshot": "",
+          "type": "step-start",
+          "id": "prt_12b0e344d001bGZplkZnLauuMe",
+          "sessionID": "ses_ed569feb0ffeaCknMBs6Ds0aAs",
+          "messageID": "msg_12b0e0de80016b86OgL2t31X7W"
+        },
+        {
+          "type": "text",
+          "text": "Telemetry gap closed. No paid calls, no push. Commit `d2518e9` (Entire checkpoint `01M4NGTT…`), tree clean.\n\n## 1. SDK audit finding\n\n`neatlogs.wrap()` (1.4.26) dispatches on concrete class/module names: raw `OpenAI`/`AsyncOpenAI` only — no LangChain chat-model branch. Our old `ChatOpenAI` fell into the generic `\"openai\" in module` branch, whose patches target `chat.completions.create`-style calls that langchain never makes — a silent no-op. That is exactly why the boot-check trace recorded `llm_calls: 0`. Auto-capture is **unsupported** on this path, so explicit spans are the documented fallback (`neatlogs.trace(name, kind=..., **attrs)` + span attributes).\n\n## 2. Instrumentation (focused diff, 4 files + 2 docs)\n\n- **New `src/swapdesk/agent/model_spans.py`** — `InstrumentedChatOpenAI(ChatOpenAI)` overrides `_generate`/`_agenerate`/`_stream`/`_astream`, each emitting **one** explicit span (`kind=\"LLM\"`, `openinference.span.kind` naming) with model id, sanitized input/output (credential-pattern scrub + 4k cap), latency, returned usage mapped to `llm.token_count.*` **only when present** (absent = omitted = unknown, never zero), and error-type + ERROR status with re-raise. Production behavior inherited untouched.\n- **`graph.py`** — LiteLLM branch of `build_model` returns the instrumented subclass (same args; still `isinstance ChatOpenAI`, `max_retries=0`). Gemini path untouched.\n- **`telemetry.py`** — `maybe_wrap_provider` returns wrap-unmatched subclasses unwrapped instead of raising (explicit spans are the single counting point). `requests_spent` remains the separate client-side count; worker flush fix kept.\n- Docs: rehearsal plan gap note updated; `hackathon.md` entry.\n\n## 3. Offline verification\n\n`tests/test_model_spans.py` — **7 passed** (~2s, no network): real wrapper code with stubbed HTTP layer proves one-span-per-generation with preserved usage, unknown-not-zero omission, error record + re-raise, secret scrubbing, single streaming span, client construction, and real-SDK acceptance of the span shape. Full suite: **134 passed, 1 skipped**. One honest regression caught and fixed same session (`wrap()` name-matching `TypeError`).\n\n## 4. ONE live smoke test (stopping here — approval needed to run)\n\nEligible exchange only (case A shape), isolated DB:\n```powershell\n$R=\"$env:TEMP\\swapdesk-rehearsal\"; New-Item -ItemType Directory -Force \"$R\\out\" | Out-Null\n$env:SWAPDESK_DB=\"$R\\smoke.db\"; $env:SWAPDESK_AGENT_BUDGET=\"12\"; $env:SWAPDESK_RUN_TIMEOUT_S=\"300\"\n# API on :8000, then:\n# POST /v1/agent/tickets {\"message\":\"Please exchange ITEM-01 on order ORD-1001 for size 42\",\"order_id\":\"ORD-1001\",\"order_item_id\":\"ITEM-01\",\"size\":\"42\",\"case_id\":\"SMOKE-1\"}\n# uv run python -m swapdesk.worker --once\n# GET status + timeline → $R\\out\\; search_traces SMOKE-1 → get_trace_context\n```\nBudget: ≤12 requests (hard client cap) + ≤1 in-flight at timeout; ~$0.05 estimated at public Haiku rates ($1/$5 per MTok) — estimate, not maximum; no tokens capped; proxy billing governs.",
+          "time": {
+            "start": 1791723713617,
+            "end": 1791723715170
+          },
+          "metadata": {
+            "openai": {
+              "itemId": "msg_01a12b0e33c9769789465a74da6881ab"
+            }
+          },
+          "id": "prt_12b0e3450001DZbL3hsceMEOSV",
+          "sessionID": "ses_ed569feb0ffeaCknMBs6Ds0aAs",
+          "messageID": "msg_12b0e0de80016b86OgL2t31X7W"
+        },
+        {
+          "reason": "stop",
+          "snapshot": "",
+          "type": "step-finish",
+          "tokens": {
+            "total": 326266,
+            "input": 361,
+            "output": 800,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 325105
+            }
+          },
+          "cost": 0,
+          "id": "prt_12b0e3be80018oQBIp9eiOVCpo",
+          "sessionID": "ses_ed569feb0ffeaCknMBs6Ds0aAs",
+          "messageID": "msg_12b0e0de80016b86OgL2t31X7W"
         }
       ]
     }
