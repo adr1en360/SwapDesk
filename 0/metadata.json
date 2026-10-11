@@ -1,0 +1,60 @@
+{
+  "cli_version": "0.11.4",
+  "checkpoint_id": "01M4NBQX7XYF8E2TST047YQ18W",
+  "session_id": "ses_ed569feb0ffeaCknMBs6Ds0aAs",
+  "strategy": "manual-commit",
+  "created_at": "2026-10-11T11:32:12.9797603Z",
+  "branch": "feat/agent-queue-reconciled",
+  "checkpoints_count": 2,
+  "files_touched": [
+    "README.md",
+    "docs/API_CONTRACT.md",
+    "hackathon.md",
+    "src/swapdesk/agent/graph.py",
+    "src/swapdesk/agent/request_budget.py",
+    "src/swapdesk/agent/tools.py",
+    "src/swapdesk/api.py",
+    "src/swapdesk/queue.py",
+    "src/swapdesk/service.py",
+    "src/swapdesk/worker.py",
+    "tests/test_agent_queue.py",
+    "tests/test_api.py"
+  ],
+  "agent": "OpenCode",
+  "model": "muse-spark-1.3-contributor-free",
+  "turn_id": "de4b0cdf90b1",
+  "checkpoint_transcript_start": 79,
+  "transcript_lines_at_start": 79,
+  "compact_transcript_start": 79,
+  "token_usage": {
+    "input_tokens": 67335,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 12245229,
+    "output_tokens": 32401,
+    "api_call_count": 62
+  },
+  "session_metrics": {
+    "turn_count": 3
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-10-11T11:32:12.8447386Z",
+    "agent_lines": 0,
+    "agent_removed": 0,
+    "human_added": 853,
+    "human_modified": 510,
+    "human_removed": 0,
+    "total_committed": 853,
+    "total_lines_changed": 1363,
+    "agent_percentage": 0,
+    "metric_version": 2
+  },
+  "prompt_attributions": [
+    {
+      "checkpoint_number": 1,
+      "user_lines_added": 0,
+      "user_lines_removed": 0,
+      "agent_lines_added": 0,
+      "agent_lines_removed": 0
+    }
+  ]
+}
