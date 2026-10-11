@@ -19,17 +19,17 @@
     },
     "cost": 0,
     "tokens": {
-      "input": 9183,
-      "output": 549,
-      "reasoning": 788,
+      "input": 10085,
+      "output": 671,
+      "reasoning": 877,
       "cache": {
-        "read": 57472,
+        "read": 79104,
         "write": 0
       }
     },
     "time": {
       "created": 1791700257555,
-      "updated": 1791700519214
+      "updated": 1791700538194
     }
   },
   "messages": [
@@ -847,19 +847,22 @@
         },
         "cost": 0,
         "tokens": {
-          "input": 0,
-          "output": 0,
-          "reasoning": 0,
+          "total": 11282,
+          "input": 642,
+          "output": 55,
+          "reasoning": 89,
           "cache": {
-            "read": 0,
-            "write": 0
+            "write": 0,
+            "read": 10496
           }
         },
         "modelID": "big-pickle",
         "providerID": "opencode",
         "time": {
-          "created": 1791700519211
+          "created": 1791700519211,
+          "completed": 1791700538173
         },
+        "finish": "tool-calls",
         "id": "msg_129ac492b001UVLDaQ6wlhsmoG",
         "sessionID": "ses_ed657b4edffeC1aP1exexqOF40"
       },
@@ -887,20 +890,115 @@
           "tool": "bash",
           "callID": "call_00_hdkv7uqfv2cz1f58oxcsbkwa",
           "state": {
-            "metadata": {
-              "output": ""
-            },
-            "status": "running",
+            "status": "completed",
             "input": {
               "command": "git commit --allow-empty -m \"test commit\"; git log -1 --format=full"
             },
+            "output": "[main 0e1d3b6] test commit\ncommit 0e1d3b6b4db707a672eff765164b7a8a8a0861d3\nAuthor: chidiituma <chidimathayas@gmail.com>\nCommit: chidiituma <chidimathayas@gmail.com>\n\n    test commit\n    \n    Entire-Checkpoint: 01M4MTRNSJPVDMRWK74GDH3X8S\n",
+            "metadata": {
+              "output": "[main 0e1d3b6] test commit\ncommit 0e1d3b6b4db707a672eff765164b7a8a8a0861d3\nAuthor: chidiituma <chidimathayas@gmail.com>\nCommit: chidiituma <chidimathayas@gmail.com>\n\n    test commit\n    \n    Entire-Checkpoint: 01M4MTRNSJPVDMRWK74GDH3X8S\n",
+              "exit": 0,
+              "truncated": false
+            },
+            "title": "git commit --allow-empty -m \"test commit\"; git log -1 --format=full",
             "time": {
-              "start": 1791700521696
+              "start": 1791700521696,
+              "end": 1791700537342
             }
           },
           "id": "prt_129ac5221001bXqoaevb2l2foy",
           "sessionID": "ses_ed657b4edffeC1aP1exexqOF40",
           "messageID": "msg_129ac492b001UVLDaQ6wlhsmoG"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "4dca107d393405bc1764762c87c20ce5f745c0a8",
+          "type": "step-finish",
+          "tokens": {
+            "total": 11282,
+            "input": 642,
+            "output": 55,
+            "reasoning": 89,
+            "cache": {
+              "write": 0,
+              "read": 10496
+            }
+          },
+          "cost": 0,
+          "id": "prt_129ac91f0001KSlvD3MYjIbKPk",
+          "sessionID": "ses_ed657b4edffeC1aP1exexqOF40",
+          "messageID": "msg_129ac492b001UVLDaQ6wlhsmoG"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_129abcafb001QzT5ZIJeN29j03",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "C:\\Users\\Chidi Mathaias\\Desktop\\SwapDesk-1",
+          "root": "C:\\Users\\Chidi Mathaias\\Desktop\\SwapDesk-1"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 11463,
+          "input": 260,
+          "output": 67,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 11136
+          }
+        },
+        "modelID": "big-pickle",
+        "providerID": "opencode",
+        "time": {
+          "created": 1791700538179,
+          "completed": 1791700541542
+        },
+        "finish": "stop",
+        "id": "msg_129ac93430014WADOiQIaxmdSI",
+        "sessionID": "ses_ed657b4edffeC1aP1exexqOF40"
+      },
+      "parts": [
+        {
+          "snapshot": "4dca107d393405bc1764762c87c20ce5f745c0a8",
+          "type": "step-start",
+          "id": "prt_129ac9bf1001Nqqf4HOYASX51b",
+          "sessionID": "ses_ed657b4edffeC1aP1exexqOF40",
+          "messageID": "msg_129ac93430014WADOiQIaxmdSI"
+        },
+        {
+          "type": "text",
+          "text": "Done. Created `.entire/settings.local.json` with `\"commit_linking\": \"always\"` and made the test commit `0e1d3b6`, which got linked with `Entire-Checkpoint: 01M4MTRNSJPVDMRWK74GDH3X8S`.",
+          "time": {
+            "start": 1791700540410,
+            "end": 1791700540846
+          },
+          "id": "prt_129ac9bfa001JrZMs5Nb0M7hC7",
+          "sessionID": "ses_ed657b4edffeC1aP1exexqOF40",
+          "messageID": "msg_129ac93430014WADOiQIaxmdSI"
+        },
+        {
+          "reason": "stop",
+          "snapshot": "4dca107d393405bc1764762c87c20ce5f745c0a8",
+          "type": "step-finish",
+          "tokens": {
+            "total": 11463,
+            "input": 260,
+            "output": 67,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 11136
+            }
+          },
+          "cost": 0,
+          "id": "prt_129ac9f32001HXlR4Jh1kBhn4Q",
+          "sessionID": "ses_ed657b4edffeC1aP1exexqOF40",
+          "messageID": "msg_129ac93430014WADOiQIaxmdSI"
         }
       ]
     }
