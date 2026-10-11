@@ -1,0 +1,1 @@
+create .entire/settings.local.json with "commit_linking": "always" and make the test commit.
