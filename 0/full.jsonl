@@ -20,17 +20,17 @@
     },
     "cost": 0,
     "tokens": {
-      "input": 822891,
-      "output": 124988,
-      "reasoning": 75906,
+      "input": 823397,
+      "output": 125323,
+      "reasoning": 75928,
       "cache": {
-        "read": 92848895,
+        "read": 93616481,
         "write": 0
       }
     },
     "time": {
       "created": 1791715836239,
-      "updated": 1791732337611
+      "updated": 1791732369770
     }
   },
   "messages": [
@@ -44071,19 +44071,22 @@
         },
         "cost": 0,
         "tokens": {
-          "input": 0,
-          "output": 0,
-          "reasoning": 0,
+          "total": 384076,
+          "input": 201,
+          "output": 124,
+          "reasoning": 22,
           "cache": {
-            "read": 0,
-            "write": 0
+            "write": 0,
+            "read": 383729
           }
         },
         "modelID": "muse-spark-1.3-contributor-free",
         "providerID": "opencode",
         "time": {
-          "created": 1791732337595
+          "created": 1791732337595,
+          "completed": 1791732369703
         },
+        "finish": "tool-calls",
         "id": "msg_12b91cbbb001AsgoMMR7q40GWi",
         "sessionID": "ses_ed569feb0ffeaCknMBs6Ds0aAs"
       },
@@ -44117,13 +44120,21 @@
           "tool": "bash",
           "callID": "call_01a12b9203667672863e8080f50b246f",
           "state": {
-            "status": "running",
+            "status": "completed",
             "input": {
               "command": "git add src/swapdesk/queue.py tests/test_agent_queue.py; git commit -m \"Report run outcome when agent writes no business state\" 2>&1 | head -n 3; git log --oneline -1; git status --short --branch; echo CLEAN",
               "timeout": 60000
             },
+            "output": "[main 0d8c55a] Report run outcome when agent writes no business state\r\n 2 files changed, 20 insertions(+), 1 deletion(-)\r\n0d8c55a Report run outcome when agent writes no business state\n## main...origin/main [ahead 1]\nCLEAN\r\n",
+            "metadata": {
+              "output": "[main 0d8c55a] Report run outcome when agent writes no business state\r\n 2 files changed, 20 insertions(+), 1 deletion(-)\r\n0d8c55a Report run outcome when agent writes no business state\n## main...origin/main [ahead 1]\nCLEAN\r\n",
+              "exit": 0,
+              "truncated": false
+            },
+            "title": "git add src/swapdesk/queue.py tests/test_agent_queue.py; git commit -m \"Report run outcome when agent writes no business state\" 2>&1 | head -n 3; git log --oneline -1; git status --short --branch; echo CLEAN",
             "time": {
-              "start": 1791732351828
+              "start": 1791732351828,
+              "end": 1791732369368
             }
           },
           "metadata": {
@@ -44134,6 +44145,102 @@
           "id": "prt_12b92034c001dupNNxhJr2rKJb",
           "sessionID": "ses_ed569feb0ffeaCknMBs6Ds0aAs",
           "messageID": "msg_12b91cbbb001AsgoMMR7q40GWi"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "",
+          "type": "step-finish",
+          "tokens": {
+            "total": 384076,
+            "input": 201,
+            "output": 124,
+            "reasoning": 22,
+            "cache": {
+              "write": 0,
+              "read": 383729
+            }
+          },
+          "cost": 0,
+          "id": "prt_12b92491d001FqMIKnV8vHIXta",
+          "sessionID": "ses_ed569feb0ffeaCknMBs6Ds0aAs",
+          "messageID": "msg_12b91cbbb001AsgoMMR7q40GWi"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_12b908bd1001AlbpP36MsskHMW",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "variant": "xhigh",
+        "path": {
+          "cwd": "C:\\Users\\DELL\\Documents\\SwapDesk",
+          "root": "C:\\Users\\DELL\\Documents\\SwapDesk"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 384373,
+          "input": 305,
+          "output": 211,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 383857
+          }
+        },
+        "modelID": "muse-spark-1.3-contributor-free",
+        "providerID": "opencode",
+        "time": {
+          "created": 1791732369764,
+          "completed": 1791732381022
+        },
+        "finish": "stop",
+        "id": "msg_12b924964001rPI4XRSQHFChRz",
+        "sessionID": "ses_ed569feb0ffeaCknMBs6Ds0aAs"
+      },
+      "parts": [
+        {
+          "snapshot": "",
+          "type": "step-start",
+          "id": "prt_12b9273680015nwRSD0uwXmvHo",
+          "sessionID": "ses_ed569feb0ffeaCknMBs6Ds0aAs",
+          "messageID": "msg_12b924964001rPI4XRSQHFChRz"
+        },
+        {
+          "type": "text",
+          "text": "Done. The plan was:\n\n1. **Root cause** — status built its answer *only* from the business `cases` table. A run that writes nothing leaves no case row, so status said `null` while the run record said `escalation`. Two sources of truth disagreeing.\n2. **Fix (1 line of logic)** — when no business state exists, fall back to the run's own stored outcome/reply. Queued/running reads are unaffected (their stored outcome is still null until completion).\n3. **Proof** — new offline regression test replays a stalled run (one model call, zero writes, scripted, zero cost) and asserts status now reports the escalation instead of nulls.\n4. **Verified** — 30 passed across the queue + API suites. Committed locally as `0d8c55a`, tree clean, **not pushed**.\n\nNet effect: status can no longer contradict the run record, in exactly the edge your vague-ticket test exposed.",
+          "time": {
+            "start": 1791732380524,
+            "end": 1791732380560
+          },
+          "metadata": {
+            "openai": {
+              "itemId": "msg_01a12b9270c972fc936c80f102ce8fce"
+            }
+          },
+          "id": "prt_12b92736c001cqSC5yO19nTF7h",
+          "sessionID": "ses_ed569feb0ffeaCknMBs6Ds0aAs",
+          "messageID": "msg_12b924964001rPI4XRSQHFChRz"
+        },
+        {
+          "reason": "stop",
+          "snapshot": "",
+          "type": "step-finish",
+          "tokens": {
+            "total": 384373,
+            "input": 305,
+            "output": 211,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 383857
+            }
+          },
+          "cost": 0,
+          "id": "prt_12b927557001DAwGZPXbVmXkJA",
+          "sessionID": "ses_ed569feb0ffeaCknMBs6Ds0aAs",
+          "messageID": "msg_12b924964001rPI4XRSQHFChRz"
         }
       ]
     }
