@@ -252,12 +252,6 @@ Key runs, linked (screenshots committed in case links need a login):
 - State Definitions: When a ticket is marked as "arranged", it means the agent successfully verified state, reserved the replacement, created the return, and generated the label in the database. It does not imply physical fulfillment.
 - Benchmarking: Our benchmark scores (based on 30 synthetic test cases) are designed to validate the agent's logic within this isolated environment, rather than claiming enterprise production reliability.
 
-## Contributing
-
-- Backend owns `src/swapdesk/` and `tests/`. Frontend owns `frontend/`.
-- Keep tests deterministic; business logic stays callable without HTTP or a model.
-- Record each change in `hackathon.md` with the exact commands run and pass/fail counts.
-- Never commit `.env`, databases, or real customer data. `.env.example` carries key names only.
 
 ## License
 
