@@ -1,24 +1,30 @@
 # SwapDesk
 
-SwapDesk is an autonomous state-machine for e-commerce customer support. While our current demo uses a synthetic footwear brand as a proof-of-concept, the underlying architecture is vertical-agnostic. The agent independently verifies store policy and inventory, reserves replacements, processes returns, and generates shipping labels. Every request deterministically results in an arranged exchange, a request for clarification, a policy denial, or a human escalation.
+SwapDesk is an autonomous state-machine for e-commerce customer support. It launches with a synthetic footwear brand as a proof-of-concept, and the underlying architecture is vertical-agnostic. The agent independently verifies store policy and inventory, reserves replacements, processes returns, and generates shipping labels. Every request deterministically results in an arranged exchange, a request for clarification, a policy denial, or a human escalation.
 
-Demo Scope: Built for neatHack by a team of four, this MVP uses 100% synthetic data. No real payments, active shipments, or actual customer information are used in this demonstration.
+Scope: Built for neatHack by a team of four, this MVP uses 100% synthetic data. No real payments, active shipments, or actual customer information are used.
 
 ## Repository layout
 
 ```text
-frontend/          Next.js dashboard — standalone client-side demo (no backend required)
+frontend/          Next.js dashboard — live client for the agent backend
 src/swapdesk/      Python backend package — FastAPI, SQLite, LangGraph agent
 eval/              Frozen benchmark, deterministic checker, and run harness
 tests/             Deterministic pytest suite (no network, no model)
 docs/              Build plan, runbooks, evidence, and business deliverables
+langgraph.json     LangGraph Studio registry (offline + live assistants)
+Dockerfile         Backend image — API and queue worker sharing one SQLite DB
+docker-entrypoint.sh  Starts the API and worker together in one container
+render.yaml        Render blueprint (web service + persistent disk)
+studio_data/       Local Studio run databases (git-ignored scratch)
+.env.example       Environment key names (copy to .env; .env is never committed)
 hackathon.md       Incremental build log and team conventions
 ```
 
 ## The two halves
 
 - **Backend** (`src/swapdesk/`) — the agent runtime. Policy checks, atomic stock reservation, idempotent operations, an append-only action journal, a LangGraph tool-using agent, and a FastAPI surface for frontend integration. Deterministic and network-free to test.
-- **Frontend** (`frontend/`) — the ops dashboard (Mission Control, Inbox, Inventory, Integrations, Customer Simulation, ticket detail). It is a **self-contained client-side demo** powered by a mock store — it demos the SwapDesk experience without calling the live API. Its own README lives at [`frontend/README.md`](frontend/README.md).
+- **Frontend** (`frontend/`) — the ops dashboard (Mission Control, Inbox, Inventory, Integrations, Customer Simulation, ticket detail). It calls the live agent backend over HTTP (`POST /v1/agent/tickets`, status/timeline polling, continue) — its own README lives at [`frontend/README.md`](frontend/README.md).
 
 ## Store interface (swapping in a real shop)
 
@@ -30,14 +36,14 @@ Going live means reimplementing those operations functions against real store AP
 
 ## What was planned
 
-The build ran in order: tool setup and a test commit, then the mock shop and checker before the agent, then a first working version with a measured baseline. After that came injected failures, trace reading, fixes, and a re-run for before-and-after numbers, followed by the business plan, a demo screen, and repo cleanup, ending with the video. Full spec in [`docs/build-plan.md`](docs/build-plan.md) — a plan, not evidence of what happened. What actually happened lives in [`hackathon.md`](hackathon.md).
+The build ran in order: tool setup and a test commit, then the mock shop and checker before the agent, then a first working version with a measured baseline. After that came injected failures, trace reading, fixes, and a re-run for before-and-after numbers, followed by the business plan, a dashboard, and repo cleanup, ending with the video. Full spec in [`docs/build-plan.md`](docs/build-plan.md) — a plan, not evidence of what happened. What actually happened lives in [`hackathon.md`](hackathon.md).
 
 ---
 
 ## How the three required tools fit
 
 - **neatlogs** records every agent run: workflow and tool spans, latency, tokens, cost. Local capture works without a key; export needs `NEATLOGS_API_KEY`. Verify with `uv run python -m neatlogs doctor --local` and read back single traces with `trace get`. The agent can also query traces itself through the neatlogs MCP server.
-- **Entire** captures the context behind each commit (prompts, decisions, changes) as checkpoints. It does not prove correctness; the deterministic checker does that. Checkpoints are the paper trail for the demo's fix story.
+- **Entire** captures the context behind each commit (prompts, decisions, changes) as checkpoints. It does not prove correctness; the deterministic checker does that. Checkpoints are the paper trail for the fix story.
 - **cfo.ai** holds the pricing, cost, revenue, and runway model. All figures there are assumptions under test, not observed facts. See [`docs/business/`](docs/business/) and the assumptions section below.
 
 ---
@@ -50,7 +56,7 @@ The build ran in order: tool setup and a test commit, then the mock shop and che
 - One active exchange per order item, across cases.
 - Append-only action journal for every committed or duplicate-routed operation.
 - Full mock exchange lifecycle: reserve → return → label → arrange, plus hold release, cancel, escalation, cleanup recovery, and a read-only verification handoff.
-- Demo-only failure injection (`faults.py`) with same-key recovery.
+- Failure injection for rehearsals (`faults.py`) with same-key recovery.
 - A LangGraph tool-using agent (`langchain.agents.create_agent`, Gemini or a LiteLLM proxy): curated tools, bounded loop, budget-capped requests, file-backed checkpoints, database-derived outcomes, template replies.
 - neatlogs wiring (workflow/tool spans, local capture without a key, export with one).
 
@@ -91,7 +97,7 @@ in sync). Normative customer contract:
 | `GET /v1/agent/cases/{id}`             | Execution status + verified outcome when available (404 unknown) |
 | `GET /v1/agent/cases/{id}/timeline`    | Sanitized action/journal events with run ids (404 unknown) |
 | `POST /v1/agent/cases/{id}/continue`   | Queue a continuation run, or report terminal unchanged (404/409/422) |
-| `POST /v1/tickets`                     | Legacy deterministic demo path (201, benchmark use; frontend must not use it) |
+| `POST /v1/tickets`                     | Legacy deterministic path (201, benchmark use; frontend must not use it) |
 | `GET /v1/cases/{id}`                   | Legacy deterministic status (frontend must not use it)    |
 | `GET /v1/cases/{id}/timeline`          | Legacy deterministic timeline (frontend must not use it)  |
 | `POST /v1/cases/{id}/continue`         | Legacy deterministic continuation (frontend must not use it) |
@@ -106,12 +112,12 @@ outcome. `execution_status` (`queued`/`running`/`waiting_input`/
 `completed`/`failed`) is distinct from the business `outcome`
 (`arranged`/`clarification`/`denial`/`escalation`, null until a run
 completes). Malformed requests return 422, unknown cases 404,
-submission conflicts or concurrent runs 409, disabled demo controls
+submission conflicts or concurrent runs 409, disabled fault-injection controls
 403. A run is bounded by `SWAPDESK_AGENT_BUDGET` provider requests and
 `SWAPDESK_RUN_TIMEOUT_S` wall-clock seconds; failed runs are never
 retried automatically.
 
-`POST /v1/tickets` remains the legacy deterministic demo path used by
+`POST /v1/tickets` remains the legacy deterministic path used by
 benchmarks. The customer frontend must use `/v1/agent/*`. The agent
 route accepts optional structured order fields as request data; the
 customer message remains the primary input, and consent is recorded
@@ -174,7 +180,7 @@ Other scripts: `npm run build` (production build), `npm run start`, `npm run lin
 
 ### Pages flow
 
-| Route           | Page                | What it demos                                        |
+| Route           | Page                | What it does                                           |
 | --------------- | ------------------- | ---------------------------------------------------- |
 | `/`             | Mission Control     | Agent metrics + live execution queue                 |
 | `/inbox`        | Inbox               | Sample ticket stream                                 |
@@ -234,14 +240,14 @@ Key runs, linked (screenshots committed in case links need a login):
 - **A run hangs.** Agent executions are bounded by `SWAPDESK_AGENT_BUDGET` requests and `SWAPDESK_RUN_TIMEOUT_S` seconds, but an in-flight model call cannot be cancelled. Wait for the timeout to record failure; the case resumes cleanly and idempotency keys prevent double effects.
 - **A test needs symlinks and fails with error 1314.** Enable Windows Developer Mode or run the terminal as administrator.
 - **neatlogs shutdown log noise.** The SDK logs its own shutdown after stdout closes. Cosmetic; it changes no results.
-- **Ports.** API `8000`, Studio server `8123`, frontend `3000`. Pick one live path per demo (scripted Studio scenarios or API demo faults, not both).
+- **Ports.** API `8000`, Studio server `8123`, frontend `3000`. Pick one live fault path at a time (scripted Studio scenarios or API fault injection, not both).
 
 ## Limitations
 
 - Synthetic Environment: This MVP operates on a synthetic shoe-store database to prove our autonomous state-machine logic. While policies and tools are modular and swappable at the code level, this build uses simulated data with no live payments, real shipments, or active customer PII.
 - Security & Auth: API authentication is intentionally bypassed to allow judges seamless access to the local evaluation mock.
-- The frontend runs on a client-side mock store until Slice 5 wiring lands; dashboard numbers (e.g. completion rates) are simulated and labeled Demo Mode.
-- Metrics Integrity: Dashboard metrics (like completion rates) reflect simulated data and are explicitly labeled "Demo Mode" while we finalize backend API wiring.
+- The frontend reads live backend state: case lists, outcomes, and inventory come from the agent API, and the timeline shows journaled business actions as the worker commits them.
+- Metrics Integrity: dashboard metrics (like completion rates) come from the backend case list, so the displayed rate always agrees with list and detail.
 - Deterministic Logging: Our timeline only journals executed business actions. If an escalation legitimately requires no action (e.g., a return is out of policy), the timeline remains intentionally empty. This is a successful path, not missing data.
 - State Definitions: When a ticket is marked as "arranged", it means the agent successfully verified state, reserved the replacement, created the return, and generated the label in the database. It does not imply physical fulfillment.
 - Benchmarking: Our benchmark scores (based on 30 synthetic test cases) are designed to validate the agent's logic within this isolated environment, rather than claiming enterprise production reliability.

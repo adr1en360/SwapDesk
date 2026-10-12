@@ -64,6 +64,18 @@ def load_fixtures(conn: sqlite3.Connection) -> None:
     stock[("COURT-CLASSIC", "44")] = 2
     stock[("TRAIL-BEAST", "42")] = 1
     stock[("TRAIL-BEAST", "43")] = 0
+    # Display variety for the ops dashboard. Stock-only pools: no orders
+    # reference them, so benchmarks, eligibility, and per-pool tests are
+    # unaffected. Counts vary per size on purpose (including a sold-out
+    # pool) so the shelf reads like a real store.
+    for size, qty in (("40", 7), ("41", 4), ("42", 9), ("43", 3),
+                      ("44", 6), ("45", 2)):
+        stock[("STREET-FLYER", size)] = qty
+    for size, qty in (("40", 6), ("41", 6), ("42", 0), ("43", 5),
+                      ("44", 1), ("45", 4)):
+        stock[("HARBOR-LOAFER", size)] = qty
+    for size, qty in (("42", 3), ("43", 3), ("44", 3)):
+        stock[("SUMMIT-GTX", size)] = qty
     conn.executemany(
         "INSERT INTO stock (sku, size, on_hand, held) VALUES (?, ?, ?, 0)",
         [(sku, size, qty) for (sku, size), qty in sorted(stock.items())],

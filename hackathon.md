@@ -342,3 +342,12 @@ case_id/idempotency_key through).
 Verify: uv run pytest -q -> 146 passed, 1 skipped; offline loop repro ->
 RUN-1 clarification, RUN-2 escalation, further continue refused as
 terminal, thread preserved, verify-reads stable; npm run build clean.
+
+## Shelf + docs pass (Oct 12, pre-demo)
+
+Inventory page repeated one SKU per row on camera: added STREET-FLYER,
+HARBOR-LOAFER (sold-out 42 included), SUMMIT-GTX as stock-only pools
+(14 -> 29 rows). No orders reference them; suite stays 146 passed.
+READMEs rewritten to describe the live backend-wired dashboard and the
+full repo layout; demo-wording removed except literal /v1/demo route
+identifiers (renaming those is a code change, deferred).

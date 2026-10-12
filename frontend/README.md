@@ -2,7 +2,9 @@
 
 The frontend dashboard for **SwapDesk** — autonomous middleware between a e-commerce helpdesk and its commerce stack that resolves exchanges, returns, and refunds safely. It is an idempotent, policy-aware agent runtime.
 
-Built as a self-contained Next.js app with **client-side demo state** — no backend is required to run or demo it.
+Built as a Next.js app wired to the live SwapDesk agent backend — every
+page reads real agent state over HTTP. It needs a running backend to
+run it (local `uvicorn swapdesk.api:app` or the deployed API).
 
 ## Tech Stack
 
@@ -33,6 +35,7 @@ Other scripts:
 
 | Variable                 | Default                             | Purpose                                                                |
 | ------------------------ | ----------------------------------- | ---------------------------------------------------------------------- |
+| `NEXT_PUBLIC_SWAPDESK_API` | `https://swapdesk-7yvl.onrender.com` | Agent backend base URL (no trailing slash). Point at `http://127.0.0.1:8000` for a fully local stack. No secrets ever live in browser code. |
 | `NEXT_PUBLIC_SITE_URL`   | `https://swapdesk.vercel.app`       | Canonical origin used for `metadataBase`, canonical URLs, sitemap, robots. Override when deploying. |
 
 ## Project Structure
@@ -42,8 +45,8 @@ app/
 ├── layout.tsx              # Root layout, global <head> metadata, fonts, SwapDeskProvider, Toaster
 ├── page.tsx                # Server entry → renders <MissionControl />
 ├── mission-control.tsx     # "Mission Control" home (client) — metrics + live queue
-├── inbox/page.tsx          # Full ticket inbox (static demo data)
-├── inventory/              # Live stock + reservations (client; stock reacts to simulations)
+├── inbox/page.tsx          # Full ticket inbox (live agent cases)
+├── inventory/              # Real stock from the backend (client; read-only)
 │   ├── layout.tsx          #   metadata
 │   └── page.tsx
 ├── database/layout.tsx     # Schema view (metadata)
@@ -61,48 +64,55 @@ app/
 
 src/
 ├── components/
-│   ├── AppShell.tsx                # Sidebar + top bar + mobile bottom nav, "Simulate Ticket" button
-│   └── CustomerSimulationWidget.tsx
+│   ├── AppShell.tsx                # Sidebar + top bar + mobile bottom nav, "New Ticket" button
+│   └── CustomerSimulationWidget.tsx # Ticket submit form → POST /v1/agent/tickets
 ├── lib/
+│   ├── api.ts                      # Typed client for the agent backend (docs/API_CONTRACT.md)
+│   ├── use-case.ts                 # Case detail + timeline hook with polling + continue
 │   ├── seo.ts                      # SITE_* constants + pageMetadata() helper
 │   └── utils.ts                    # cn() (clsx + tailwind-merge)
 └── store/
-    └── swapdesk.tsx                # Global demo state + SwapDeskProvider
+    └── swapdesk.tsx                # Live case list + backend health, backed by lib/api.ts
 ```
 
-## Demo Flow
+## User Flow
 
-Everything is driven by a client-side store — no network calls.
+Everything is driven by the live agent backend — each action below is a
+real API call (contract: `docs/API_CONTRACT.md`).
 
-1. Click **Simulate Ticket** (top bar) or open **Customer Simulation** (`/simulate`), type a complaint, and submit.
-2. The store appends a ticket with status `Agent Processing` (`INTAKE` / `ROUTING` actions).
-3. It appears instantly in **Mission Control** and the **Inbox**, filterable by status.
-4. Open any ticket to inspect its execution timeline, actions, and SKU reservation.
-5. **Simulate Ticket** also decrements stock for `AJ4-MIL-43` (5 → 4) — visible on `/inventory`.
-6. **Reset Mock Data** (inventory page) clears tickets and restores stock.
+1. Click **New Ticket** (top bar) or open **Customer Simulation** (`/simulate`), type a complaint, and submit → `POST /v1/agent/tickets` returns `202` with a case id.
+2. The case appears in **Mission Control** and the **Inbox**; both poll every 3s while any visible case is non-terminal.
+3. Open the ticket to watch its execution timeline arrive as the worker commits actions (`reserve → return → label → arrange`).
+4. If the agent needs more info, answer from the ticket page → `POST .../continue` queues a fresh run; terminal cases return their saved outcome with no new run.
 
 ## State Management
 
-`src/store/swapdesk.tsx` exposes a `SwapDeskProvider` (mounted in `app/layout.tsx`) plus a `useSwapDesk()` hook:
+`src/store/swapdesk.tsx` exposes a `SwapDeskProvider` (mounted in `app/layout.tsx`) plus a `useSwapDesk()` hook. It holds the live case list,
+result summary, backend health, and a `submit()` that posts tickets —
+all backed by `src/lib/api.ts`:
 
 ```ts
-const { tickets, inventory, simulateTicket, submitCustomerTicket, resetMockData, getTicket } =
-  useSwapDesk();
+const { cases, summary, total, loading, error, health, ready,
+  refresh, reload, loadMore, hasMore, submit } = useSwapDesk();
 ```
 
-- `TicketStatus` = `"resolved" | "escalated" | "processing"`
-- `simulateTicket(): Ticket` — prepends `TCK-9045+` resolved ticket, decrements `AJ4-MIL-43` stock.
-- `submitCustomerTicket(message): Ticket` — prepends a `processing` ticket with your message.
-- `resetMockData()` — wipes tickets, restores initial inventory.
-- `getTicket(id)` — look up a single ticket.
+- `cases` — agent cases, newest first, with `execution_status`
+  (`queued | running | waiting_input | completed | failed`) and business
+  `outcome` (`arranged | clarification | denial | escalation | null`).
+- `submit({ message, order_id, order_item_id, size, ... })` — posts to
+  `/v1/agent/tickets`, then refreshes the list.
+- Polling is status-only (3s while any visible case is non-terminal);
+  nothing here ever resubmits or retries a run.
+- Per-case detail, timeline, and continuation live in
+  `src/lib/use-case.ts` (`useCaseDetail`), used by `/ticket/[id]`.
 
 ## Routes
 
 | Route                 | Page                    | Type            | Notes                              |
 | --------------------- | ----------------------- | --------------- | ---------------------------------- |
-| `/`                   | Mission Control         | server + client | metrics + live queue, filter       |
-| `/inbox`              | Inbox                   | server          | static ticket list                 |
-| `/inventory`          | Inventory               | server layout + client page | stock reacts to simulations |
+| `/`                   | Mission Control         | server + client | backend metrics + live queue, filter       |
+| `/inbox`              | Inbox                   | server + client | live agent cases                           |
+| `/inventory`          | Inventory               | server layout + client page | real backend stock, read-only        |
 | `/database`           | Database Schema         | server          |                                    |
 | `/integrations`       | Integrations            | server layout + client page | webhook toggle + URL copy  |
 | `/settings`           | Agent Settings          | server          |                                    |

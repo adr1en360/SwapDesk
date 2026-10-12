@@ -203,7 +203,7 @@ def test_inventory_before_during_after_finalize(client):
 
     paged = client.get("/v1/inventory?limit=5&offset=5").json()
     assert paged["limit"] == 5 and paged["offset"] == 5
-    assert paged["total"] == 14 and len(paged["items"]) == 5
+    assert paged["total"] == 29 and len(paged["items"]) == 5
     assert [ (i["sku"], i["size"]) for i in paged["items"]] == sorted(
         (i["sku"], i["size"]) for i in paged["items"])
     assert client.get("/v1/inventory?limit=501").status_code == 422
