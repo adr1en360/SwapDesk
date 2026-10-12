@@ -254,8 +254,9 @@ class FaultOut(BaseModel):
 def _cors_origins() -> list[str]:
     raw = os.environ.get(
         "SWAPDESK_CORS_ORIGINS",
-        "http://localhost:3000,http://127.0.0.1:3000")
-    return [o.strip() for o in raw.split(",") if o.strip()]
+        "https://swapdesk.vercel.app,http://localhost:3000,http://127.0.0.1:3000")
+    origins = [o.strip().rstrip("/") for o in raw.split(",") if o.strip()]
+    return origins
 
 
 app = FastAPI(title="SwapDesk",
