@@ -141,6 +141,37 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
   return (await res.json()) as T;
 }
 
+export type FixtureItem = {
+  id: string;
+  sku: string;
+  size: string;
+  qty: number;
+  status: string;
+  delivered_at: string;
+  final_sale: boolean;
+};
+
+export type FixtureOrder = {
+  id: string;
+  customer_ref: string;
+  items: FixtureItem[];
+};
+
+export type StorePolicy = {
+  window_days: number;
+  eligible_status: string;
+  final_sale_excluded: boolean;
+};
+
+export type FixturesOut = {
+  orders: FixtureOrder[];
+  policy: StorePolicy;
+};
+
+export function getFixtures(): Promise<FixturesOut> {
+  return request<FixturesOut>("/v1/fixtures");
+}
+
 export function getHealth(): Promise<HealthOut> {
   return request<HealthOut>("/v1/health");
 }
